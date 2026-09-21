@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <boost/shared_ptr.hpp>
+
 #include <OpenTissue/core/geometry/geometry_obb_fit.h>
 
 #include <cassert>

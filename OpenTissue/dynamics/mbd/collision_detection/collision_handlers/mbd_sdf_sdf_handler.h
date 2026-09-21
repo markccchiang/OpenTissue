@@ -9,6 +9,12 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/collision/sdf/sdf_geometry.h>
+
+#include <OpenTissue/core/containers/grid/grid.h>
+
+#include <OpenTissue/core/containers/mesh/polymesh/polymesh.h>
+
 #include <OpenTissue/collision/collision_sdf_sdf.h>
 
 namespace OpenTissue

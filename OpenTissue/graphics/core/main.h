@@ -7,6 +7,8 @@
 //
 #pragma once
 
+#include <OpenTissue/graphics/glfw/glfw_application.h>
+
 int main(int argc, char** argv)
 {
   auto app = ::createApplication(argc, argv);

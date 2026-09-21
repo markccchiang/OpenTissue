@@ -9,6 +9,15 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/core/geometry/geometry_barycentric.h>
+
+
+#include <OpenTissue/core/geometry/geometry_plane.h>
+
+#include <boost/shared_ptr.hpp>
+
+#include <OpenTissue/core/math/math_constants.h>
+
 #include <OpenTissue/collision/intersect/intersect_aabb_aabb.h>
 
 namespace OpenTissue

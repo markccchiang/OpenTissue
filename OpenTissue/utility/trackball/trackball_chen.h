@@ -9,7 +9,9 @@
 //
 #include <OpenTissue/configuration.h>
 
-#include <OpenTissue/core/math/big/big_diag.h>
+#include <OpenTissue/core/math/math_value_traits.h>
+
+#include <OpenTissue/core/math/math_matrix3x3.h>
 
 #include <OpenTissue/utility/trackball/trackball_generic.h>
 #include <OpenTissue/core/math/math_constants.h>
@@ -52,8 +54,8 @@ namespace OpenTissue
         void begin_drag(real_type const & x, real_type const & y)
         {
           this->m_xform_anchor = this->m_xform_current;
-          this->m_xform_incremental = diag(1.0);
-          this->m_xform_current = diag(1.0);
+          this->m_xform_incremental = math::diag(1.0);
+          this->m_xform_current = math::diag(1.0);
           this->m_anchor_position = vector3_type(x,y,0);
           this->m_current_position = vector3_type(x,y,0);
         }
@@ -75,8 +77,8 @@ namespace OpenTissue
         real_type f(real_type const & x) const
         {
           if (x <= 0) return 0;
-          if (x >= 1) return math::detail::pi_2<real_type>();
-          return math::detail::pi_2<real_type>() * x;
+          if (x >= 1) return math::detail::pi_half<real_type>();
+          return math::detail::pi_half<real_type>() * x;
         }
 
         void compute_incremental(vector3_type const & anchor, vector3_type const & current, matrix3x3_type & transform)
@@ -100,7 +102,7 @@ namespace OpenTissue
             );
 
           vector3_type d   = current - anchor;
-          this->m_angle = math::detail::pi_2<real_type>() * length(d) / this->m_radius * (1 - (1 - 0.2 / math::detail::pi<real_type>()) * 2 * omega / math::detail::pi<real_type>() *(1 - fabs(cos(tau))));
+          this->m_angle = math::detail::pi_half<real_type>() * length(d) / this->m_radius * (1 - (1 - 0.2 / math::detail::pi<real_type>()) * 2 * omega / math::detail::pi<real_type>() *(1 - fabs(cos(tau))));
           transform = Ru(this->m_angle,this->m_axis);
         }
       };

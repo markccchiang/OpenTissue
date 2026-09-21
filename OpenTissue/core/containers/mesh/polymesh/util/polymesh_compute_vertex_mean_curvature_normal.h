@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <iostream>
+
 #include <boost/cast.hpp>
 
 #include <OpenTissue/core/geometry/geometry_cot.h>

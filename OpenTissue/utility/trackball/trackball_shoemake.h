@@ -9,7 +9,7 @@
 //
 #include <OpenTissue/configuration.h>
 
-#include <OpenTissue/core/math/big/big_diag.h>
+#include <OpenTissue/core/math/math_matrix3x3.h>
 
 #include <OpenTissue/utility/trackball/trackball_generic.h>
 
@@ -60,8 +60,8 @@ namespace OpenTissue
           this->m_axis.clear();
 
           this->m_xform_anchor = this->m_xform_current;
-          this->m_xform_incremental = diag(1.0);
-          this->m_xform_current = diag(1.0);
+          this->m_xform_incremental = math::diag(1.0);
+          this->m_xform_current = math::diag(1.0);
 
           this->m_anchor_position = vector3_type(x,y,0);
           project_onto_surface(this->m_anchor_position);

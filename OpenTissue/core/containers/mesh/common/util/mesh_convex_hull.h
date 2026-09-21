@@ -9,6 +9,11 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <list>
+
+#include <boost/cast.hpp>
+#include <vector>
+
 #include <OpenTissue/utility/utility_qhull.h>
 
 namespace OpenTissue

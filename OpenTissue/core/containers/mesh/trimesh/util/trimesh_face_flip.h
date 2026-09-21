@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/core/containers/mesh/trimesh/trimesh_mesh.h>
+
 #include <OpenTissue/core/containers/mesh/trimesh/trimesh_face.h>
 
 namespace OpenTissue

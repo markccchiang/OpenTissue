@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/collision/aabb_tree/aabb_tree_refit.h>
+
 #include <OpenTissue/dynamics/psys/collision/collision_psys_plane.h>
 #include <OpenTissue/dynamics/psys/collision/collision_psys_sphere.h>
 #include <OpenTissue/dynamics/psys/collision/collision_psys_sdf.h>

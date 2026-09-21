@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <boost/shared_ptr.hpp>
+
 namespace OpenTissue
 {
 namespace aabb_tree

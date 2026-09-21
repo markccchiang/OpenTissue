@@ -9,6 +9,7 @@
 //
 #include <OpenTissue/configuration.h>
 
+
 #include <OpenTissue/core/containers/grid/util/grid_gradient.h> 
 #include <OpenTissue/core/math/math_vector3.h>         
 
@@ -32,7 +33,7 @@ namespace OpenTissue
 
       typedef OpenTissue::math::Vector3<real_type> vector3_type;
       vector3_type g;
-      gradient(map,i,j,k,g);
+      gradient(grid,i,j,k,g);
       grad_mag = sqrt(g*g);
     }
 

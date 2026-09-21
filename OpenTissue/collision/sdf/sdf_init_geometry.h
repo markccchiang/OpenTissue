@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/collision/bvh/top_down_constructor/bvh_top_down_constructor.h>
+
 #include <OpenTissue/collision/sdf/sdf_compute_point_sampling.h>
 #include <OpenTissue/collision/sdf/sdf_top_down_policy.h>
 
