@@ -9,8 +9,11 @@ if(POLICY CMP0167)
   cmake_policy(SET CMP0167 NEW)
 endif()
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+# Use -std=c++17 rather than -std=gnu++17, so the standard setting above actually
+# constrains what compiles and the code stays portable across compilers.
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 #-----------------------------------------------------------------------------
 #

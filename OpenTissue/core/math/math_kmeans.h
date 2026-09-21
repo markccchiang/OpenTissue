@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <random>
+
 #include <OpenTissue/core/math/math_random.h>
 #include <OpenTissue/core/math/math_matrix3x3.h>
 #include <OpenTissue/core/math/math_covariance.h>
@@ -217,8 +219,16 @@ namespace OpenTissue
             max_coord = max( max_coord, (*p) );
           }
 
-          // Add some randomness 
-          std::random_shuffle(m_memberships.begin(), m_memberships.end());
+          // Add some randomness
+          //
+          // std::random_shuffle was removed in C++17. It drew from an unspecified source,
+          // in practice rand(), which is deterministic unless the caller seeds it. A
+          // fixed-seed generator is used here so the behaviour stays deterministic rather
+          // than silently becoming run-dependent.
+          {
+            static std::mt19937 shuffle_generator( 1234u );
+            std::shuffle(m_memberships.begin(), m_memberships.end(), shuffle_generator);
+          }
 
           //--- This initialization just seed clusters at random positions...
           m_clusters.clear();

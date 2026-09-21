@@ -52,7 +52,7 @@ namespace OpenTissue
       {
         if (!FixedSmoothingKernel<Types, CheckRange>::checkRange(r))
           return 0.;
-        register real_type res = base_type::m_radius- length(r);
+        real_type res = base_type::m_radius- length(r);
         res *= res*res*m_k;
         return res;
       }
@@ -64,13 +64,13 @@ namespace OpenTissue
       {
         if (!FixedSmoothingKernel<Types, CheckRange>::checkRange(r))
           return vector(0);
-        register real_type tmp = length(r);
+        real_type tmp = length(r);
         if (tmp <= 0.) {
           vector rnd; 
           random(rnd,-0.0001, 0.0001);
           return vector(m_l*rnd);
         }
-        const register real_type tmp2 = base_type::m_radius-tmp;
+        const real_type tmp2 = base_type::m_radius-tmp;
         tmp = (tmp2*tmp2)/tmp;
         return vector((m_l*tmp)*r);
       }
@@ -82,7 +82,7 @@ namespace OpenTissue
       {
         if (!FixedSmoothingKernel<Types, CheckRange>::checkRange(r))
           return 0.;
-        register real_type tmp = length(r);
+        real_type tmp = length(r);
         if (tmp <= 0.)
           return -1e38; // -oo
         tmp = ((base_type::m_radius-tmp)*(base_type::m_radius-2*tmp))/tmp;

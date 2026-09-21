@@ -19,9 +19,14 @@ namespace OpenTissue
     * structures containing pointers to data and not instances.
     */
     template<class T>
-    struct greater_ptr 
-      : public std::binary_function<T, T, bool>
+    struct greater_ptr
     {
+      // std::binary_function was removed in C++17. These three typedefs are all it ever
+      // supplied, so they are kept here for any code that still reads them.
+      typedef T     first_argument_type;
+      typedef T     second_argument_type;
+      typedef bool  result_type;
+
       bool operator()(const T& x, const T& y) const { return (*x)>(*y); }
     };
 

@@ -36,8 +36,8 @@ namespace OpenTissue
         typedef Interval<value_type>  interval_type;
 
         //--- TODO KE : why use register?
-        register value_type tmp_lower; // jackj: -O4 probably makes register
-        register value_type tmp_upper; // jackj: -O4 probably makes register
+        value_type tmp_lower; // jackj: -O4 probably makes register
+        value_type tmp_upper; // jackj: -O4 probably makes register
 
         if(empty(A) || empty(B))
           return interval_type::empty();

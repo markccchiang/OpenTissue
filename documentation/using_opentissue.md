@@ -4,11 +4,15 @@ OpenTissue is a header-only library consisting of a collection of many smaller s
 Many of these sub-libraries are self-contained, that is, they do not have explicit third-party dependencies. Thus, in order to use OpenTissue in your application, you need to tell your compiler the location of the OpenTissue include headers which is usually accomplished by passing the flag (Linux, macOS) ```-I <path-to-opentissue>/``` at the command line. On the other hand, if you are using any sub-libraries that have some dependency then your application will have the same dependency. For instance, a substantial subset of the libraries uses Boost, so in these cases, your application will depend on Boost as well.
 
 ## Minimum requirements
-  1. A C++ compiler supporting C++11 (GCC, Clang/AppleClang, or MSVC 19+).
+  1. A C++ compiler supporting C++17 (GCC, Clang/AppleClang, or MSVC 19+).
   2. CMake 3.25 or newer.
   3. Boost 1.39 or newer.
 
 Boost is the only hard dependency. Everything else is optional.
+
+OpenTissue builds itself as C++17, but the headers do not require it: they compile cleanly at
+C++11, 14, 17 and 20, and `OpenTissue::headers` does not force a standard on your project. If
+your application is still on C++11 you can use OpenTissue as-is.
 
 ## Third-party dependencies
 
