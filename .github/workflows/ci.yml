@@ -1,8 +1,11 @@
 name: CI
 
 on:
+  # Every branch, not just the default one. Restricting this to master/main meant a feature
+  # branch could be pushed and reviewed with no CI at all, which is exactly when it is most
+  # wanted. Tags are excluded: '**' matches branch names only.
   push:
-    branches: [ master, main ]
+    branches: ['**']
   pull_request:
   workflow_dispatch:
 
