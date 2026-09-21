@@ -9,11 +9,7 @@
 //
 #include <OpenTissue/configuration.h>
 
-#ifdef USE_ATLAS
-#  include <OpenTissue/core/math/big/big_svd_impl_atlas.h>  
-#else
-#  include <OpenTissue/core/math/big/big_svd_impl1.h>  
-#endif 
+#include <OpenTissue/core/math/big/big_svd_impl1.h>
 #include <OpenTissue/core/math/big/big_types.h>  
 #include <OpenTissue/core/math/math_value_traits.h>  
 #include <boost/cast.hpp>             // needed for boost::numeric_cast
@@ -46,18 +42,7 @@ namespace OpenTissue
                       , ublas::matrix<typename ME::value_type> & V
                       )
       {
-#ifdef USE_ATLAS
-        ublas::matrix<typename ME::value_type, ublas::column_major>  VT;
-        ublas::matrix<typename ME::value_type, ublas::column_major>  UU;
-        
-        detail::svd_impl_atlas( A, UU, s, VT);
-        
-        V.resize( VT.size1(), VT.size2() ); 		
-		    V = ublas::trans( VT );
-        U = UU;
-#else
         detail::svd_impl1(A, U, s, V);
-#endif
       }
       
       

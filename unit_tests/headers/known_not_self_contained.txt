@@ -9,17 +9,9 @@
 # Blank lines and #-comments are ignored.
 
 #----------------------------------------------------------------------------------------------
-# Needs a third-party library that was not available when this list was generated (18).
+# Needs a third-party library that was not available when this list was generated (9).
 # These are not known to be broken; install the library and try removing them.
 #----------------------------------------------------------------------------------------------
-
-# requires NVIDIA Cg (discontinued in 2012, no arm64 build)
-OpenTissue/core/geometry/t4_gpu_scan/t4_gpu_scan.h
-OpenTissue/gpu/cg/cg_program.h
-OpenTissue/gpu/cg/cg_util.h
-OpenTissue/gpu/texture/texture_show_texture2D.h
-OpenTissue/kinematics/skinning/lbs/skinning_lbs_gpu.h
-OpenTissue/kinematics/skinning/sbs/skinning_sbs_gpu.h
 
 # requires GLFW
 OpenTissue/graphics/core/main.h
@@ -31,19 +23,12 @@ OpenTissue/core/containers/t4mesh/util/t4mesh_tetgen_constrained_delaunay_tetrah
 OpenTissue/core/containers/t4mesh/util/t4mesh_tetgen_mesh_lofter.h
 OpenTissue/core/containers/t4mesh/util/t4mesh_tetgen_quality_tetrahedralization.h
 
-# requires the generated graphics export header (build OpenTissueGraphics first)
-OpenTissue/graphics/glut/glut_application.h
-OpenTissue/graphics/glut/glut_window.h
-
 # requires Triangle
 OpenTissue/core/containers/mesh/polymesh/util/polymesh_compute_delaunay2D.h
 OpenTissue/core/containers/mesh/polymesh/util/polymesh_compute_voronoi.h
 
-# requires GLUT
+# requires GLUT (still needed by the GL text helpers)
 OpenTissue/graphics/core/gl/gl_on_screen_display.h
-
-# requires boost numeric bindings (unmaintained, never part of Boost)
-OpenTissue/core/math/big/big_svd_impl_atlas.h
 
 #----------------------------------------------------------------------------------------------
 # Genuine defects still to fix (1).

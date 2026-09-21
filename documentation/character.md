@@ -22,10 +22,13 @@ This type can then be provided to the skeleton:
 <pre>
 typedef OpenTissue::SkeletonTypes<math_types>    skeleton_types;
 </pre>
-To define a skin type, the math type must again be used along with an argument denoting the skinning method to be used. In the following hardware supported Spherical Blend Skinning is used:
+To define a skin type, the math type must again be used along with an argument denoting the skinning method to be used. In the following Spherical Blend Skinning is used:
 <pre>
-typedef OpenTissue::SkinTypes<math_types, OpenTissue::SBSGPU>    skin_types;
+typedef OpenTissue::SkinTypes<math_types, OpenTissue::SBS>    skin_types;
 </pre>
+The available methods are `LBS` (linear blend), `SBS` (spherical blend) and `DBS` (dual
+quaternion blend). GPU variants of LBS and SBS used to exist, written in NVIDIA Cg; Cg was
+discontinued in 2012 and those have been removed.
 Finally, the character types can be defined using:
 <pre>
 typedef OpenTissue::CharacterTypes<math_types,skin_types,skeleton_types>    character_types;

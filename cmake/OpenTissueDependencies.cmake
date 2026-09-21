@@ -237,13 +237,17 @@ set(OpenGL_GL_PREFERENCE GLVND)
 find_package(OpenGL QUIET)
 find_package(GLEW QUIET)
 find_package(glfw3 QUIET)
+# GLUT too: graphics/core/gl/gl.h includes the GLUT header unconditionally and the text
+# helpers call into it, so the graphics library does not compile without it even though
+# the GLUT application backend itself is gone.
+find_package(GLUT QUIET)
 
-if(TARGET OpenGL::GL AND TARGET GLEW::GLEW AND TARGET glfw)
+if(TARGET OpenGL::GL AND TARGET GLEW::GLEW AND TARGET glfw AND TARGET GLUT::GLUT)
   set(OPENTISSUE_HAVE_GRAPHICS ON)
-  _ot_report("graphics" "found" "OpenGL + GLEW + GLFW")
+  _ot_report("graphics" "found" "OpenGL + GLEW + GLFW + GLUT")
 else()
   set(_ot_missing_gfx "")
-  foreach(_pair "OpenGL::GL:OpenGL" "GLEW::GLEW:GLEW" "glfw:GLFW")
+  foreach(_pair "OpenGL::GL:OpenGL" "GLEW::GLEW:GLEW" "glfw:GLFW" "GLUT::GLUT:GLUT")
     string(REPLACE ":" ";" _parts "${_pair}")
     list(GET _parts 0 _tgt)
     list(GET _parts -1 _label)

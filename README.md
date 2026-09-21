@@ -48,7 +48,6 @@ GPU - Collection of general purpose algorithms and methods performed on the GPU 
 Utility - Large collection of miscellaneous utilities, mostly for OT-based applications.
   * [Using the Demo Glut Application Framework](documentation/using_demo_framework.md)
   * [The OpenGL Programming Guide](documentation/using_opengl.md)
-  * [The Shader Programming Guide](documentation/using_shaders.md)
   * [Utility Programming Guide](documentation/utility.md)
 
 ## Learn More

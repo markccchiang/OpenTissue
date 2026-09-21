@@ -12,7 +12,7 @@
 #include <OpenTissue/graphics/core/gl/gl_check_errors.h>
 
 #include <OpenTissue/graphics/core/gl/gl.h>
-#include <boost/shared_ptr.hpp>
+#include <memory>
 
 namespace OpenTissue
 {
@@ -164,7 +164,7 @@ namespace OpenTissue
 
     };
 
-    typedef boost::shared_ptr<Renderbuffer>  renderbuffer_pointer;
+    typedef std::shared_ptr<Renderbuffer>  renderbuffer_pointer;
 
     /**
     * Create Depth Buffer.

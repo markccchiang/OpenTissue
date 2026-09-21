@@ -9,7 +9,7 @@
 //
 #include <OpenTissue/configuration.h>
 
-#include <boost/shared_ptr.hpp> //needed for boost::const_pointer_cast
+#include <memory> //needed for std::const_pointer_cast
 
 #include <list>
 
@@ -35,7 +35,7 @@ namespace OpenTissue
       bv_ptr_container Q;          //--- work queue
       std::list< unsigned int > D; //--- depth queue
 
-      bv_ptr root = boost::const_pointer_cast<bv_type>( bvh.root() );
+      bv_ptr root = std::const_pointer_cast<bv_type>( bvh.root() );
 
       Q.push_back( root );
       unsigned int zero = 0;

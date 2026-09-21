@@ -11,7 +11,6 @@
 
 #include <OpenTissue/core/containers/grid/util/grid_poisson_solver.h>
 
-#include <boost/lambda/lambda.hpp>
 #include <algorithm>
 
 namespace OpenTissue

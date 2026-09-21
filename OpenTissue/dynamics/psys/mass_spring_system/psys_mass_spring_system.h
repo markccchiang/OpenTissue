@@ -16,7 +16,7 @@
 #include <OpenTissue/dynamics/sph/sph_system.h>
 
 #include <boost/iterator/indirect_iterator.hpp>
-#include <boost/bind.hpp>
+#include <algorithm>
 
 #include <list>
 
@@ -234,7 +234,7 @@ namespace OpenTissue
         for(;p!=end;++p)
           p->force().clear();
 
-        std::for_each( force_begin(), force_end(), boost::bind( &force_type::apply, _1 ));
+        std::for_each( force_begin(), force_end(), []( force_type & force ){ force.apply(); } );
       }
 
     };

@@ -11,11 +11,7 @@
 
 #include <OpenTissue/kinematics/skinning/skinning_animated_skin.h>
 #include <OpenTissue/kinematics/skinning/lbs/skinning_lbs.h>
-//2020-07-27 Kenny: Cg no longer supported on osx.
-//#include <OpenTissue/kinematics/skinning/lbs/skinning_lbs_gpu.h>
 #include <OpenTissue/kinematics/skinning/sbs/skinning_sbs.h>
-//2020-07-27 Kenny: Cg no longer supported on osx.
-//#include <OpenTissue/kinematics/skinning/sbs/skinning_sbs_gpu.h>
 #include <OpenTissue/kinematics/skinning/dbs/skinning_dbs.h>
 #include <OpenTissue/kinematics/skinning/gl_skin_render.h>
 #include <OpenTissue/utility/utility_material.h>

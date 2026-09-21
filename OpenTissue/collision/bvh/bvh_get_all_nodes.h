@@ -9,7 +9,7 @@
 //
 #include <OpenTissue/configuration.h>
 
-#include <boost/shared_ptr.hpp> // needed for  boost::const_pointer_cast
+#include <memory> // needed for  std::const_pointer_cast
 
 namespace OpenTissue
 {
@@ -30,7 +30,7 @@ namespace OpenTissue
       if ( !bvh.root() )
         return ;
 
-      bv_ptr root = boost::const_pointer_cast<bv_type>( bvh.root() );
+      bv_ptr root = std::const_pointer_cast<bv_type>( bvh.root() );
 
       nodes.push_back( root );
       bv_ptr_container Q;

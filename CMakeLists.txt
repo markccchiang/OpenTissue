@@ -65,25 +65,22 @@ if(OPENTISSUE_ENABLE_DEMOS)
   # openGL code pieces have never been intended to be used by end-users.
   # Therefore end-users should be able to use OpenTissue without OpenGL.
   #
-  # The only expcetion is our GPGPU code pieces, these are hard-wired to OpenGL
-  # and Cg.
-  #
+  # (The GPGPU code pieces that were hard-wired to Cg have been removed; Cg was
+  # discontinued in 2012.)
   #
   set(OpenGL_GL_PREFERENCE GLVND)
   find_package(OpenGL REQUIRED)
 
   #-----------------------------------------------------------------------------
   #
-  # Try to find GLUT (read more here http://www.opengl.org/resources/libraries/).
+  # GLUT. The GLUT application backend is gone -- GLFW replaced it and nothing
+  # referenced the GLUT one -- but the GL text helpers (gl_draw_string.h and
+  # gl_on_screen_display.h) still call glutStrokeCharacter and friends, and
+  # graphics/core/gl/gl.h includes the GLUT header unconditionally. So GLUT is
+  # still required to compile anything that draws text. Removing that is part of
+  # finishing the move to GLFW.
   #
-  # Glut is only needed by the Demo applications that comes with OpenTissue.
-  # End-users that are writting their own applications do not need this GLUT
-  # depedency and can ignore it.
-  #
-  option(OPENTISSUE_ENABLE_GLUT "Enable deprecated GLUT graphics interface." OFF)
-  if(OPENTISSUE_ENABLE_GLUT)
-    find_package(GLUT REQUIRED)
-  endif()
+  find_package(GLUT REQUIRED)
 
   # Let CMake locate glfw3 through the usual search paths (CMAKE_PREFIX_PATH, Homebrew,
   # vcpkg, ...). Hard-coding /usr/local broke on Apple Silicon, where Homebrew installs

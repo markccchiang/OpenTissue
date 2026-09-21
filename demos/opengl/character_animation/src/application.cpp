@@ -32,10 +32,7 @@ public:
   typedef OpenTissue::skeleton::Types<math_types>                      skeleton_types;
   typedef OpenTissue::graphics::GlfwApplication                        Base;
 
-//  typedef OpenTissue::skinning::Types< math_types, OpenTissue::skinning::SBSGPU >	 skin_types;
-//  typedef OpenTissue::skinning::Types< math_types, OpenTissue::skinning::SBS >	 skin_types;
-//  typedef OpenTissue::skinning::Types< math_types, OpenTissue::skinning::LBS >	 skin_types;
-//  typedef OpenTissue::skinning::Types< math_types, OpenTissue::skinning::LBSGPU >	 skin_types;
+//  Other skinning methods: swap DBS below for SBS (spherical blend) or LBS (linear blend).
   typedef OpenTissue::skinning::Types< math_types, OpenTissue::skinning::DBS >	 skin_types;
 
 protected:

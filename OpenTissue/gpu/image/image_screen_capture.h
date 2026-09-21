@@ -12,7 +12,7 @@
 #include <OpenTissue/graphics/core/gl/gl_util.h>
 #include <OpenTissue/gpu/image/image.h>
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
 
 namespace OpenTissue
 {
@@ -31,9 +31,9 @@ namespace OpenTissue
     *
     * @return    A pointer to an image containing the captured screen.
     */
-    boost::shared_ptr<OpenTissue::image::Image<unsigned char> >  screen_capture( keep_transparency const & /*tag*/ )
+    std::shared_ptr<OpenTissue::image::Image<unsigned char> >  screen_capture( keep_transparency const & /*tag*/ )
     {
-      typedef boost::shared_ptr<OpenTissue::image::Image<unsigned char> > image_pointer;
+      typedef std::shared_ptr<OpenTissue::image::Image<unsigned char> > image_pointer;
 
       GLint viewport[4];
       glGetIntegerv(GL_VIEWPORT,viewport);
@@ -53,9 +53,9 @@ namespace OpenTissue
     *
     * @return    A pointer to an image containing the captured screen.
     */
-    boost::shared_ptr<OpenTissue::image::Image<unsigned char> >  screen_capture( no_transparency const & /*tag*/ )
+    std::shared_ptr<OpenTissue::image::Image<unsigned char> >  screen_capture( no_transparency const & /*tag*/ )
     {
-      typedef boost::shared_ptr<OpenTissue::image::Image<unsigned char> > image_pointer;
+      typedef std::shared_ptr<OpenTissue::image::Image<unsigned char> > image_pointer;
 
       GLint viewport[4];
       glGetIntegerv(GL_VIEWPORT,viewport);
@@ -92,7 +92,7 @@ namespace OpenTissue
     *
     * @return    A pointer to an image containing the captured screen.
     */
-    boost::shared_ptr<OpenTissue::image::Image<unsigned char> >  screen_capture(  )
+    std::shared_ptr<OpenTissue::image::Image<unsigned char> >  screen_capture(  )
     {
       return screen_capture( keep_transparency() );
     }

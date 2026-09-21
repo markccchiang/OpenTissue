@@ -12,7 +12,7 @@
 #include <OpenTissue/collision/bvh/bottom_up_constructor/bvh_graph.h>
 #include <OpenTissue/collision/bvh/bottom_up_constructor/bvh_default_priority_bottom_up_policy.h>
 
-#include <boost/shared_ptr.hpp> // needed for boost::static_pointer_cast
+#include <memory> // needed for std::static_pointer_cast
 
 #include <iostream>
 
@@ -82,7 +82,7 @@ namespace OpenTissue
           else
           {
             node->create_bv(bvh,true);
-            annotated_bv_ptr bv = boost::static_pointer_cast<annotated_bv_type>(node->bv());
+            annotated_bv_ptr bv = std::static_pointer_cast<annotated_bv_type>(node->bv());
 
             bv->insert(node->coverage());
 

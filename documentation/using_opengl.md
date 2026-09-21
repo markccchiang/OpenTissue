@@ -54,11 +54,10 @@ or
 OpenTissue/utility/GL
 </pre>
 
-As the very first header file. If you are using Cg you can simply use the header file
+As the very first header file.
 
-    #include<OpenTissue/utility/cg_util.h>
-
-Instead. This is explained in more detail in <a href="shader_programming.html">The Shader Programming Guide</a>.
+(There used to be a Cg convenience header here as well. NVIDIA discontinued Cg in 2012 and
+the Cg interface has been removed from OpenTissue.)
 
 ## OpenGL Matrix Utilities
 In some applications it is convenient to extract 4-by-4 OpenGL matrices stored

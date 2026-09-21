@@ -9,15 +9,6 @@
 //
 #include <OpenTissue/configuration.h>
 
-#ifdef USE_ATLAS
-#  include <boost/numeric/bindings/atlas/cblas2.hpp>
-#  include <boost/numeric/bindings/atlas/cblas3.hpp>
-#  include <boost/numeric/bindings/atlas/clapack.hpp>
-#  include <boost/numeric/bindings/traits/ublas_matrix.hpp>
-#  include <boost/numeric/bindings/traits/ublas_vector.hpp>
-
-namespace atlas = boost::numeric::bindings::atlas;
-#endif
 
 #include <OpenTissue/core/math/big/big_types.h>  
 
@@ -34,95 +25,6 @@ namespace OpenTissue
     namespace big
     {
 
-#ifdef USE_ATLAS
-
-      /**
-      * Solve Linear System using LU decomposition.
-      *
-      * @param A       The matrix.
-      * @param x       Upon return this argument holds the solution 
-      * @param b       The right hand side vector.
-      *
-      * @return      If succesfull then the return value is true otherwise it is false.
-      */
-      template<typename matrix_type, typename vector_type>
-      inline bool lu_atlas( matrix_type  const & A, vector_type & x, vector_type const & b)
-      {
-        typedef typename matrix_type::value_type value_type;
-        typedef typename matrix_type::size_type  size_type;
-
-        if(A.size1() <= 0 || A.size2() <= 0)
-          throw std::invalid_argument("A was empty");
-
-        if(b.size() != A.size1())
-          throw std::invalid_argument("The size of b must be the same as the number of rows in A");
-
-        if(x.size() != A.size2())
-          throw std::invalid_argument("The size of x must be the same as the number of columns in A");
-
-        size_type m = A.size1();
-        size_type n = A.size2();
-
-        ublas::matrix<value_type, ublas::column_major> Acpy( m, n );
-        Acpy.assign(A);
-        ublas::matrix<value_type, ublas::column_major> B( n, 1 );
-        ublas::column( B, 0 ) = b;
-        atlas::gesv( Acpy, B );
-        x = ublas::column( B, 0 );
-
-        return true;
-      }
-
-
-      /**
-      * Invert Matrix using LU factorization.
-      *
-      * @param A     The matrix to be inverted.
-      * @param invA  Upon return this argument holds the inverted matrix.
-      *
-      * @note        This function works, and can be used as an
-      *              alternative for big::lu_invert(). No performance measurements
-      *              has been done to see which version is the fastest. However, this
-      *              version uses ATLAS whereas the big::lu_invert version only uses
-      *              ublas. 
-      *
-      * @return      If succesfull then the return value is true otherwise it is false.
-      */
-      template<typename T>
-      inline bool lu_atlas_invert( ublas::matrix<T>  const & A, ublas::matrix<T> & invA)
-      {
-        typedef typename ublas::matrix<T>::size_type  size_type;
-
-        if(A.size1() <= 0 || A.size2() <= 0)
-          throw std::invalid_argument("A was empty");
-
-        size_type m = A.size1();
-        size_type n = A.size2();
-
-        invA.resize(m,n,false);
-        invA.assign( A );
-
-        std::vector<int> ipiv (n);   // pivot vector
-        int rc = atlas::lu_factor (invA, ipiv);  // alias for getrf()
-
-        // FRom http://www.netlib.org/lapack/single/sgetrf.f
-        //
-        // INFO    (output) INTEGER
-        //          = 0:  successful exit
-        //          < 0:  if INFO = -i, the i-th argument had an illegal value
-        //          > 0:  if INFO = i, U(i,i) is exactly zero. The factorization
-        //                has been completed, but the factor U is exactly
-        //                singular, and division by zero will occur if it is used
-        //                to solve a system of equations.
-        //
-        if(rc!=0)
-          return false;
-
-        atlas::lu_invert (invA, ipiv);  // alias for getri()
-        return true;
-      }
-
-#else
 
       /**
       * Solve Linear System using LU decomposition.
@@ -197,7 +99,6 @@ namespace OpenTissue
         return true;
       }
 
-#endif
 
 
 

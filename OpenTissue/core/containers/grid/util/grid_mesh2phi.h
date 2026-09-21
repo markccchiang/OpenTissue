@@ -15,8 +15,6 @@
 
 #include <OpenTissue/core/containers/mesh/common/util/mesh_compute_minmax_face_area.h>
 
-// 2020-07-25 Kenny: Cg is no longer running on osx hence, we outcommented its usage.
-//#include <OpenTissue/core/geometry/t4_gpu_scan/t4_gpu_scan.h>
 #include <OpenTissue/core/geometry/t4_cpu_scan/t4_cpu_scan.h>
 
 #include <OpenTissue/core/math/math_power2.h>
@@ -36,7 +34,9 @@ namespace OpenTissue
     * @param mesh              A polygonal mesh.
     * @param phi               Upon return this argument contains a signed distance field of the specified mesh.
     * @param max_resolution    This argument can be used to set a maximum upper limit on the resolution of the signed distance field. Default value is 64.
-    * @param use_gpu           Boolean flag indicating whether the gpu should be used to compute the signed distance field. Default value is true.
+    * @param use_gpu           Ignored. The GPU scan conversion was implemented in Cg,
+    *                          which was discontinued in 2012 and removed from OpenTissue.
+    *                          The parameter is kept so existing calls still compile.
     */
     template<typename mesh_type, typename grid_type>
     inline void mesh2phi(mesh_type & mesh, grid_type & phi, size_t max_resolution = 64, bool use_gpu = true)
@@ -106,22 +106,7 @@ namespace OpenTissue
 
       mesh::compute_angle_weighted_vertex_normals(mesh);
 
-      // 2020-07-25 Kenny: Cg is no longer running on osx hence, we outcommented its usage.
-      //      if(use_gpu)
-      //      {
-      //        bool gpu_done = t4_gpu_scan(
-      //          mesh
-      //          , band
-      //          , phi
-      //          );
-      //        // Test if we should fall back on CPU
-      //        if(!gpu_done)
-      //          t4_cpu_scan(mesh,band,phi, t4_cpu_signed() );
-      //      }
-      //      else
-      //      {
-        t4_cpu_scan(mesh,band,phi, t4_cpu_signed() );
-      //      }
+      t4_cpu_scan(mesh,band,phi, t4_cpu_signed() );
 
       std::cout << "mesh2phi(): completed phi computation" << std::endl;
     }
@@ -133,7 +118,9 @@ namespace OpenTissue
     * @param phi               Upon return this argument contains a signed distance field of the specified mesh.
     * @param bandsize          This argument can be used to set the size of a band enclosing the mesh.
     * @param max_resolution    This argument can be used to set the wanted resolution of the resuling distance field.
-    * @param use_gpu           Boolean flag indicating whether the gpu should be used to compute the signed distance field. Default value is true.
+    * @param use_gpu           Ignored. The GPU scan conversion was implemented in Cg,
+    *                          which was discontinued in 2012 and removed from OpenTissue.
+    *                          The parameter is kept so existing calls still compile.
     */
     template<typename mesh_type, typename grid_type>
     inline void mesh2phi(mesh_type & mesh, grid_type & phi, double bandsize, size_t resolution, bool use_gpu = true)
@@ -167,22 +154,7 @@ namespace OpenTissue
 
       mesh::compute_angle_weighted_vertex_normals(mesh);
 
-      // 2020-07-25 Kenny: Cg is no longer running on osx hence, we outcommented its usage.
-      //      if(use_gpu)
-      //      {
-      //        bool gpu_done = t4_gpu_scan(
-      //          mesh
-      //          , band
-      //          , phi
-      //          );
-      //        // Test if we should fall back on CPU
-      //        if(!gpu_done)
-      //          t4_cpu_scan(mesh,band,phi, t4_cpu_signed() );
-      //      }
-      //      else
-      //      {
-        t4_cpu_scan(mesh,band,phi, t4_cpu_signed() );
-      //      }
+      t4_cpu_scan(mesh,band,phi, t4_cpu_signed() );
       std::cout << "mesh2phi(): completed phi computation" << std::endl;
     }
 

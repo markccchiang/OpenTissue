@@ -126,10 +126,10 @@ OpenTissue contains in-built support for OpenGL drawing, all OpenGL related head
 The OpenGL support is quite extensive an a good place to start is the [The OpenGL Programming Guide](using_opengl.md). Note, one is not required to use OpenGL with OpenTissue.
 
 
-## Cg
+## Shaders
 
-The builtin OpenGL support in OpenTissue has been integrated with a Cg (C for graphics) programming interface. The Cg interface makes it easy to implement shaders and to use the GPU for general purpose processing. The Cg interface is located in the subfolder
-
-	OpenTissue/utility/Cg/
-
-Shader programming using the OpenTissue Cg interface is explained in more detail in the [The Shader Programming Guide](using_shaders.md). It would be worth to read the [The OpenGL Programming Guide](using_opengl.md) and the [The Image and Texture Programming Guide](texture.md)
+OpenTissue used to ship a Cg (C for graphics) interface for shader programming and GPGPU
+work. NVIDIA discontinued Cg in 2012 and it has no build for current platforms, so that
+interface and the shaders written against it have been removed. See the
+[The OpenGL Programming Guide](using_opengl.md) and the
+[The Image and Texture Programming Guide](texture.md).

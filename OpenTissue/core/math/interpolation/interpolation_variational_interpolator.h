@@ -11,7 +11,6 @@
 
 #include <OpenTissue/core/math/big/big_lu.h>
 
-#include <boost/lambda/lambda.hpp>
 
 #include <cmath>
 #include <algorithm> // for copy
@@ -106,23 +105,15 @@ namespace OpenTissue
 
           std::copy(point_begin, point_end, std::back_inserter( m_c ) );
 
-          // TODO: Rewrite into a one-liner?
-          // hd 2006-06-09 - Using transform and boost::lambda, this is possible.
-          //                 However, I couldn't convince boost to deduce the return type, 
-          //                 so I had to help it with ret<small_vector_type> that looks
-          //                 a bit clumsy.
-          //                 Further, I don't know if we are allowed to use using namespace
-          //                 like this without polluting the global namespace? Dropping the 
-          //                 useing stuff, however, would make the one-liner even uglier...
+          // Offset each boundary point along its normal. This was a std::transform with
+          // boost::lambda, which needed explicit ret<> hints because the expression's
+          // return type could not be deduced; the plain loop says the same thing.
           {
-            using namespace boost::lambda;
-            std::transform( point_begin, point_end, normal_begin, std::back_inserter( m_c ), 
-              ret<small_vector_type>(_1 + ret<small_vector_type>(_2*k)) );
+            iterator p = point_begin;
+            iterator n = normal_begin;
+            for(; n != normal_end; ++p, ++n)
+              m_c.push_back( (*p) + (*n)*k );
           }
-          //iterator p = point_begin;
-          //iterator n = normal_begin;
-          //for(;n!=normal_end;++p,++n)
-          //  m_c.push_back( (*p) + (*n)*k );
 
           m_x.resize( m_M );
           m_b.resize( m_M );

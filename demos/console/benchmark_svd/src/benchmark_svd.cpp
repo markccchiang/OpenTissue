@@ -11,7 +11,6 @@
 #include <OpenTissue/core/math/big/big_generate_PD.h>
 #include <OpenTissue/utility/utility_timer.h>
 
-//#define USE_ATLAS
 #include <OpenTissue/core/math/big/big_svd.h>
 
 

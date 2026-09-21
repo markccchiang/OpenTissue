@@ -9,7 +9,7 @@
 //
 #include <OpenTissue/configuration.h>
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
 
 #include <OpenTissue/core/geometry/geometry_compute_smallest_sphere.h>
 
@@ -182,7 +182,7 @@ namespace OpenTissue
       {
         if(partition.annotated())
         {
-          annotated_bv_ptr A = boost::static_pointer_cast<annotated_bv_type>(bv);
+          annotated_bv_ptr A = std::static_pointer_cast<annotated_bv_type>(bv);
 
           A->insert( m_geometry[partition.m_left] );
         }

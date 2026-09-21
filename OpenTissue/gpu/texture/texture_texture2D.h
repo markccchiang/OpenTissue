@@ -13,7 +13,7 @@
 #include <OpenTissue/gpu/texture/texture_types.h>
 #include <OpenTissue/graphics/core/gl/gl_check_errors.h>
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
 
 #include <iostream>
 #include <cassert>
@@ -327,7 +327,7 @@ namespace OpenTissue
 
     };
 
-    typedef boost::shared_ptr<Texture2D>  texture2D_pointer;
+    typedef std::shared_ptr<Texture2D>  texture2D_pointer;
 
   } // namespace texture
 } // namespace OpenTissue

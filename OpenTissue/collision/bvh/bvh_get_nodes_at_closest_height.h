@@ -11,7 +11,7 @@
 
 #include <OpenTissue/collision/bvh/bvh_get_all_nodes.h>
 
-#include <boost/shared_ptr.hpp> //needed for boost::const_pointer_cast
+#include <memory> //needed for std::const_pointer_cast
 
 #include <map>
 
@@ -67,7 +67,7 @@ namespace OpenTissue
 
       height_map heights;
 
-      bv_ptr root = boost::const_pointer_cast<bv_type>( bvh.root() );
+      bv_ptr root = std::const_pointer_cast<bv_type>( bvh.root() );
 
       detail::compute_heights( bvh, root, heights );
 
@@ -84,7 +84,7 @@ namespace OpenTissue
           nodes.push_back( cur );
         else if ( (*bv)->parent() )
         {
-          bv_ptr ptr = boost::const_pointer_cast<bv_type>( (*bv)->parent() );
+          bv_ptr ptr = std::const_pointer_cast<bv_type>( (*bv)->parent() );
           bv_ptr parent( ptr );
           unsigned int parent_height= heights[ parent ];
           if ( bv_height < height && parent_height > height )

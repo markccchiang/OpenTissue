@@ -9,7 +9,7 @@
 //
 #include <OpenTissue/configuration.h>
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
 
 namespace OpenTissue
 {
@@ -52,7 +52,7 @@ namespace OpenTissue
           this->refit(bv);   //--- From volume refitter policy!!!
           if ( bv->parent() )
           {
-            bv_ptr ptr = boost::const_pointer_cast<bv_type>( bv->parent() ) ;
+            bv_ptr ptr = std::const_pointer_cast<bv_type>( bv->parent() ) ;
             Q.push_back( ptr );
           }
         }

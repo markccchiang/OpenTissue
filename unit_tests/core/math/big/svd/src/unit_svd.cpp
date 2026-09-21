@@ -7,7 +7,6 @@
 #include <OpenTissue/core/math/math_random.h>
 #include <OpenTissue/core/math/big/big_types.h>
 
-//#define USE_ATLAS
 #include <OpenTissue/core/math/big/big_svd.h>
 
 

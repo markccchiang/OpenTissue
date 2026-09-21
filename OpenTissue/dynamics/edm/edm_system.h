@@ -55,7 +55,7 @@ namespace OpenTissue
 
       void reset()
       {
-        //--- KE 2006-05-24: Used boost::shared_ptr instead!
+        //--- KE 2006-05-24: Used std::shared_ptr instead!
 
         // free memory for all deformable bodies
         for (typename EDMIOModels::iterator iob = m_models.begin(); iob != m_models.end(); ++iob)

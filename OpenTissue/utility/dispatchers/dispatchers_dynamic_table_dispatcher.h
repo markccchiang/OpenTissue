@@ -11,7 +11,7 @@
 
 #include <OpenTissue/utility/dispatchers/dispatchers_unbound_dispatch_function.h>
 #include <boost/multi_array.hpp>
-#include <boost/shared_ptr.hpp>
+#include <memory>
 
 namespace OpenTissue
 {
@@ -125,7 +125,7 @@ namespace OpenTissue
 
       private:
 
-        typedef boost::shared_ptr<FunctorBase>    FunctorPtr;
+        typedef std::shared_ptr<FunctorBase>    FunctorPtr;
         typedef boost::multi_array<FunctorPtr, 2> FunctorTableType;
 
         FunctorTableType m_functor_table;          
@@ -299,7 +299,7 @@ namespace OpenTissue
 
       private:
 
-        typedef boost::shared_ptr<FunctorBase>    FunctorPtr;
+        typedef std::shared_ptr<FunctorBase>    FunctorPtr;
         typedef boost::multi_array<FunctorPtr, 2> FunctorTableType;
 
         FunctorTableType m_functor_table;

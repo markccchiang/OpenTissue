@@ -16,7 +16,6 @@
 #include <OpenTissue/core/geometry/geometry_cylinder_fit.h>
 #include <OpenTissue/core/geometry/geometry_prism_fit.h>
 
-#include <boost/bind.hpp>
 
 #include <algorithm>
 #include <vector>
@@ -134,15 +133,8 @@ namespace OpenTissue
 
       std::vector<vector3_type> points;
 
-      std::for_each( 
-        begin
-        , end
-        , boost::bind( 
-        &volume_type::compute_surface_points
-        , _1
-        , boost::ref( points ) 
-        )
-        );
+      for(hybrid_volume_iterator volume = begin; volume != end; ++volume)
+        (*volume).compute_surface_points( points );
 
       //std::for_each( 
       //    points.begin()

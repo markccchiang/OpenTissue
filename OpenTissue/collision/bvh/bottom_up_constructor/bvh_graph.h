@@ -12,7 +12,7 @@
 #include <OpenTissue/collision/bvh/bottom_up_constructor/bvh_graph_node.h>
 #include <OpenTissue/collision/bvh/bottom_up_constructor/bvh_graph_edge.h>
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <boost/iterator/indirect_iterator.hpp>
 
 #include <cmath>       //Needed for fabs()
@@ -39,10 +39,10 @@ namespace OpenTissue
       typedef BVHGraphEdge<bvh_type>                 edge_type;
       //typedef node_type *                            node_ptr_type;
       //typedef edge_type *                            edge_ptr_type;
-      typedef boost::shared_ptr<node_type>           node_ptr_type;
-      typedef boost::shared_ptr<edge_type>           edge_ptr_type;
-      typedef boost::shared_ptr<node_type const>     const_node_ptr_type;
-      typedef boost::shared_ptr<edge_type const>     const_edge_ptr_type;
+      typedef std::shared_ptr<node_type>           node_ptr_type;
+      typedef std::shared_ptr<edge_type>           edge_ptr_type;
+      typedef std::shared_ptr<node_type const>     const_node_ptr_type;
+      typedef std::shared_ptr<edge_type const>     const_edge_ptr_type;
       typedef typename bvh_type::geometry_container  geometry_container;
       typedef typename bvh_type::geometry_type       geometry_type;
       typedef typename bvh_type::volume_type         volume_type;

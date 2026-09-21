@@ -9,7 +9,7 @@
 //
 #include <OpenTissue/configuration.h>
 
-#include <boost/shared_ptr.hpp> //needed for boost::static_pointer_cast
+#include <memory> //needed for std::static_pointer_cast
 #include <vector>
 
 namespace OpenTissue
@@ -130,7 +130,7 @@ namespace OpenTissue
       {
         if(partition.annotated())
         {
-          annotated_bv_ptr A = boost::static_pointer_cast<annotated_bv_type>(bv);
+          annotated_bv_ptr A = std::static_pointer_cast<annotated_bv_type>(bv);
           A->insert( m_geometry[partition.m_left] );
         }
       }

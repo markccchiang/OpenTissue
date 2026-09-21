@@ -13,7 +13,7 @@
 
 #include <OpenTissue/core/geometry/geometry_plane.h>
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <list>
 #include <map>
 #include <OpenTissue/collision/intersect/intersect_aabb_aabb.h>
@@ -69,8 +69,8 @@ namespace OpenTissue
         , contact_point_container & contacts
         )
       {
-        annotated_bv_ptr bvA = boost::static_pointer_cast<annotated_bv_type>(bvA_);
-        annotated_bv_ptr bvB = boost::static_pointer_cast<annotated_bv_type>(bvB_);
+        annotated_bv_ptr bvA = std::static_pointer_cast<annotated_bv_type>(bvA_);
+        annotated_bv_ptr bvB = std::static_pointer_cast<annotated_bv_type>(bvB_);
 
         geometry_type * A = &(*(bvA->geometry_begin()));
         geometry_type * B = &(*(bvB->geometry_begin()));

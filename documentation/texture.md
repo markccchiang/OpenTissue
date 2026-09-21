@@ -128,14 +128,6 @@ One can also re-load data into the texture object, for instance by writing
 tex->load( img->get_data() );
 </pre>
 
-The texture 2D object integrates nicely with the Cg program class, thus if one wants to setup a 2D texture for a Cg program, once simply writes
-
-<pre>
-CgProgram gpu_fun;
-...
-gpu_fun.set_input_texture("texture",  tex);
-</pre>
-
 There exist more ways of creating textures, which do not necessitate the use of an image, for examples see for instance in the header file
 
     #include<OpenTissue/texture/texture2D_util.h>

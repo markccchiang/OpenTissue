@@ -9,7 +9,7 @@
 //
 #include <OpenTissue/configuration.h>
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
 
 #include <OpenTissue/collision/intersect/intersect_obb_obb_sat.h>
 #include <OpenTissue/collision/intersect/intersect_triangle_triangle_sat.h>
@@ -114,8 +114,8 @@ namespace OpenTissue
       template<typename result_container>
       bool report(coordsys_type const & A2B, bv_ptr bvA, bv_ptr bvB, result_container & results)
       {       
-        annotated_bv_ptr  nodeA = boost::static_pointer_cast<annotated_bv_type>(bvA);
-        annotated_bv_ptr  nodeB = boost::static_pointer_cast<annotated_bv_type>(bvB);
+        annotated_bv_ptr  nodeA = std::static_pointer_cast<annotated_bv_type>(bvA);
+        annotated_bv_ptr  nodeB = std::static_pointer_cast<annotated_bv_type>(bvB);
 
         face_ptr_type A = *(nodeA->geometry_begin());
         face_ptr_type B = *(nodeB->geometry_begin());

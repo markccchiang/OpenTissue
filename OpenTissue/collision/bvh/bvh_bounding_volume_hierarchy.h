@@ -14,8 +14,7 @@
 #include <OpenTissue/collision/bvh/bvh_bv_traversal_iterator.h>
 #include <OpenTissue/utility/utility_empty_traits.h>
 
-#include <boost/weak_ptr.hpp>
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <boost/iterator/indirect_iterator.hpp>
 
 #include <list>
@@ -41,17 +40,17 @@ namespace OpenTissue
       typedef AnnotatedBV<bvh_type, T>                     annotated_bv_type;
       typedef BVTraversalIterator<bvh_type>                bv_traversal_iterator;
 
-      typedef boost::shared_ptr<bvh_type>                  bvh_ptr;
-      typedef boost::weak_ptr<bvh_type>                    bvh_weak_ptr;
-      typedef boost::shared_ptr<bvh_type const>            bvh_const_ptr;
-      typedef boost::weak_ptr<bvh_type const>              bvh_const_weak_ptr;
-      typedef boost::shared_ptr<volume_type>               volume_ptr;
-      typedef boost::shared_ptr<geometry_type>             geometry_ptr;
-      typedef boost::shared_ptr<bv_type>                   bv_ptr;
-      typedef boost::weak_ptr<bv_type>                     bv_weak_ptr;
-      typedef boost::shared_ptr<bv_type const>             bv_const_ptr;
-      typedef boost::weak_ptr<bv_type const>               bv_const_weak_ptr;
-      typedef boost::shared_ptr<annotated_bv_type>         annotated_bv_ptr;
+      typedef std::shared_ptr<bvh_type>                  bvh_ptr;
+      typedef std::weak_ptr<bvh_type>                    bvh_weak_ptr;
+      typedef std::shared_ptr<bvh_type const>            bvh_const_ptr;
+      typedef std::weak_ptr<bvh_type const>              bvh_const_weak_ptr;
+      typedef std::shared_ptr<volume_type>               volume_ptr;
+      typedef std::shared_ptr<geometry_type>             geometry_ptr;
+      typedef std::shared_ptr<bv_type>                   bv_ptr;
+      typedef std::weak_ptr<bv_type>                     bv_weak_ptr;
+      typedef std::shared_ptr<bv_type const>             bv_const_ptr;
+      typedef std::weak_ptr<bv_type const>               bv_const_weak_ptr;
+      typedef std::shared_ptr<annotated_bv_type>         annotated_bv_ptr;
 
       typedef typename std::list<bv_ptr>                   bv_ptr_container;
       typedef typename bv_ptr_container::iterator          bv_ptr_iterator;
@@ -118,7 +117,7 @@ namespace OpenTissue
 
       const bv_traversal_iterator begin() const
       {
-        bv_ptr root = boost::const_pointer_cast<bv_type>(m_root);
+        bv_ptr root = std::const_pointer_cast<bv_type>(m_root);
         return bv_traversal_iterator(root);
       }
 

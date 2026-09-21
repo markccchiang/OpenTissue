@@ -9,7 +9,7 @@
 //
 #include <OpenTissue/configuration.h>
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
 
 namespace OpenTissue
 {
@@ -48,8 +48,8 @@ namespace OpenTissue
         this->reset(results);//--- collision_policy
 
         bv_ptr_container Q;
-        bv_ptr root_A =  boost::const_pointer_cast<bv_type>( bvh_A.root() );
-        bv_ptr root_B =  boost::const_pointer_cast<bv_type>( bvh_B.root() );
+        bv_ptr root_A =  std::const_pointer_cast<bv_type>( bvh_A.root() );
+        bv_ptr root_B =  std::const_pointer_cast<bv_type>( bvh_B.root() );
 
 
         Q.push_back( root_A );

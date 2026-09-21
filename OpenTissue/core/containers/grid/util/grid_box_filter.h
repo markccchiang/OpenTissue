@@ -9,7 +9,7 @@
 //
 #include <OpenTissue/configuration.h>
 
-#include <boost/lambda/lambda.hpp>
+#include <algorithm>
 #include <cmath> // for pow()
 
 namespace OpenTissue
@@ -78,10 +78,11 @@ namespace OpenTissue
               }
             }
 
-            std::for_each( 
-              dst.begin()
+            double const scale = 1.0/pow(static_cast<double>(size),3);
+            std::for_each(
+                dst.begin()
               , dst.end()
-              , boost::lambda::_1 *=  boost::lambda::make_const(  1.0/pow(static_cast<double>(size),3) ) 
+              , [scale](value_type & value){ value *= scale; }
               );
     }
 
