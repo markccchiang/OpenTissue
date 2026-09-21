@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/core/containers/t4mesh/t4mesh_default_point_container.h>
+
 #include <OpenTissue/core/math/math_vector3.h>
 #include <OpenTissue/core/math/math_is_finite.h>
 #include <OpenTissue/core/math/math_is_number.h>

@@ -8,6 +8,14 @@
 // OTTL is licensed under zlib: http://opensource.org/licenses/zlib-license.php
 //
 #include <OpenTissue/configuration.h>
+
+#include <OpenTissue/core/geometry/geometry_barycentric.h>
+
+#include <OpenTissue/core/geometry/geometry_plane.h>
+
+#include <boost/shared_ptr.hpp>
+#include <list>
+#include <map>
 #include <OpenTissue/collision/intersect/intersect_aabb_aabb.h>
 
 namespace OpenTissue

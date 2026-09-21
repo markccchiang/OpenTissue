@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <iostream>
+
 #include <boost/type_traits.hpp>
 #include <boost/type_traits/detail/ice_and.hpp>
 

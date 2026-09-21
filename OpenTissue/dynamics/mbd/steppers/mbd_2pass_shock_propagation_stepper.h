@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/dynamics/mbd/collision_resolvers/mbd_iterate_once_collision_resolver.h>
+
 #include <OpenTissue/dynamics/mbd/interfaces/mbd_stepper_interface.h>
 
 #include <OpenTissue/dynamics/mbd/steppers/mbd_dynamics_stepper.h>

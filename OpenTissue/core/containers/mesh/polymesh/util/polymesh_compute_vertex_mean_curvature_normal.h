@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <boost/cast.hpp>
+
 #include <OpenTissue/core/geometry/geometry_cot.h>
 #include <OpenTissue/core/geometry/geometry_compute_area_mixed.h>
 #include <OpenTissue/core/containers/mesh/polymesh/util/polymesh_is_boundary.h>

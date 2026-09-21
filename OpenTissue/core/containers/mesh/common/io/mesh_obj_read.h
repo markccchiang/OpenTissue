@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/core/math/math_vector3.h>
+
 #include <boost/algorithm/string.hpp>  //--- needed for split and is_any_of function
 #include <boost/lexical_cast.hpp>  //--- needed for lexical cast function
 

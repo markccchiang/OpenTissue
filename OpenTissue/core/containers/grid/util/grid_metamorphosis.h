@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <iostream>
+
 namespace OpenTissue
 {
   namespace grid

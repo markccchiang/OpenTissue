@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/dynamics/mbd/mbd_is_all_bodies_sleepy.h>
+
 #include <OpenTissue/dynamics/mbd/interfaces/mbd_stepper_interface.h>
 
 #include <OpenTissue/dynamics/mbd/steppers/mbd_dynamics_stepper.h>

@@ -9,6 +9,16 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/collision/spatial_hashing/hash_queries/spatial_hashing_aabb_data_query.h>
+
+#include <OpenTissue/core/geometry/geometry_sphere.h>
+
+#include <OpenTissue/core/geometry/geometry_triangle.h>
+
+#include <OpenTissue/core/containers/mesh/common/util/mesh_compute_face_maximum_coord.h>
+
+#include <OpenTissue/core/containers/mesh/common/util/mesh_compute_face_minimum_coord.h>
+
 #include <OpenTissue/core/math/math_basic_types.h>  // Needed for BasicMathTypes
 
 #include <OpenTissue/core/containers/grid/util/grid_gradient.h>

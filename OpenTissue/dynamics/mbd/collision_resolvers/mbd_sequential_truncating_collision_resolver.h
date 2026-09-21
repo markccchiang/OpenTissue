@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <vector>
+
 #include <OpenTissue/dynamics/mbd/interfaces/mbd_collision_resolver_interface.h>
 #include <OpenTissue/dynamics/mbd/mbd_apply_impulse.h>
 #include <OpenTissue/dynamics/mbd/mbd_compute_relative_contact_velocity.h>

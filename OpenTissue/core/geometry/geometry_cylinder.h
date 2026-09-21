@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/core/containers/mesh/common/util/mesh_coordinate_iterator.h>
+
 #include <OpenTissue/core/geometry/geometry_volume_shape.h>
 #include <OpenTissue/core/function/function_signed_distance_function.h>
 #include <OpenTissue/utility/utility_class_id.h>

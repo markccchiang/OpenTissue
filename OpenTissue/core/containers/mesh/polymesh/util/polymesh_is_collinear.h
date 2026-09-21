@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <iostream>
+
 #include <OpenTissue/core/containers/mesh/polymesh/polymesh_face.h>
 #include <OpenTissue/core/containers/mesh/polymesh/util/polymesh_valency.h>
 

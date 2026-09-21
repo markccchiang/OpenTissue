@@ -60,4 +60,10 @@ configure_file(
   @ONLY
 )
 
-add_subdirectory(graphics)
+# OpenTissueGraphics needs the OpenGL/GLEW/GLFW stack. Skip it when that is unavailable so
+# that the default build target still works on a machine without a graphics stack.
+if(OPENTISSUE_HAVE_GRAPHICS)
+  add_subdirectory(graphics)
+else()
+  message(STATUS "Skipping OpenTissueGraphics (needs OpenGL, GLEW and GLFW)")
+endif()

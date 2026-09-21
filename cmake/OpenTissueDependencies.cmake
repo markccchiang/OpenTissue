@@ -225,6 +225,38 @@ endif()
 
 #-------------------------------------------------------------------------------------------------
 #
+# Graphics stack (OpenGL + GLEW + GLFW) -- needed by the OpenTissueGraphics library and by the
+# demos. Detected unconditionally and quietly so that OpenTissue/graphics can be skipped when
+# the stack is absent; without this, building the default target failed on a machine with no
+# GLFW even though the demos were switched off.
+#
+#-------------------------------------------------------------------------------------------------
+set(OPENTISSUE_HAVE_GRAPHICS OFF)
+
+set(OpenGL_GL_PREFERENCE GLVND)
+find_package(OpenGL QUIET)
+find_package(GLEW QUIET)
+find_package(glfw3 QUIET)
+
+if(TARGET OpenGL::GL AND TARGET GLEW::GLEW AND TARGET glfw)
+  set(OPENTISSUE_HAVE_GRAPHICS ON)
+  _ot_report("graphics" "found" "OpenGL + GLEW + GLFW")
+else()
+  set(_ot_missing_gfx "")
+  foreach(_pair "OpenGL::GL:OpenGL" "GLEW::GLEW:GLEW" "glfw:GLFW")
+    string(REPLACE ":" ";" _parts "${_pair}")
+    list(GET _parts 0 _tgt)
+    list(GET _parts -1 _label)
+    if(NOT TARGET ${_tgt})
+      list(APPEND _ot_missing_gfx ${_label})
+    endif()
+  endforeach()
+  string(REPLACE ";" ", " _ot_missing_gfx "${_ot_missing_gfx}")
+  _ot_report("graphics" "MISSING" "no ${_ot_missing_gfx} -- OpenTissueGraphics and demos unavailable")
+endif()
+
+#-------------------------------------------------------------------------------------------------
+#
 # Print what we ended up with. Called from the top-level CMakeLists.txt once everything else
 # has been resolved.
 #

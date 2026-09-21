@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <cassert>
+
 #include <OpenTissue/dynamics/mbd/interfaces/mbd_stepper_interface.h>
 
 namespace OpenTissue

@@ -9,6 +9,10 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <cassert>
+#include <list>
+#include <vector>
+
 #include <OpenTissue/core/containers/mesh/polymesh/polymesh_vertex.h>
 
 namespace OpenTissue

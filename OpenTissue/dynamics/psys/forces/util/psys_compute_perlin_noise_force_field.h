@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <iostream>
+
 #include <OpenTissue/core/containers/grid/util/grid_idx2coord.h>
 #include <OpenTissue/core/math/noise/noise_perlin.h>
 

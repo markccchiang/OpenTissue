@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <cassert>
+
 #include <OpenTissue/core/containers/mesh/polymesh/polymesh_face.h>
 
 #include <map>

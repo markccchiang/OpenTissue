@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <cassert>
+
 #include <OpenTissue/core/containers/mesh/polymesh/polymesh_edge.h>
 #include <OpenTissue/core/containers/mesh/polymesh/polymesh_halfedge.h>
 

@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/core/math/math_vector3.h>
+
 #include <OpenTissue/core/containers/grid/util/grid_gradient.h>
 #include <OpenTissue/core/containers/grid/util/grid_coord2idx.h>
 #include <cmath>

@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/core/math/big/big_diag.h>
+
 #include <OpenTissue/utility/trackball/trackball_generic.h>
 
 namespace OpenTissue

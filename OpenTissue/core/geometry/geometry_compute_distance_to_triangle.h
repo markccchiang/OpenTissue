@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <cassert>
+
 #include <cmath>   // Needed for std::fabs
 
 namespace OpenTissue

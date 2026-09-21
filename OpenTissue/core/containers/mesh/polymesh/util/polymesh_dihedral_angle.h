@@ -9,6 +9,11 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/core/containers/mesh/polymesh/polymesh_edge.h>
+
+#include <OpenTissue/core/math/math_precision.h>
+#include <iostream>
+
 #include <OpenTissue/core/containers/mesh/polymesh/polymesh_halfedge.h>
 
 namespace OpenTissue

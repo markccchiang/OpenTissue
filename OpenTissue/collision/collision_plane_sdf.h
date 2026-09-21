@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <boost/cast.hpp>
+
 namespace OpenTissue
 {
   namespace collision

@@ -9,6 +9,10 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <iostream>
+#include <list>
+#include <vector>
+
 namespace OpenTissue
 {
   namespace mesh

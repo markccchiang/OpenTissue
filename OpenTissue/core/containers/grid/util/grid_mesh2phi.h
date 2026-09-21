@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/core/containers/mesh/common/util/mesh_compute_minmax_face_area.h>
+
 // 2020-07-25 Kenny: Cg is no longer running on osx hence, we outcommented its usage.
 //#include <OpenTissue/core/geometry/t4_gpu_scan/t4_gpu_scan.h>
 #include <OpenTissue/core/geometry/t4_cpu_scan/t4_cpu_scan.h>

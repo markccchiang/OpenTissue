@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/core/containers/mesh/common/util/mesh_compute_angle_weighted_vertex_normals.h>
+
 #include <OpenTissue/core/containers/mesh/common/util/mesh_compute_mesh_center.h>
 #include <OpenTissue/core/containers/mesh/common/util/mesh_compute_mesh_minimum_coord.h>
 #include <OpenTissue/core/containers/mesh/common/util/mesh_compute_mesh_maximum_coord.h>

@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/core/math/math_precision.h>
+
 namespace OpenTissue
 {
   namespace intersect

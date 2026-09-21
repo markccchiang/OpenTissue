@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/core/math/math_vector3.h>
+
 #include <OpenTissue/dynamics/edm/edm.h>
 
 #include <TinyXML/tinyxml.h>

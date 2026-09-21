@@ -9,6 +9,9 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <iostream>
+#include <sstream>
+
 #include <TinyXML/tinyxml.h>
 
 namespace OpenTissue

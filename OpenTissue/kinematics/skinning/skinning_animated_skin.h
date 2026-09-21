@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <map>
+
 #include <OpenTissue/graphics/core/gl/gl_util.h>
 #include <OpenTissue/core/containers/mesh/trimesh/trimesh.h>
 #include <OpenTissue/core/containers/mesh/trimesh/util/trimesh_util.h>

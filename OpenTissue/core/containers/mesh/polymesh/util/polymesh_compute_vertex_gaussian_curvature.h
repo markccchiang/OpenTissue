@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <iostream>
+
 #include <OpenTissue/core/geometry/geometry_is_angle_obtuse.h>
 #include <OpenTissue/core/geometry/geometry_is_triangle_obtuse.h>
 #include <OpenTissue/core/geometry/geometry_angle_from_cot.h>

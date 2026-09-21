@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/core/containers/t4mesh/t4mesh_default_point_container.h>
+
 namespace OpenTissue
 {
   namespace t4mesh

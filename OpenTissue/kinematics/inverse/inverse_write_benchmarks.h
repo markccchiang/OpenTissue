@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/core/math/optimization/optimization_constants.h>
+
 #include <OpenTissue/core/math/big/io/big_matlab_write.h>
 
 #include <cassert>

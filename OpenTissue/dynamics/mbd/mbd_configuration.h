@@ -12,6 +12,8 @@
 
 #include <OpenTissue/configuration.h>
 
+#include <iostream>
+
 #include <OpenTissue/utility/utility_map_data_iterator.h>
 
 #include <boost/iterator/indirect_iterator.hpp>

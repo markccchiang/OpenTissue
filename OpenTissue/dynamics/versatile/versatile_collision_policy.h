@@ -9,6 +9,10 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/core/geometry/geometry_barycentric.h>
+
+#include <OpenTissue/core/math/math_vector3.h>
+
 #include <OpenTissue/collision/spatial_hashing/spatial_hashing.h>
 
 namespace OpenTissue

@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <boost/shared_ptr.hpp>
+
 #include <OpenTissue/collision/intersect/intersect_obb_obb_sat.h>
 #include <OpenTissue/collision/intersect/intersect_triangle_triangle_sat.h>
 

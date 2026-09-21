@@ -57,3 +57,13 @@ add_subdirectory( dynamics )
 add_subdirectory( kinematics )
 add_subdirectory( utility )
 ot_add_test_subdirectory( io PNG )
+
+#-----------------------------------------------------------------------------
+#
+# Check that every header compiles standalone. Off by default: it adds roughly
+# 900 translation units to the build.
+#
+option(OPENTISSUE_ENABLE_HEADER_TESTS "Check that every OpenTissue header is self-contained" OFF)
+if(OPENTISSUE_ENABLE_HEADER_TESTS)
+  add_subdirectory( headers )
+endif()

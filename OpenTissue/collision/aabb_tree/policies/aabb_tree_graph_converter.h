@@ -9,6 +9,9 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <map>
+#include <queue>
+
 namespace OpenTissue
 {
   namespace aabb_tree

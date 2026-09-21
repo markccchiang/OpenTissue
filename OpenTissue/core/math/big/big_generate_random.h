@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/core/math/big/big_types.h>
+
 #include <OpenTissue/core/math/math_random.h>
 #include <OpenTissue/core/math/math_value_traits.h>
 #include <OpenTissue/core/math/math_is_number.h>

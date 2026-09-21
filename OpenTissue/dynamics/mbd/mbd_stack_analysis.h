@@ -9,6 +9,9 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <list>
+#include <vector>
+
 namespace OpenTissue
 {
   namespace mbd

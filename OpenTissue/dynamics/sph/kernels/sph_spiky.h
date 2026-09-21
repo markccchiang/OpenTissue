@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/utility/utility_runtime_type.h>
+
 #include <OpenTissue/dynamics/sph/sph_kernel.h>
 #include <OpenTissue/core/math/math_constants.h>
 

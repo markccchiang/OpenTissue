@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <iostream>
+
 #include <boost/cast.hpp> //--- needed for boost::numeric_cast
 #include <cassert>
 

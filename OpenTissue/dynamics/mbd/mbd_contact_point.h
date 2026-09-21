@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/dynamics/mbd/mbd_compute_relative_contact_velocity.h>
+
 #include <OpenTissue/core/math/math_is_number.h>
 #include <OpenTissue/core/math/math_constants.h>
 

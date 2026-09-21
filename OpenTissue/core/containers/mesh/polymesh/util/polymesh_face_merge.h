@@ -9,6 +9,9 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <cassert>
+#include <list>
+
 #include <OpenTissue/core/containers/mesh/polymesh/util/polymesh_is_shared_edge.h>
 #include <OpenTissue/core/containers/mesh/polymesh/polymesh_face.h>
 

@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/graphics/core/gl/gl_check_errors.h>
+
 #include <OpenTissue/graphics/core/gl/gl.h>
 #include <boost/shared_ptr.hpp>
 

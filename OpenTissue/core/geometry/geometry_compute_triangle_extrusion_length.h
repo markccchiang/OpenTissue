@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/core/math/math_polynomial_roots.h>
+
 namespace OpenTissue
 {
   namespace geometry

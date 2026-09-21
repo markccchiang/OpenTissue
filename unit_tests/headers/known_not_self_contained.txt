@@ -1,0 +1,198 @@
+# Headers that do not yet compile on their own.
+#
+# The header self-containment check (see CMakeLists.txt in this directory) compiles
+# every OpenTissue header in isolation. Headers listed here are skipped.
+#
+# This list is a ratchet: it must only ever get shorter. Do not add to it to make a
+# build pass -- fix the header instead. When you fix one, delete its line.
+#
+# Blank lines and #-comments are ignored.
+
+#----------------------------------------------------------------------------------------------
+# Needs a third-party library that was not available when this list was generated (43).
+# These may well be fine once the library is installed; they are not known to be broken.
+#----------------------------------------------------------------------------------------------
+
+# requires Qhull
+OpenTissue/collision/aabb_tree/aabb_tree_geometry.h
+OpenTissue/collision/bvh/bottom_up_constructor/bvh_mesh2bvh_graph.h
+OpenTissue/collision/bvh/bottom_up_constructor/bvh_volume2bvh_graph.h
+OpenTissue/collision/bvh/bvh.h
+OpenTissue/collision/collision_obb_tree_obb_tree.h
+OpenTissue/collision/obb_tree/obb_tree.h
+OpenTissue/collision/obb_tree/obb_tree_init.h
+OpenTissue/collision/obb_tree/obb_tree_top_down_policy.h
+OpenTissue/collision/obb_tree/obb_tree_types.h
+OpenTissue/collision/sdf/sdf_compute_point_sampling.h
+OpenTissue/collision/sdf/sdf_geometry.h
+OpenTissue/collision/sdf/sdf_init_geometry.h
+OpenTissue/collision/sdf/sdf_semiauto_init_geometry.h
+OpenTissue/collision/vclip/vclip.h
+OpenTissue/collision/vclip/vclip_mesh.h
+OpenTissue/core/containers/grid/util/grid_voxelizer.h
+OpenTissue/core/containers/mesh/common/util/mesh_convex_hull.h
+OpenTissue/core/containers/mesh/mesh.h
+OpenTissue/core/containers/t4mesh/util/t4mesh_delaunay_tetrahedralization.h
+OpenTissue/core/geometry/geometry_cylinder_fit.h
+OpenTissue/core/geometry/geometry_hybrid_fit.h
+OpenTissue/core/geometry/geometry_obb_fit.h
+OpenTissue/core/geometry/geometry_prism_fit.h
+OpenTissue/dynamics/mbd/collision_detection/mbd_setup_default_geometry_dispatcher.h
+OpenTissue/dynamics/mbd/mbd.h
+OpenTissue/dynamics/mbd/util/mbd_draw_body.h
+OpenTissue/dynamics/psys/psys.h
+OpenTissue/utility/utility_qhull.h
+
+# requires NVIDIA Cg (discontinued 2012)
+OpenTissue/core/geometry/t4_gpu_scan/t4_gpu_scan.h
+OpenTissue/gpu/cg/cg_program.h
+OpenTissue/gpu/cg/cg_util.h
+OpenTissue/gpu/texture/texture_show_texture2D.h
+OpenTissue/kinematics/skinning/lbs/skinning_lbs_gpu.h
+OpenTissue/kinematics/skinning/sbs/skinning_sbs_gpu.h
+
+# requires TetGen
+OpenTissue/core/containers/t4mesh/util/t4mesh_tetgen_constrained_delaunay_tetrahedralization.h
+OpenTissue/core/containers/t4mesh/util/t4mesh_tetgen_mesh_lofter.h
+OpenTissue/core/containers/t4mesh/util/t4mesh_tetgen_quality_tetrahedralization.h
+
+# requires GLFW
+OpenTissue/graphics/glfw/glfw_application.h
+OpenTissue/graphics/glfw/glfw_window.h
+
+# requires Triangle
+OpenTissue/core/containers/mesh/polymesh/util/polymesh_compute_delaunay2D.h
+OpenTissue/core/containers/mesh/polymesh/util/polymesh_compute_voronoi.h
+
+# requires GLUT
+OpenTissue/graphics/core/gl/gl_on_screen_display.h
+
+# requires boost numeric bindings (unmaintained)
+OpenTissue/core/math/big/big_svd_impl_atlas.h
+
+#----------------------------------------------------------------------------------------------
+# Genuine defects still to fix (59).
+#----------------------------------------------------------------------------------------------
+
+# use of undeclared identifier 'math'
+OpenTissue/collision/aabb_tree/aabb_tree.h
+OpenTissue/collision/aabb_tree/aabb_tree_refit.h
+OpenTissue/collision/aabb_tree/policies/aabb_tree_refitter_policy.h
+OpenTissue/collision/aabb_tree/policies/aabb_tree_single_collision_policy.h
+OpenTissue/collision/collision_points_aabb_tree.h
+OpenTissue/core/containers/grid/util/grid_mesh2phi.h
+OpenTissue/core/containers/mesh/common/util/mesh_compute_minmax_face_area.h
+OpenTissue/dynamics/psys/psys_system.h
+
+# no member named 'detail' in namespace 'OpenTissue::math'; did you mean 'boost::detail'?
+OpenTissue/collision/collision_sdf_sdf.h
+OpenTissue/collision/sdf/sdf.h
+OpenTissue/collision/sdf/sdf_collision_policy.h
+OpenTissue/dynamics/mbd/collision_detection/collision_handlers/mbd_sdf_plane_handler.h
+OpenTissue/dynamics/mbd/collision_detection/collision_handlers/mbd_sdf_sdf_handler.h
+OpenTissue/dynamics/mbd/collision_detection/collision_handlers/mbd_sdf_sphere_handler.h
+OpenTissue/dynamics/psys/psys_geometry_holder.h
+
+# 'mesh' is not a class, namespace, or enumeration
+OpenTissue/collision/aabb_tree/aabb_tree_init.h
+OpenTissue/collision/aabb_tree/policies/aabb_tree_graph_converter.h
+OpenTissue/core/containers/mesh/polymesh/util/polymesh_naive_patcher.h
+OpenTissue/dynamics/mbd/util/mbd_mel_geometry_string.h
+
+# no matching member function for call to 'SetAttribute'
+OpenTissue/core/containers/t4mesh/io/t4mesh_xml_write.h
+OpenTissue/kinematics/inverse/inverse.h
+OpenTissue/kinematics/inverse/io/inverse_xml_write.h
+OpenTissue/kinematics/skeleton/io/skeleton_xml_write.h
+
+# no template named 'System'
+OpenTissue/dynamics/psys/forces/psys_pressure_softbody.h
+OpenTissue/dynamics/psys/mass_spring_system/psys_cloth.h
+OpenTissue/dynamics/psys/mass_spring_system/psys_mass_spring_system.h
+OpenTissue/dynamics/psys/mass_spring_system/psys_surface_mesh.h
+
+# use of undeclared identifier 'diag'; did you mean 'math::diag'?
+OpenTissue/utility/trackball/trackball_bell.h
+OpenTissue/utility/trackball/trackball_chen.h
+OpenTissue/utility/trackball/trackball_shoemake.h
+
+# includes OpenTissue/graphics/graphics_export.h, which does not exist
+OpenTissue/graphics/glut/glut_application.h
+OpenTissue/graphics/glut/glut_window.h
+
+# no type named 'texture3D_pointer' in namespace 'OpenTissue::texture'; did you mean 'texture2D_p
+OpenTissue/gpu/texture/texture_create_texture3D.h
+OpenTissue/gpu/texture/texture_texture3D.h
+
+# default template argument for a template template parameter must be a class template
+OpenTissue/core/containers/mesh/polymesh/kernels/polymesh_kernels.h
+OpenTissue/core/containers/mesh/polymesh/kernels/polymesh_list_kernel.h
+
+# includes OpenTissue/core/containers/grid/util/functions.h, which does not exist
+OpenTissue/core/containers/grid/util/grid_uniform_point_sampling.h
+
+# includes OpenTissue/core/containers/grid/util/gradient.h, which does not exist
+OpenTissue/core/containers/grid/util/grid_extrapolation.h
+
+# no template named 'CoordSys'; did you mean 'math::CoordSys'?
+OpenTissue/collision/collision_box_box.h
+
+# expected ')'
+OpenTissue/collision/intersect/intersect_triangle_triangle_interval_overlap.h
+
+# use of undeclared identifier 'GL_LINE_LOOP'
+OpenTissue/collision/aabb_tree/aabb_tree_debug_draw.h
+
+# use of undeclared identifier 'e20'
+OpenTissue/core/geometry/geometry_tetrahedron_slicer.h
+
+# unknown type name 'real_type'
+OpenTissue/core/geometry/geometry_compute_cylinder_mass_properties.h
+
+# missing 'typename' prior to dependent type name 'skeleton_type::bone_iterator'
+OpenTissue/kinematics/inverse/inverse_estimate_joints.h
+
+# no member named 'math' in namespace 'OpenTissue'
+OpenTissue/kinematics/inverse/inverse_bone_traits.h
+
+# no member named 'createApplication' in the global namespace
+OpenTissue/graphics/core/main.h
+
+# use of undeclared identifier 'ShaderDataTypeSize'; did you mean 'ShaderDataType'?
+OpenTissue/graphics/core/buffer.h
+
+# no template named 'Vector3'; did you mean 'math::Vector3'?
+OpenTissue/dynamics/edm/io/edm_system_xml_read.h
+
+# no member named 'Rz' in namespace 'OpenTissue::math'
+OpenTissue/graphics/core/gl/gl_draw_arc.h
+
+# use of undeclared identifier 'DrawTetrahedron'
+OpenTissue/graphics/core/gl/gl_draw_t4mesh.h
+
+# use of undeclared identifier 'map'
+OpenTissue/core/containers/grid/util/grid_gradient_magnitude.h
+
+# no template named 'AABBDataQuery'; did you mean 'spatial_hashing::AABBDataQuery'?
+OpenTissue/core/containers/grid/util/grid_junctions.h
+
+# unknown type name 'ral_type'; did you mean 'real_type'?
+OpenTissue/core/containers/grid/util/grid_curvature.h
+
+# 'math_types' is not a class, namespace, or enumeration
+OpenTissue/core/containers/grid/util/grid_split2slices.h
+
+# expected namespace name
+OpenTissue/core/math/big/big_is_orthonormal.h
+
+# implicit instantiation of undefined template 'boost::numeric::ublas::compressed_matrix<double>'
+OpenTissue/core/math/big/big_cholesky.h
+
+# expected a qualified name after 'typename'
+OpenTissue/core/math/interpolation/interpolation_spline_interpolator.h
+
+# use of undeclared identifier 'trimesh_core_access'
+OpenTissue/core/containers/mesh/trimesh/util/trimesh_face_flip.h
+
+# no member named 'cerr' in namespace 'std'
+OpenTissue/core/containers/mesh/polymesh/util/polymesh_compute_vertex_mean_curvature_normal.h

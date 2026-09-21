@@ -9,6 +9,10 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/dynamics/edm/edm_system.h>
+
+#include <OpenTissue/dynamics/sph/sph_system.h>
+
 #include <boost/iterator/indirect_iterator.hpp>
 #include <boost/bind.hpp>
 

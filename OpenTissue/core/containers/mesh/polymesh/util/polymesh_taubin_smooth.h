@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <vector>
+
 namespace OpenTissue
 {
   namespace polymesh

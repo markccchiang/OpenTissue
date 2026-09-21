@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <list>
+
 #include <OpenTissue/core/geometry/geometry_plane.h> //--- needed for plane_type
 
 namespace OpenTissue

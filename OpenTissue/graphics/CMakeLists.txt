@@ -16,11 +16,21 @@ add_library(OpenTissueGraphics
   ${GRAPHICS_GLFW_SOURCES}
 )
 
+# The public headers of this library include <GLFW/glfw3.h> and the GL headers, so the
+# graphics stack has to propagate to consumers -- PRIVATE headers alone left demos without
+# the include paths they need.
 target_link_libraries(OpenTissueGraphics
-  PRIVATE headers
+  PRIVATE
+    headers
+  PUBLIC
+    OpenGL::GL
+    GLEW::GLEW
+    glfw
 )
 
-target_compile_definitions(OpenTissueGraphics INTERFACE OT_USE_GLUT)
+if(OPENTISSUE_ENABLE_GLUT)
+  target_compile_definitions(OpenTissueGraphics INTERFACE OT_USE_GLUT)
+endif()
 
 #-------------------------------------------------------------------------------
 #

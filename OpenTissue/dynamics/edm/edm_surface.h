@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/core/math/big/big_types.h>
+
 #include <OpenTissue/core/math/math_functions.h>
 
 #include <cmath>

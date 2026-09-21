@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/core/math/math_vector3.h>
+
 #include <OpenTissue/core/geometry/geometry_aabb.h>
 #include <OpenTissue/collision/intersect/intersect_aabb_aabb.h>
 #include <OpenTissue/collision/spatial_hashing/spatial_hashing.h>

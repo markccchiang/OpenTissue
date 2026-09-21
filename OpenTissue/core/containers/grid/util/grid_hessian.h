@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/core/math/math_matrix3x3.h>
+
 namespace OpenTissue
 {
   namespace grid

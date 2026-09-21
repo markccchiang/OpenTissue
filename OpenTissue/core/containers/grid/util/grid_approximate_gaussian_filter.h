@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <iostream>
+
 #include <OpenTissue/core/containers/grid/util/grid_box_filter.h>
 #include <OpenTissue/core/containers/grid/util/grid_translate.h>
 

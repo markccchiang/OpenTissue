@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/core/geometry/geometry_barycentric.h>
+
 namespace OpenTissue
 {
   namespace collision

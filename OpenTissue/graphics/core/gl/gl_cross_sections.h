@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/core/containers/grid/grid.h>
+
 #include <OpenTissue/graphics/core/gl/gl_util.h>
 #include <OpenTissue/gpu/image/image.h>
 #include <cassert>

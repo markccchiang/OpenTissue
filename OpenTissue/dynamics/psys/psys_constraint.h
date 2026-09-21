@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <cassert>
+
 #include <OpenTissue/dynamics/psys/psys_connector_facade.h>
 
 namespace OpenTissue

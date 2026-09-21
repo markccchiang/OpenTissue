@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <iostream>
+
 #include <OpenTissue/dynamics/mbd/interfaces/mbd_sub_constraint_interface.h>
 #include <OpenTissue/core/math/math_constants.h>
 

@@ -9,6 +9,18 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/dynamics/mbd/mbd_set_position_vector.h>
+
+#include <OpenTissue/dynamics/mbd/mbd_compute_position_update.h>
+
+#include <OpenTissue/dynamics/mbd/mbd_get_inverse_mass_matrix.h>
+
+#include <OpenTissue/dynamics/mbd/mbd_get_external_force_vector.h>
+
+#include <OpenTissue/dynamics/mbd/mbd_get_velocity_vector.h>
+
+#include <OpenTissue/dynamics/mbd/mbd_get_position_vector.h>
+
 #include <OpenTissue/dynamics/mbd/interfaces/mbd_simulator_interface.h>
 
 namespace OpenTissue

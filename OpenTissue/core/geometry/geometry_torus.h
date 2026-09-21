@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/core/math/math_vector3.h>
+
 #include <OpenTissue/core/geometry/geometry_volume_shape.h>
 #include <OpenTissue/core/function/function_signed_distance_function.h>
 #include <OpenTissue/utility/utility_class_id.h>

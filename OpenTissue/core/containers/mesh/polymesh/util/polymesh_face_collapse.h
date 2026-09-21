@@ -9,6 +9,10 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <cassert>
+#include <list>
+#include <vector>
+
 #include <OpenTissue/core/containers/mesh/polymesh/polymesh_face.h>
 #include <OpenTissue/core/containers/mesh/common/util/mesh_compute_face_center.h>
 

@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <list>
+
 #include <boost/multi_array.hpp>
 
 namespace OpenTissue

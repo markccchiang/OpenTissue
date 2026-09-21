@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/core/containers/grid/grid.h>
+
 #include <OpenTissue/core/containers/grid/util/grid_value_at_point.h>
 #include <OpenTissue/core/containers/grid/util/grid_gradient_at_point.h>
 

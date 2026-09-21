@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <iostream>
+
 #include <OpenTissue/collision/bvh/top_down_constructor/bvh_default_top_down_policy.h>
 
 #include <list>

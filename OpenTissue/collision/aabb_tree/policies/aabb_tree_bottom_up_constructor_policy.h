@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/collision/bvh/bottom_up_constructor/bvh_binary_matching_bottom_up_policy.h>
+
 namespace OpenTissue
 {
   namespace aabb_tree

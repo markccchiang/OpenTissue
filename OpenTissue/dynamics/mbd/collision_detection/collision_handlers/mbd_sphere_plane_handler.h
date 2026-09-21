@@ -9,6 +9,10 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/core/geometry/geometry_plane.h>
+
+#include <OpenTissue/core/geometry/geometry_sphere.h>
+
 #include <OpenTissue/collision/collision_sphere_plane.h>
 
 namespace OpenTissue
