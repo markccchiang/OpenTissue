@@ -17,9 +17,17 @@
 #include <ctime>   // for std::time()
 #include <cstdlib> // for std::getenv(), std::strtoul(), std::srand() and std::rand()
 
-#ifdef BOOST_VERSION  //--- FIXME: Nicer way too see if we have boost?
-#  include <boost/random.hpp>
-#endif
+// Boost.Random, unconditionally.
+//
+// This used to be guarded by #ifdef BOOST_VERSION, and the class below was then chosen
+// by #ifdef BOOST_RANDOM_HPP. BOOST_VERSION comes from <boost/version.hpp>, which this
+// header never included, so whether Boost was used depended on whether some earlier
+// include happened to pull Boost in first. Two different definitions of
+// OpenTissue::math::Random therefore existed across translation units: an ODR violation,
+// and one that showed up as the same function appearing at two different lines in the
+// coverage data. Boost is a required dependency of OpenTissue, so there is no reason for
+// the fallback to exist.
+#include <boost/random.hpp>
 
 namespace OpenTissue
 {
@@ -47,7 +55,6 @@ namespace OpenTissue
       }
     } // namespace detail
 
-#ifdef BOOST_RANDOM_HPP
 
 
     template<typename value_type>
@@ -104,66 +111,6 @@ namespace OpenTissue
 
     };
 
-#else
-
-
-    template <typename value_type>
-    class Random
-    {
-    protected:
-
-      typedef value_type  T;
-      typedef Random<T>   self;
-
-      T m_lower;
-      T m_upper;
-
-    protected:
-
-      static bool & is_initialized()
-      {
-        static bool initialized = false;
-        return initialized;
-      }
-
-    public:
-
-      Random() 
-        : m_lower(math::detail::zero<T>()) 
-        , m_upper(math::detail::one<T>())
-      {
-        if(!is_initialized())
-        {
-          std::srand( detail::initial_random_seed() );
-          is_initialized() = true;
-        }
-      }
-
-      Random(T lower,T upper) 
-        : m_lower(lower) 
-        , m_upper(upper)
-      { 
-        self();
-      }
-
-    private:
-
-      Random(Random const & rnd){}
-      Random & operator=(Random const & rnd){return *this;}
-
-    public:
-
-      T operator()() const
-      {
-        double rnd = rand()/(1.0*RAND_MAX);
-        return boost::numeric_cast<T>(m_lower+(m_upper-m_lower)*rnd);
-      }
-
-      bool operator==(Random const & rnd) const { return (m_lower==rnd.m_lower && m_upper==rnd.m_upper);  }
-
-    };
-
-#endif
 
   } // namespace math
 
