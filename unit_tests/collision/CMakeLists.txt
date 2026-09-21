@@ -1,5 +1,5 @@
 add_subdirectory( gjk )
 add_subdirectory( continuous )
-add_subdirectory( vclip )
+ot_add_test_subdirectory( vclip QHULL )
 add_subdirectory( bvh )
 add_subdirectory( ray_aabb )

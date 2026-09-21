@@ -1,33 +1,45 @@
 #-------------------------------------------------------------------------------
 #
-# Try to find OpenTissue, runtime libraries, and include paths.
-# Once done this will define
+# CMake package configuration for OpenTissue.
 #
-# OPENTISSUE_FOUND        : System has OpenTissue and it can be used.
-# OPENTISSUE_INCLUDE_DIRS : Directories need to find header-files used by OpenTissue and OpenTissue itself
-# OPENTISSUE_LIBRARY_DIRS : Directories where the compiler can find static libraries of third-party software used by OpenTissue.
-# OPENTISSUE_LIBS         : Full paths to all libraries of third-party software used by OpenTissue.
-# OPENTISSUE_FLAGS        : OpenTissue compiler flags that should be used for any application using OpenTissue.
+# Importing this package defines the following targets:
 #
-# Boost_unit_test_framework_LIBRARY : OpenTissue uses the Boost unit-test framework. This tells where the libs are for the linker
+#   OpenTissue::headers : Interface target carrying the OpenTissue include
+#                         directories, the Boost include directories and the
+#                         compiler definitions OpenTissue needs. This is what
+#                         applications link.
+#   OpenTissue::depends : Empty interface target, reserved for third-party
+#                         linkage. Exported for compatibility; linking it does
+#                         nothing today.
 #
+# Typical use:
+#
+#   set(OpenTissue_ROOT "path-to-opentissue-build-or-install-dir")
+#   find_package(OpenTissue REQUIRED)
+#   target_link_libraries(MyProject PRIVATE OpenTissue::headers)
+#
+# OpenTissue is header-only, so there is nothing to link beyond Boost. The
+# optional third-party libraries (TinyXML, Qhull, TetGen, Triangle, libpng) are
+# only needed by the specific headers that use them; if your application
+# includes one of those, find and link that library yourself.
+#
+#-------------------------------------------------------------------------------
 
 set(OPENTISSUE_VERSION @OpenTissue_VERSION@)
 
 @PACKAGE_INIT@
 
-if(EXISTS ${CMAKE_CURRENT_LIST_DIR}/conanbuildinfo.cmake)
-  include(${CMAKE_CURRENT_LIST_DIR}/conanbuildinfo.cmake)
-  list(INSERT CMAKE_MODULE_PATH 0 @PROJECT_SOURCE_DIR@/cmake)
-  conan_basic_setup(TARGETS NO_OUTPUT_DIRS)
-  set(Boost_USE_STATIC_LIBS ON)
-  find_package(Boost @OPENTISSUE_BOOST_VERSION@ COMPONENTS "@OPENTISSUE_BOOST_COMPONENTS@" REQUIRED)
-  find_package(DevIL REQUIRED)
-  find_package(TinyXML REQUIRED)
-  find_package(TetGen REQUIRED)
-  find_package(Triangle REQUIRED)
-  find_package(Qhull REQUIRED)
+include(CMakeFindDependencyMacro)
+
+# CMake 4 removed the bundled FindBoost module in favour of BoostConfig.cmake.
+if(POLICY CMP0167)
+  cmake_policy(SET CMP0167 NEW)
 endif()
+
+# Boost is a genuine hard dependency: OpenTissue::headers links the
+# Boost::disable_autolinking target, so that target must exist before
+# OpenTissueTargets.cmake is imported below.
+find_dependency(Boost @OPENTISSUE_BOOST_VERSION@)
 
 check_required_components(OpenTissue)
 

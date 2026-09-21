@@ -31,15 +31,6 @@
 #
 ##################################################################################################
 
-# If we have the conan target then use it and exit.
-if(TARGET CONAN_PKG::TinyXML)
-  if(NOT TARGET TinyXML)
-    add_library(TinyXML INTERFACE IMPORTED)
-    target_link_libraries(TinyXML INTERFACE CONAN_PKG::TinyXML)
-  endif()
-  return()
-endif()
-
 # Find headers and libraries
 find_path(TinyXML_INCLUDE_DIR NAMES tinyxml.h PATH_SUFFIXES TinyXML)
 

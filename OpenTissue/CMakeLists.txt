@@ -15,8 +15,13 @@ if(NOT TARGET OpenTissue)
   add_library(OpenTissue INTERFACE)
 endif()
 
+# Boost::headers carries the Boost include directories. Without it, anything that consumes
+# OpenTissue::headers from outside this build tree fails on the first OpenTissue header that
+# includes Boost (math_random.h includes <boost/cast.hpp>, for instance). In-tree targets
+# happened to get the include path from Boost::unit_test_framework, which hid the problem.
 target_link_libraries(headers
   INTERFACE
+    Boost::headers
     Boost::disable_autolinking
 )
 

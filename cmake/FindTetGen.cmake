@@ -31,15 +31,6 @@
 #
 ##################################################################################################
 
-# If we have the conan target then use it and exit.
-if(TARGET CONAN_PKG::TetGen)
-  if(NOT TARGET TetGen)
-    add_library(TetGen INTERFACE IMPORTED)
-    target_link_libraries(TetGen INTERFACE CONAN_PKG::TetGen)
-  endif()
-  return()
-endif()
-
 # Find headers and libraries
 find_path(TetGen_INCLUDE_DIR NAMES tetgen.h PATH_SUFFIXES TetGen)
 

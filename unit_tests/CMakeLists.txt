@@ -31,9 +31,29 @@ if(OPENTISSUE_ENABLE_CODE_COVERAGE AND CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang"
   endif()
 endif()
 
+#-----------------------------------------------------------------------------
+#
+# Several unit tests link a third-party library that is optional (see
+# cmake/OpenTissueDependencies.cmake). Add those directories only when the
+# libraries they need were actually found, so that a partial dependency set
+# still yields a working test suite instead of a configure error.
+#
+# Usage: ot_add_test_subdirectory( <dir> [FEATURE...] )
+# where FEATURE is the suffix of an OPENTISSUE_HAVE_<FEATURE> variable.
+#
+function(ot_add_test_subdirectory dir)
+  foreach(_feature IN LISTS ARGN)
+    if(NOT OPENTISSUE_HAVE_${_feature})
+      message(STATUS "Skipping unit tests '${dir}' (needs ${_feature})")
+      return()
+    endif()
+  endforeach()
+  add_subdirectory(${dir})
+endfunction()
+
 add_subdirectory( collision )
 add_subdirectory( core )
 add_subdirectory( dynamics )
 add_subdirectory( kinematics )
 add_subdirectory( utility )
-add_subdirectory( io )
+ot_add_test_subdirectory( io PNG )

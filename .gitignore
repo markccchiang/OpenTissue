@@ -30,6 +30,9 @@
 *.out
 *.app
 OpenTissueConfig.cmake
+
+# Local AI assistant guidance, not part of the project.
+CLAUDE.md
 .DS_Store
 build/
 OpenTissue/configuration.h

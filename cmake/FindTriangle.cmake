@@ -31,15 +31,6 @@
 #
 ##################################################################################################
 
-# If we have the conan target then use it and exit.
-if(TARGET CONAN_PKG::Triangle)
-  if(NOT TARGET Triangle)
-    add_library(Triangle INTERFACE IMPORTED)
-    target_link_libraries(Triangle INTERFACE CONAN_PKG::Triangle)
-  endif()
-  return()
-endif()
-
 # Find headers and libraries
 find_path(Triangle_INCLUDE_DIR NAMES triangle.h PATH_SUFFIXES Triangle)
 

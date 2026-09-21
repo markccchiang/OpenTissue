@@ -31,20 +31,18 @@
 #
 ##################################################################################################
 
-# If we have the conan target then use it and exit.
-if(TARGET CONAN_PKG::Qhull)
-  if(NOT TARGET Qhull::libqhull)
-    add_library(Qhull::libqhull INTERFACE IMPORTED)
-    target_link_libraries(Qhull::libqhull INTERFACE CONAN_PKG::Qhull)
-  endif()
-  return()
-endif()
+# Find headers and libraries.
+#
+# OpenTissue includes these as <libqhull/libqhull.h>, so we have to report the directory that
+# *contains* libqhull/, not libqhull/ itself. Searching for the path-qualified header name
+# gets that right; "NAMES libqhull.h PATH_SUFFIXES libqhull" would report one level too deep
+# and every #include would then fail.
+find_path(Qhull_INCLUDE_DIR NAMES libqhull/libqhull.h)
 
-# Find headers and libraries
-find_path(Qhull_INCLUDE_DIR NAMES libqhull.h PATH_SUFFIXES libqhull)
-
-find_library(Qhull_LIBRARY_RELEASE  NAMES qhull)
-find_library(Qhull_LIBRARY_DEBUG  NAMES qhull_d)
+# Qhull ships the non-reentrant library under several names depending on the platform and on
+# whether it was built static or shared.
+find_library(Qhull_LIBRARY_RELEASE NAMES qhull qhullstatic libqhull)
+find_library(Qhull_LIBRARY_DEBUG   NAMES qhull_d qhullstatic_d libqhull_d)
 
 if(Qhull_LIBRARY_RELEASE)
   set(Qhull_LIBRARIES ${Qhull_LIBRARY_RELEASE})

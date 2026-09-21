@@ -1,13 +1,12 @@
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.25)
 project(OpenTissue VERSION 0.994
                    DESCRIPTION "A header only c++ library collection of generic algorithms and data structures for rapid development of interactive modeling and simulation."
                    HOMEPAGE_URL "https://github.com/erleben/OpenTissue")
 
-# Add connan dependencies, conan targets will be used.
-if(EXISTS ${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-  include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-  conan_basic_setup(TARGETS NO_OUTPUT_DIRS)
-  set(Boost_USE_STATIC_LIBS ON)
+# CMake 4 removed the bundled FindBoost module in favour of the BoostConfig.cmake package that
+# Boost itself ships. Opt in explicitly so the removal is not merely a deprecation warning.
+if(POLICY CMP0167)
+  cmake_policy(SET CMP0167 NEW)
 endif()
 
 set(CMAKE_CXX_STANDARD 11)
@@ -42,11 +41,14 @@ option(OPENTISSUE_ENABLE_DEMOS "Build demos" OFF)
 # Try to find Boost (http://www.boost.org/), Boost is needed by almost all
 # OpenTissue code, one have to make sure this one works!
 # FindBoost
-if(OPENTISSUE_ENABLE_UNIT_TESTS)
-  set(OPENTISSUE_BOOST_COMPONENTS unit_test_framework)
-endif()
 set(OPENTISSUE_BOOST_VERSION 1.39.0)
-find_package(Boost ${OPENTISSUE_BOOST_VERSION} COMPONENTS "${OPENTISSUE_BOOST_COMPONENTS}" REQUIRED)
+if(OPENTISSUE_ENABLE_UNIT_TESTS)
+  # Only ask for the compiled component when we actually build the tests; passing an empty
+  # COMPONENTS list is an error in config mode.
+  find_package(Boost ${OPENTISSUE_BOOST_VERSION} REQUIRED COMPONENTS unit_test_framework)
+else()
+  find_package(Boost ${OPENTISSUE_BOOST_VERSION} REQUIRED)
+endif()
 
 if(OPENTISSUE_ENABLE_DEMOS)
   #-----------------------------------------------------------------------------
@@ -80,7 +82,9 @@ if(OPENTISSUE_ENABLE_DEMOS)
     find_package(GLUT REQUIRED)
   endif()
 
-  set(glfw3_ROOT /usr/local)
+  # Let CMake locate glfw3 through the usual search paths (CMAKE_PREFIX_PATH, Homebrew,
+  # vcpkg, ...). Hard-coding /usr/local broke on Apple Silicon, where Homebrew installs
+  # into /opt/homebrew. Point glfw3_ROOT at a custom prefix if you need one.
   find_package(glfw3 REQUIRED)
 
   #-----------------------------------------------------------------------------
@@ -97,17 +101,14 @@ if(OPENTISSUE_ENABLE_DEMOS)
 
 endif()
 
-find_package(TinyXML REQUIRED)
-find_package(TetGen REQUIRED)
-find_package(Triangle REQUIRED)
-find_package(PNG REQUIRED)
-
 #-----------------------------------------------------------------------------
 #
-# Try to find QHull (http://www.qhull.org/). Our mesh and t4mesh utilities
-# make use of QHull for both convex hull as well as Delaunay triangulations.
+# Resolve the optional third-party libraries (TinyXML, Qhull, TetGen, Triangle,
+# libpng). None of these is required to configure or to use the bulk of
+# OpenTissue -- see cmake/OpenTissueDependencies.cmake for what each one gates
+# and for the licensing caveats on TetGen and Triangle.
 #
-find_package(Qhull REQUIRED)
+include(OpenTissueDependencies)
 
 #-----------------------------------------------------------------------------
 #
@@ -206,3 +207,9 @@ install(FILES
   ${CMAKE_CURRENT_BINARY_DIR}/OpenTissue/configuration.h
   DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/OpenTissue
 )
+
+#-----------------------------------------------------------------------------
+#
+# Summarise which optional dependencies were resolved.
+#
+ot_report_dependencies()
