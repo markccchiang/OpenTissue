@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/core/math/math_matrix3x3.h>
+
 #include <OpenTissue/kinematics/inverse/inverse_box_limits.h>
 #include <OpenTissue/kinematics/inverse/inverse_sinus_cone.h>
 #include <OpenTissue/kinematics/inverse/inverse_reach_cone.h>

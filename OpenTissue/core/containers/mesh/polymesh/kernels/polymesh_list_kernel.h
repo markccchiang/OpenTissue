@@ -9,7 +9,12 @@
 //
 #include <OpenTissue/configuration.h>
 
-#include <OpenTissue/core/containers/mesh/polymesh/polymesh.h>
+#include <OpenTissue/core/containers/mesh/polymesh/polymesh_core_access.h>
+
+// Deliberately does NOT include polymesh.h: PolyMesh names this kernel as a default
+// template argument, so including it here makes that default refer to an as-yet
+// undeclared template. A kernel is the storage backend and does not need PolyMesh.
+
 #include <OpenTissue/core/containers/mesh/polymesh/polymesh_vertex.h>
 #include <OpenTissue/core/containers/mesh/polymesh/polymesh_halfedge.h>
 #include <OpenTissue/core/containers/mesh/polymesh/polymesh_edge.h>

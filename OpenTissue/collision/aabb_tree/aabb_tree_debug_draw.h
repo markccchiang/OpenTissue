@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/graphics/core/gl/gl_util.h>
+
 #include <OpenTissue/collision/bvh/bvh_get_leaf_nodes.h>
 
 namespace OpenTissue

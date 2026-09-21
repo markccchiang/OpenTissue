@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/core/math/big/big_types.h>
+
 #include <OpenTissue/core/math/math_value_traits.h>
 #include <boost/cast.hpp>             // needed for boost::numeric_cast
 

@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/core/containers/mesh/common/util/mesh_clear_vertex_tags.h>
+
 #include <OpenTissue/dynamics/psys/constraints/psys_stick.h>
 #include <OpenTissue/dynamics/psys/forces/psys_spring.h>
 #include <OpenTissue/dynamics/psys/mass_spring_system/psys_mass_spring_system.h>
@@ -238,7 +240,7 @@ namespace OpenTissue
 
         m_coupling.init(*this,mesh);
 
-        mesh::clear_vertex_tags(m_coupling.mesh());
+        OpenTissue::mesh::clear_vertex_tags(m_coupling.mesh());
 
         vertex_iterator end   = m_coupling.mesh().vertex_end();
         vertex_iterator v     = m_coupling.mesh().vertex_begin();

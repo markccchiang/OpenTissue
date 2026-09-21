@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <iostream>
+
 #include <OpenTissue/core/math/interpolation/interpolation_base_interpolator.h>
 #include <OpenTissue/core/math/math_constants.h>
 
@@ -30,7 +32,7 @@ namespace OpenTissue
     {
     public:
 
-      typedef typename real_type_    real_type;
+      typedef          real_type_    real_type;
 
     private:
 

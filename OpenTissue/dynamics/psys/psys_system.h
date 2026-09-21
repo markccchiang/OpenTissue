@@ -9,6 +9,7 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/core/math/math_constants.h>
 #include <vector>
 
 namespace OpenTissue

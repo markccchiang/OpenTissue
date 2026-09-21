@@ -9,6 +9,10 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/core/containers/mesh/common/util/mesh_compute_angle_weighted_vertex_normals.h>
+
+#include <OpenTissue/dynamics/psys/psys_system.h>
+
 #include <OpenTissue/dynamics/psys/mass_spring_system/psys_surface_mesh.h>
 #include <vector>
 #include <iostream>

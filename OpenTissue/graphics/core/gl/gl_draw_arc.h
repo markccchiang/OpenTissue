@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/core/math/math_matrix3x3.h>
+
 #include <OpenTissue/core/math/math_vector3.h>
 
 #include <OpenTissue/graphics/core/gl/gl.h>

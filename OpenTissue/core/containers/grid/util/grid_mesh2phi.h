@@ -9,6 +9,10 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/core/containers/mesh/common/util/mesh_compute_mesh_maximum_coord.h>
+
+#include <OpenTissue/core/containers/mesh/common/util/mesh_compute_mesh_minimum_coord.h>
+
 #include <OpenTissue/core/containers/mesh/common/util/mesh_compute_minmax_face_area.h>
 
 // 2020-07-25 Kenny: Cg is no longer running on osx hence, we outcommented its usage.

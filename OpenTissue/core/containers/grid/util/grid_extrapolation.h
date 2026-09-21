@@ -11,7 +11,7 @@
 
 #include <cmath>
 
-#include <OpenTissue/core/containers/grid/util/gradient.h>
+#include <OpenTissue/core/containers/grid/util/grid_gradient.h>
 #include <OpenTissue/core/containers/grid/util/grid_compute_sign_function.h>
 #include <OpenTissue/core/math/math_vector3.h>
 
@@ -45,8 +45,6 @@ namespace OpenTissue
       typedef typename grid_type::value_type            value_type;
       typedef typename grid_type::math_types            math_types;
       typedef typename math_types::real_type            real_type;
-
-      Gradient<vector3_type> gradient;
 
       size_t I = S.I();
       size_t J = S.J();

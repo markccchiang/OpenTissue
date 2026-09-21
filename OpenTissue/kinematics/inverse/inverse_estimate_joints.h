@@ -242,7 +242,7 @@ namespace OpenTissue
           std::vector< samples_container > samples;
           
           samples.resize( skeleton.size() );
-          for(skeleton_type::bone_iterator bone = skeleton.begin();bone!=skeleton.end();++bone)
+          for(typename skeleton_type::bone_iterator bone = skeleton.begin();bone!=skeleton.end();++bone)
           {
             samples[bone->get_number()].resize( N );;
           }
@@ -254,7 +254,7 @@ namespace OpenTissue
           for(size_t i = 0;i < N;++i)
           {
             scheduler.compute_pose(skeleton, time);
-            for(skeleton_type::bone_iterator bone = skeleton.begin();bone!=skeleton.end();++bone)
+            for(typename skeleton_type::bone_iterator bone = skeleton.begin();bone!=skeleton.end();++bone)
             {
               samples[bone->get_number()][i] = bone_traits::convert( bone->relative() );
             }
@@ -262,7 +262,7 @@ namespace OpenTissue
           }
           
           // From the samples try to estimate joint types for each bone
-          for(skeleton_type::bone_iterator bone = skeleton.begin();bone!=skeleton.end();++bone)
+          for(typename skeleton_type::bone_iterator bone = skeleton.begin();bone!=skeleton.end();++bone)
           {
             detail::estimate_joint_type( samples[bone->get_number()].begin(), samples[bone->get_number()].end(), *bone);
           }

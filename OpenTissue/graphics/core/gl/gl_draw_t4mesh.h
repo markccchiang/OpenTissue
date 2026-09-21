@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/graphics/core/gl/gl_draw_tetrahedron.h>
+
 #include <OpenTissue/core/math/math_basic_types.h>
 #include <OpenTissue/core/geometry/geometry_tetrahedron.h>
 

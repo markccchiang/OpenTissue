@@ -32,7 +32,7 @@ namespace OpenTissue
       // 2007-02-17 KE: I moved all thise streaming operators from being vector3 members into global operators in this edm namespace!!! They do not belong in the vector3 class!!!
       // 2009-03-11 kenny: Oh dear hardwired Vector3 type, creates a strong type dependency to another sub-library of OT
       template<typename T>
-      inline Vector3<T> & operator<<(Vector3<T> & to, std::string const & from)
+      inline math::Vector3<T> & operator<<(math::Vector3<T> & to, std::string const & from)
       {
         std::istringstream ist(from);
         char dummy;
@@ -41,7 +41,7 @@ namespace OpenTissue
       }
 
       template<typename T>
-      inline Vector3<T> & operator<<(Vector3<T> & to,Vector3<T> const &from)
+      inline math::Vector3<T> & operator<<(math::Vector3<T> & to,math::Vector3<T> const &from)
       {
         to = from;
         return to;
@@ -49,7 +49,7 @@ namespace OpenTissue
 
       // 2009-03-11 kenny: Oh dear hardwired Vector3 type, creates a strong type dependency to another sub-library of OT
       template<typename T>
-      inline Vector3<T> const & operator>>(Vector3<T> const & from, std::string & to)
+      inline math::Vector3<T> const & operator>>(math::Vector3<T> const & from, std::string & to)
       {
         std::ostringstream ost;
         ost << "[" << from(0) << "," << from(1) << "," << from(2) << "]" << std::endl;
@@ -59,7 +59,7 @@ namespace OpenTissue
 
       // 2009-03-11 kenny: Oh dear hardwired Vector3 type, creates a strong type dependency to another sub-library of OT
       template<typename T>
-      inline Vector3<T> const & operator>>(Vector3<T> const & from,Vector3<T> & to)
+      inline math::Vector3<T> const & operator>>(math::Vector3<T> const & from,math::Vector3<T> & to)
       {
         to = from;
         return from;
@@ -74,7 +74,7 @@ namespace OpenTissue
       template<typename real_type>
       inline bool get_value_real(real_type& val, TiXmlElement const & elem, std::string const & att)
       {
-        char const * attr = elem.Attribute(att);
+        char const * attr = elem.Attribute(att.c_str());
         if (!attr) return false;
         std::istringstream ist(attr);
         ist >> val;
@@ -84,7 +84,7 @@ namespace OpenTissue
       template<typename tensor2_type>
       inline bool get_value_tensor2(tensor2_type& val, TiXmlElement const & elem, std::string const & att)
       {
-        char const * attr = elem.Attribute(att);
+        char const * attr = elem.Attribute(att.c_str());
         if (!attr) 
           return false;
         std::istringstream ist(attr);
@@ -104,7 +104,7 @@ namespace OpenTissue
       template<typename tensor3_type>
       inline bool get_value_tensor3(tensor3_type& val, TiXmlElement const & elem, std::string const & att)
       {
-        const char* attr = elem.Attribute(att);
+        const char* attr = elem.Attribute(att.c_str());
         if (!attr) return false;
         std::istringstream ist(attr);
         typename tensor3_type::value_type tmp;
@@ -132,7 +132,7 @@ namespace OpenTissue
 
       inline bool get_value_compare(bool& val, TiXmlElement const & elem, std::string const & att, std::string const & cmp)
       {
-        char const * attr = elem.Attribute(att);
+        char const * attr = elem.Attribute(att.c_str());
         if (!attr) return false;
         val = cmp == attr;
         return true;
@@ -157,7 +157,7 @@ namespace OpenTissue
         typedef GenericBezierPatch<edm_types>        generic_bezier_patch_type;
         typedef QuadraticBezierPatch<edm_types>      quadratic_bezier_patch_type;
         typedef EllipsoidPatch<edm_types>            ellipsoid_patch_type;
-        typedef typename Surface::SurfaceParticle    SurfaceParticle;
+        typedef typename surface_type::SurfaceParticle    SurfaceParticle;
 
         const TiXmlElement* properties = surface_node.FirstChildElement("Properties");
 
@@ -167,7 +167,7 @@ namespace OpenTissue
         const char* timestep = properties->Attribute("timestep");
         if (!timestep)
           return error("A 'Body' object's 'Properties' node must have the delta t 'timestep' attribute!");
-        typename Surface::real_type dt;
+        typename surface_type::real_type dt;
         std::istringstream ist1(timestep);
         ist1 >> dt;
 

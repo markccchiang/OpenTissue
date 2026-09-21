@@ -120,7 +120,7 @@ namespace OpenTissue
         vector3_type & n = plane.n();
         vector3_type e10 = m_intersections[1] - m_intersections[0];
         vector3_type e21 = m_intersections[2] - m_intersections[1];
-        if(n*(e10%e20)<0)
+        if(n*(e10%e21)<0)
         {
           m_triangle1[0] = m_intersections[0];
           m_triangle1[1] = m_intersections[2];

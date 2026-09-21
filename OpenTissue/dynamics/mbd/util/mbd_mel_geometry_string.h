@@ -9,8 +9,19 @@
 //
 #include <OpenTissue/configuration.h>
 
-#include<string>
+#include <OpenTissue/collision/sdf/sdf_geometry.h>
+
+#include <OpenTissue/core/containers/grid/grid.h>
+
+#include <OpenTissue/core/geometry/geometry_obb.h>
+
+#include <OpenTissue/core/geometry/geometry_plane.h>
+
+#include <OpenTissue/core/geometry/geometry_sphere.h>
+
+#include <OpenTissue/core/containers/mesh/common/util/mesh_clear_vertex_tags.h>
 #include<sstream>
+#include<string>
 
 namespace OpenTissue
 {
@@ -32,7 +43,7 @@ namespace OpenTissue
 
           int unused = static_cast<int>(mesh->size_vertices() +1);
 
-          mesh::clear_vertex_tags(*mesh, unused);
+          OpenTissue::mesh::clear_vertex_tags(*mesh, unused);
           int cnt = 0;
 
           bool firstFace = true;

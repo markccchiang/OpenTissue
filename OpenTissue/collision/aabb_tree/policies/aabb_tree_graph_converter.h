@@ -9,6 +9,11 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <iostream>
+
+#include <OpenTissue/core/containers/mesh/common/util/mesh_clear_face_tags.h>
+
+#include <OpenTissue/core/containers/mesh/common/util/mesh_clear_halfedge_tags.h>
 #include <map>
 #include <queue>
 
@@ -77,8 +82,8 @@ namespace OpenTissue
 
         face_ptr_queue Q;
 
-        mesh::clear_face_tags(mesh);
-        mesh::clear_halfedge_tags(mesh);
+        OpenTissue::mesh::clear_face_tags(mesh);
+        OpenTissue::mesh::clear_halfedge_tags(mesh);
 
         Q.push( &(  *(mesh.face_begin())   )  );
         while(!Q.empty())

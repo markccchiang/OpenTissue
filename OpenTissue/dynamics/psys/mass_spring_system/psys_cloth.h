@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/core/containers/mesh/common/util/mesh_make_plane.h>
+
 #include <OpenTissue/dynamics/psys/mass_spring_system/psys_surface_mesh.h>
 
 #include <boost/multi_array.hpp>

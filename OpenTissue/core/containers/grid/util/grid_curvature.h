@@ -85,7 +85,7 @@ namespace OpenTissue
       G = min( G, limit_K );
       G = max( G, -limit_K );
       //--- According to theory we can compute principal curvatures form Gaussian and Mesn curvature
-      ral_type d = sqrt( K * K - G );
+      real_type d = sqrt( K * K - G );
       k1 = K + d;
       k2 = K - d;
     }
@@ -149,7 +149,7 @@ namespace OpenTissue
       vector3_type d;
       OpenTissue::math::eigen( S, V, d );
       size_t order[ 3 ];
-      vector3_type abs_d = OpenTissue::fabs( d );
+      vector3_type abs_d = fabs( d );
       get_increasing_order( abs_d, order );
       k1 = d( order[ 0 ] );
       k2 = d( order[ 1 ] );

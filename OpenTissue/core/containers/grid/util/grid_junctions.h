@@ -493,7 +493,7 @@ namespace OpenTissue
 
       typedef          std::list<candidate_type>                          candidate_container;
       typedef          detail::JunctionCollisionPolicy<face_type,candidate_type>   collision_policy;
-      typedef          AABBDataQuery< typename collision_policy::hash_grid, collision_policy >      query_algorithm;
+      typedef          spatial_hashing::AABBDataQuery< typename collision_policy::hash_grid, collision_policy >      query_algorithm;
 
       bool results = false;
       query_algorithm     query;

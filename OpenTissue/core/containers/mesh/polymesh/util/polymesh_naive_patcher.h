@@ -9,6 +9,7 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/core/containers/mesh/common/util/mesh_clear_halfedge_tags.h>
 #include <list>
 
 #include <OpenTissue/core/geometry/geometry_plane.h> //--- needed for plane_type
@@ -33,7 +34,7 @@ namespace OpenTissue
       ring_container      rings;
 
       //--- traverse open boundaries and collect ``rings'' of vertices.
-      mesh::clear_halfedge_tags(mesh);
+      OpenTissue::mesh::clear_halfedge_tags(mesh);
 
       halfedge_iterator h = mesh.halfedge_begin();
       halfedge_iterator hend = mesh.halfedge_end();

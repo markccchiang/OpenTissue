@@ -26,8 +26,8 @@ namespace OpenTissue
     template <typename grid_type,typename grid_container>
     inline void split2slices(grid_type & grid, grid_container & slices, size_t axis = 2)
     {
-      typename grid_type::math_types      math_types;
-      typename math_types::vector3_type   vector3_type;
+      typedef typename grid_type::math_types      math_types;
+      typedef typename math_types::vector3_type   vector3_type;
 
       assert( axis==2 || !"split2slices(): Only splits along k-axis is currently supported");
 

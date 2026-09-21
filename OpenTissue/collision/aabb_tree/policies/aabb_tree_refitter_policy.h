@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/core/math/math_constants.h>
+
 #include <boost/shared_ptr.hpp>
 
 namespace OpenTissue

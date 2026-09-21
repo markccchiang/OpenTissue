@@ -9,7 +9,6 @@
 //
 #include <OpenTissue/configuration.h>
 
-#include <OpenTissue/core/containers/grid/util/functions.h> //--- needed for gradient_func and value_func
 
 namespace OpenTissue
 {

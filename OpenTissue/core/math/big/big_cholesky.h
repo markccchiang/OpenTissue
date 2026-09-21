@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/core/math/big/big_types.h>
+
 //#include <OpenTissue/core/math/big/big_types.h> // Not needed for here! 
 
 //

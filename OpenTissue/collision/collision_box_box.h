@@ -65,7 +65,7 @@ namespace OpenTissue
     {
       using std::sqrt;
       using std::fabs;
-      typedef          CoordSys<real_type>             coordsys_type;
+      typedef          math::CoordSys<real_type>       coordsys_type;
       typedef typename coordsys_type::quaternion_type  quaternion_type;
       assert(p);
       assert(distances);

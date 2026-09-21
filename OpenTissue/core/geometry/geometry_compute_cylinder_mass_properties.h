@@ -60,6 +60,7 @@ namespace OpenTissue
     * @param intertia        Upon return this argument holds the body frame inertia tensor.
     *                        Note this is a diagnoal 3x3 matrix, so only 3 values are needed.
     */
+    template<typename real_type,typename vector3_type>
     void compute_cylinder_mass_properties(
       real_type const & radius,
       real_type const & half_height,

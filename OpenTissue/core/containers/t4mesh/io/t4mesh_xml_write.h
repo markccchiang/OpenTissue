@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/core/containers/t4mesh/t4mesh_default_point_container.h>
+
 #include <OpenTissue/core/math/math_vector3.h>
 #include <OpenTissue/core/math/math_is_finite.h>
 #include <OpenTissue/core/math/math_is_number.h>
@@ -165,7 +167,7 @@ namespace OpenTissue
     template<typename t4mesh_type>
     bool xml_write(std::string const & filename,t4mesh_type const & mesh)
     {
-      default_point_container<t4mesh_type> points(const_cast<t4mesh_type*>(&mesh));
+      t4mesh::default_point_container<t4mesh_type> points(const_cast<t4mesh_type*>(&mesh));
       return xml_write(filename,mesh,points);
     }
 

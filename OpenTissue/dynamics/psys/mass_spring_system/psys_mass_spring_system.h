@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/dynamics/psys/psys_system.h>
+
 #include <OpenTissue/dynamics/edm/edm_system.h>
 
 #include <OpenTissue/dynamics/sph/sph_system.h>

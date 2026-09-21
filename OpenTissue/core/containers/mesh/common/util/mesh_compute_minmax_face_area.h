@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/core/math/math_constants.h>
+
 namespace OpenTissue
 {
   namespace mesh

@@ -47,13 +47,13 @@ public:
   BufferElement() = default;
 
   BufferElement(ShaderDataType type, const std::string& name, bool normalized = false)
-    : m_name(name), m_type(type), m_size(ShaderDataTypeSize(type)), m_offset(0), m_normalized(normalized)
+    : m_name(name), m_type(type), m_size(shader_data_type_size(type)), m_offset(0), m_normalized(normalized)
   {
   }
 
   uint32_t get_component_count() const
   {
-    switch (Type)
+    switch (m_type)
     {
       case ShaderDataType::Float:   return 1;
       case ShaderDataType::Float2:  return 2;
@@ -191,7 +191,9 @@ public:
     return m_count;
   }
 
-private:
+// Protected rather than private: this is a CRTP base and the derived buffer types
+// (VertexBuffer, IndexBuffer) use m_rendererid directly.
+protected:
   BufferLayout m_Layout;
   uint32_t m_rendererid;
   uint32_t m_count = 0;
@@ -201,7 +203,7 @@ class VertexBuffer : public Buffer<VertexBuffer>
 {
 public:
   template<typename... Args>
-  VertexBuffer(Args... args) : Buffer<VertexBuffer>(args) {}
+  VertexBuffer(Args... args) : Buffer<VertexBuffer>(args...) {}
 
   void bind() const
   {
@@ -224,7 +226,7 @@ class IndexBuffer : public Buffer<IndexBuffer>
 {
 public:
   template<typename... Args>
-  IndexBuffer(Args... args) : Buffer<IndexBuffer>(args) {}
+  IndexBuffer(Args... args) : Buffer<IndexBuffer>(args...) {}
 
   void bind() const
   {
