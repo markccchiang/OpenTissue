@@ -7,15 +7,16 @@ OpenTissue is a collection of generic algorithms and data structures for rapid d
 Free for commercial use, open source under the [Zlib license](http://opensource.org/licenses/zlib-license.php).
 
 ## Getting Started/Installing
-  * [Easy Boost Bindings](documentation/boost_bindings.md)
+  * [Installing OpenTissue](INSTALL.md) — requirements, dependencies, building and testing
   * [Using OpenTissue in your Application](documentation/using_opentissue.md)
+  * [Changelog](CHANGELOG.md)
 
 ## For Developers
   * [Code Standards](documentation/code_standards.md)
   * [Good Practice for Development](documentation/good_practice.md)
   * [Design Patterns in OpenTissue](documentation/design_patterns.md)
   * [Unit Testing Guide](documentation/unit_testing.md)
-  * [The Code Review Process](documenation/code_review.md)
+  * [The Code Review Process](documentation/code_review.md)
 
 ## Read More
   * Have a look at our [OpenTissue Gallery](https://www.youtube.com/playlist?list=PLNtAp--NfuirWaf0HhB9wUeromoXWvJlb)
