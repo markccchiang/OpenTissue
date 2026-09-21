@@ -77,7 +77,7 @@ point_query( data.begin(), data.end() );
 The hash grid class stores an infinite, uniform 3D grid as a 1D hash tabel. It is tailored to work in 3D. However, an end user could use it in 2D or even 1D by ignoring second or third coordinates (i.e. set them all to the same value). The hash grid class is located in the header
 
 ```cpp
-#include<OpenTissue/collision/spatial_hashing/hash_grid.h>
+#include<OpenTissue/collision/spatial_hashing/spatial_hashing_grid.h>
 ```
 
 The hash grid needs a hash function, which must supply the following interface
@@ -92,10 +92,10 @@ void resize(size_type)
 As of this writing, OpenTissue implements four different hash functions to be used together with the hash grid. These are located in the header files
 
 ```cpp
-#include<OpenTissue/collision/spatial_hashing/hash_functions/grid_function.h> 
-#include<OpenTissue/collision/spatial_hashing/hash_functions/prime_number_function.h> 
-#include<OpenTissue/collision/spatial_hashing/hash_functions/random_array_function.h> 
-#include<OpenTissue/collision/spatial_hashing/hash_functions/shifted_golden_mean_function.h>
+#include<OpenTissue/collision/spatial_hashing/hash_functions/spatial_hashing_grid_function.h> 
+#include<OpenTissue/collision/spatial_hashing/hash_functions/spatial_hashing_prime_number_function.h> 
+#include<OpenTissue/collision/spatial_hashing/hash_functions/spatial_hashing_random_array_function.h> 
+#include<OpenTissue/collision/spatial_hashing/hash_functions/spatial_hashing_shifted_golden_mean_function.h>
 ```
 
 It is usually a good idea to try different hash functions in order to find the one that yields the best performance. Here is an example of typical usage
@@ -133,16 +133,16 @@ Observe that a grid cell is not the same as a hash-cell. Data inside a grid cell
 The spatial query class is a generic type for all types of queries on a spatial hash grid. All queries should be inherited from this class. The spatial query class is located in the header
 
 ```cpp
-#include<OpenTissue/collision/spatial_hashing/spatial_query.h>
+#include<OpenTissue/collision/spatial_hashing/spatial_hashing_query.h>
 ```
 
 Currently OpenTissue implements three different query types, these are all inherited from the spatial query class and are located in the header files
 
 
 ```cpp
-    #include<OpenTissue/collision/spatial_hashing/hash_queries/point_data_query.h>
-    #include<OpenTissue/collision/spatial_hashing/hash_queries/line_data_query.h>    
-    #include<OpenTissue/collision/spatial_hashing/hash_queries/aabb_data_query.h>
+    #include<OpenTissue/collision/spatial_hashing/hash_queries/spatial_hashing_point_data_query.h>
+    #include<OpenTissue/collision/spatial_hashing/hash_queries/spatial_hashing_line_data_query.h>    
+    #include<OpenTissue/collision/spatial_hashing/hash_queries/spatial_hashing_aabb_data_query.h>
 ```
 
 Their major difference lie in how the hash-grid cells are traversed, when testing a query type for collision. We refer the interested reader to the above header files for details.
@@ -327,8 +327,7 @@ Optimal spatial hashing is used many places in OpenTissue. Here is a short list 
 
 
 ```cpp
-#include<OpenTissue/t4mesh/util/t4mesh_mesh_coupling.h>
-#include<OpenTissue/dynamics/cfd/sph/sph_system.h>
-#include<OpenTissue/dynamics/multibody/CD/retro_spatial_hashing.h>
-#include<OpenTissue/t4mesh/util/thin_shell/policies/bisection_adaptive_extrusion.h>
+#include<OpenTissue/core/containers/t4mesh/util/t4mesh_mesh_coupling.h>
+#include<OpenTissue/dynamics/sph/sph_system.h>
+#include<OpenTissue/dynamics/mbd/collision_detection/mbd_spatial_hashing.h>
 ```

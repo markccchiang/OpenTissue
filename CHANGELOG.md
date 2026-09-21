@@ -59,6 +59,12 @@ incidental one.
   now returns HTTP 400.
 - `cmake_minimum_required` raised to 3.25, and `CMP0167` set, since CMake 4 removed the
   bundled `FindBoost` module.
+- **The programming guides now reference files that exist.** They had accumulated 120 dead
+  source references, none of them from this work: the library had been reorganised from a
+  flat layout into `core/`, `collision/` and `dynamics/`, and separately every header gained
+  a `namespace_` prefix, and the guides followed neither change. 109 references were
+  repointed at the file that actually holds the material. The 11 that remain are in two
+  guides now marked as historical.
 
 ### Fixed
 
@@ -102,3 +108,8 @@ incidental one.
   `numeric_cast`, `multi_array` and `indirect_iterator` are still used and have no standard
   equivalent.
 - `azure-pipelines.yml`, which targeted retired runner images and the removed Conan flow.
+- `documentation/using_cmake.md`, a guide to generating Visual Studio 2005 project files,
+  superseded by `INSTALL.md` and linked from nowhere.
+- `documentation/volviz.md` and `documentation/using_demo_framework.md` are kept but marked:
+  the first describes modules that no longer exist, the second the GLUT application
+  framework that GLFW replaced.

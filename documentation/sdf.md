@@ -4,7 +4,7 @@ The signed distance field (sdf) collision library is based on a double
 representation of the object geometries. To use this library one would need to
 include the header file
 
-    #include <OpenTissue/collision/signed_distance_field/sdf.h>
+    #include <OpenTissue/collision/sdf/sdf.h>
 
 This header file will include all other parts of this collision library and
 hence forth one can use all the functionality in the library.
@@ -53,8 +53,8 @@ disk).
 
 A typical initialization of the signed distance geometry type would look like:
 
-    #include <OpenTissue/utility/get_environment_variable.h>
-    #include <OpenTissue/mesh/mesh.h>
+    #include <OpenTissue/utility/utility_get_environment_variable.h>
+    #include <OpenTissue/core/containers/mesh/mesh.h>
 
     ...
 

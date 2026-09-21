@@ -20,8 +20,8 @@ The BIG library was written to provide the glue that binds everything together i
 # Overview of BIG Library
 
 The BIG library contains quite many header files and is constantly expanding. In most cases the naming-convention of the header files in the BIG library should make it clear what the content of the header file is all about. We refer the reader to the source documentation (ie. doxygen and inline comments) for more information about the specifics. In the following we will merely give a brief overview of some of the most fundamental parts of the BIG library.
-* A BIG include all header. This header file OpenTissue/math/big/big.h includes nearly all other files in the BIG library. It is intended as a convenience header file to be used by end-users that do not want to know any details about the header files that makes up the complete BIG library.
-* A BIG types include header. This header file, OpenTissue/math/big/big_types.h, takes care of including appropriate header files from Boost uBLAS. It makes sure that one has access to often used types. In most cases this includes
+* A BIG include all header. This header file OpenTissue/core/math/big/big.h includes nearly all other files in the BIG library. It is intended as a convenience header file to be used by end-users that do not want to know any details about the header files that makes up the complete BIG library.
+* A BIG types include header. This header file, OpenTissue/core/math/big/big_types.h, takes care of including appropriate header files from Boost uBLAS. It makes sure that one has access to often used types. In most cases this includes
 
       ublas::matrix<...>
       ublas::compresed_matrix<...>
@@ -31,31 +31,31 @@ The BIG library contains quite many header files and is constantly expanding. In
 * A lot of ublas::compressed_matrix routines have been written. In most cases end users could use the ublas::axpy() method instead. In most cases the only difference the specialized routines and the ublas::axpy()-method is that axpy uses expression templates. The specialized routines work directly on the raw data of the arguments passed to them.
 
 * As of this writing the set of specialized routines can be find in the following header files.
-  - OpenTissue/math/big/big_prod_trans.h
-  - OpenTissue/math/big/big_residual.h
-  - OpenTissue/math/big/big_prod.h
-  - OpenTissue/math/big/big_prod_add.h
-  - OpenTissue/math/big/big_prod_add_rhs.h
-  - OpenTissue/math/big/big_prod_row.h
-  - OpenTissue/math/big/big_prod_sub.h
-  - OpenTissue/math/big/big_prod_sub_rhs.h
+  - OpenTissue/core/math/big/big_prod_trans.h
+  - OpenTissue/core/math/big/big_residual.h
+  - OpenTissue/core/math/big/big_prod.h
+  - OpenTissue/core/math/big/big_prod_add.h
+  - OpenTissue/core/math/big/big_prod_add_rhs.h
+  - OpenTissue/core/math/big/big_prod_row.h
+  - OpenTissue/core/math/big/big_prod_sub.h
+  - OpenTissue/core/math/big/big_prod_sub_rhs.h
 
 * BIG also have a few higher-level functionality that often is convenient. This functionality can be located in the header-files:
-  - OpenTissue/math/big/big_shur_system.h
-  - OpenTissue/math/big/big_cholesky_decompose.h
-  - OpenTissue/math/big/big_identity_preconditioner.h
+  - OpenTissue/core/math/big/big_shur_system.h
+  - OpenTissue/core/math/big/big_cholesky.h
+  - OpenTissue/core/math/big/big_identity_preconditioner.h
 
 * Finally BIG has a vast set of different matrix solvers. These are located in the header files
 
-  - OpenTissue/math/big/big_svd.h
-  - OpenTissue/math/big/big_cholesky.h
-  - OpenTissue/math/big/big_lu.h
-  - OpenTissue/math/big/big_conjugate_gradient.h
-  - OpenTissue/math/big/big_gmres.h
-  - OpenTissue/math/big/big_forward_gauss_seidel.h
-  - OpenTissue/math/big/big_backward_gauss_seidel.h
-  - OpenTissue/math/big/big_symmetric_gauss_seidel.h
-  - OpenTissue/math/big/big_jacobi.h
+  - OpenTissue/core/math/big/big_svd.h
+  - OpenTissue/core/math/big/big_cholesky.h
+  - OpenTissue/core/math/big/big_lu.h
+  - OpenTissue/core/math/big/big_conjugate_gradient.h
+  - OpenTissue/core/math/big/big_gmres.h
+  - OpenTissue/core/math/big/big_forward_gauss_seidel.h
+  - OpenTissue/core/math/big/big_backward_gauss_seidel.h
+  - OpenTissue/core/math/big/big_symmetric_gauss_seidel.h
+  - OpenTissue/core/math/big/big_jacobi.h
 
 * The matrix solvers have been implemented to provide a c-like functional way of invoking the matrix solvers. Different overloaded solver-function versions exist allowing end-users to use default parameter settings or make their own specific settings. Also in most cases a functor interface is provided making it easier to pass the solver-methods to algorithms etc..
 
@@ -63,11 +63,11 @@ The BIG library contains quite many header files and is constantly expanding. In
 
 In the following example we will show how one can set up a linear system and solve it using a conjugate gradient solver. First one would write a include directive to define the ublas matrix types
 
-    #include <OpenTissue/math/big/big_types.h>
+    #include <OpenTissue/core/math/big/big_types.h>
 
 Following this one would write the include header that defines the conjugate gradient solver
 
-    #include <OpenTissue/math/big/big_conjugate_gradient.h>
+    #include <OpenTissue/core/math/big/big_conjugate_gradient.h>
 
 Next one may define the Boost uBLAS types that are needed. This could be written like this
 

@@ -5,7 +5,7 @@ The Damped Wave Equations (DWE) is a simplified variant of the linearized Shallo
 
 The DWE system can be employed simply by including the following header file:
 <pre>
-#include &lt;OpenTissue/dynamics/cfd/swe/damped_wave_equation.h&gt;
+#include &lt;OpenTissue/dynamics/swe/swe_damped_wave_equation.h&gt;
 </pre>
 An accompanying demo application is located in:
 <pre>

@@ -1,9 +1,16 @@
 # Volume Visualization&nbsp;Programming Guide
+
+> **Historical.** This guide describes `OpenTissue/map/` and
+> `OpenTissue/visualization/`, modules that are no longer part of OpenTissue. Nothing it
+> shows can be compiled against the current tree, and there is no direct replacement: for
+> volumetric data see `OpenTissue/core/containers/grid/`, and for 3D textures see
+> `OpenTissue/gpu/texture/`. It is kept for the background it gives on the techniques.
+
 ## Loading a 3D Image
 In OpenTissue 3D images are most conveniently stored in a Map data structure.
 The implementation of this data structure is located in the header file:
 
-    #include<OpenTissue/map/map.h>
+    #include<OpenTissue/core/math/optimization/optimization_compute_generalized_minimal_map.h>
 
 It is a template data structure, which means you have to supply it with a few
 types indicating what kind of data you want to work with. For instance
@@ -156,7 +163,7 @@ The texture tile based render is defined in the header file
 
 and the smallest power 2 render is defined in
 
-    #include<OpenTissue/visualization/direct_volume_rendering/render.h>
+    #include<OpenTissue/kinematics/skinning/gl_skin_render.h>
 
 Both renders have the same interface and only differs in how they internally
 manage allocation of texture memory. There are some inherent trade offs.

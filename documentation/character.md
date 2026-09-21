@@ -3,13 +3,17 @@
 <h2>Introduction</h2>
 The character animation system in OpenTissue supports deformation of skin meshes using a skeleton of bones. OpenTissue supports both Linear Blend Skinning and Spherical Blend Skinning implemented in both software and hardware (for NVIDIA GPUs series 6 and higher). Software skinning support an arbitrary number of bone influences for each skin vertex, while hardware skinning support up to 4 bone influences per skin vertex. It must be decided at compile time whether software or hardware skinning is to be used.
 
-To employ the character animation system, the following header file must be included:
+The character animation system no longer has a single umbrella header. Include the pieces
+you need from `OpenTissue/kinematics/`, as the demo does:
 <pre>
-#include <OpenTissue/character/character_types.h>
+#include &lt;OpenTissue/kinematics/skeleton/skeleton_types.h&gt;
+#include &lt;OpenTissue/kinematics/skinning/skinning_types.h&gt;
+#include &lt;OpenTissue/kinematics/animation/animation_keyframe_animation.h&gt;
+#include &lt;OpenTissue/kinematics/animation/animation_naive_blend_scheduler.h&gt;
 </pre>
 A ready-to-compile-and-run demo using the character animation system is located in:
 <pre>
-/demos/opengl/character/
+/demos/opengl/character_animation/
 </pre>
 Here it is shown how the system can be used to animate a running/walking human character.
 

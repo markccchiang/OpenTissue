@@ -3,7 +3,7 @@
 The image data structure is a template class located in the header
 file
 
-    #include<OpenTissue/image/image.h>
+    #include<OpenTissue/gpu/image/image.h>
 
 To work with images you need to specify what kind of data type that is
 stored in the channels of the image. For instance to get an image that
@@ -77,8 +77,8 @@ Notice that this returns the address of the starting position of the data as a v
 
 An easy to use interface have been implemented allowing end-users to read and write images from and to the hard drive. The functions implementing this is defined in the header files
 
-    #include<OpenTissue/image/io/image_read.h>
-    #include<OpenTissue/image/io/image_write.h>
+    #include<OpenTissue/gpu/image/io/image_read.h>
+    #include<OpenTissue/gpu/image/io/image_write.h>
 
 Depending on the extension of the supplied filename various image file-formats are supported. For instance you can write
 
@@ -92,7 +92,7 @@ image_write(filename,* img);
 
 Here in this example we choose to read in a png-file and write a bmp-file. Usually you would want to both read and write png-files. A number of different image utilities have also been implemented. A convenient utility is the screen_capture() utility. This is defined in the header file
 
-    #include<OpenTissue/image/util/screen_capture.h>
+    #include<OpenTissue/gpu/image/image_screen_capture.h>
 
 An returns a boost shared pointer to a 8bit four channel image containing whatever is currently in the frame-buffer. You can use it like this:
 
@@ -109,7 +109,7 @@ There are many other utilities and we encourage you to explore the folder util s
 
 The image data structure have been implemented to make it easy to create 2D textures. The 2D texture object data structure is defined in the header file
 
-    #include<OpenTissue/texture/texture2D.h>
+    #include<OpenTissue/gpu/texture/texture_texture2D.h>
 
 Herein is a texture 2D pointer data type, usually this is used as follows
 
@@ -130,17 +130,17 @@ tex->load( img->get_data() );
 
 There exist more ways of creating textures, which do not necessitate the use of an image, for examples see for instance in the header file
 
-    #include<OpenTissue/texture/texture2D_util.h>
+    #include<OpenTissue/gpu/texture/texture_create_texture2D.h>
 
 ## Working with 3D Textures
 
 The natural extension for 2D textures is of course 3D textures. The 3D texture object is defined in the header file
 
-    #include<OpenTissue/texture/texture3D.h>
+    #include<OpenTissue/gpu/texture/texture_texture3D.h>
 
 An there exist an utility for creating such textures from 3D images, which is located in the header file
 
-    #include<OpenTissue/texture/texture3D_util.h>
+    #include<OpenTissue/gpu/texture/texture_create_texture3D.h>
 
 See the volume visualization programming guide for an example of how to use this utility. Here we will discuss a few other details of the texture3D object.
 

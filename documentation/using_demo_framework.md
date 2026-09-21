@@ -1,5 +1,12 @@
 # FAQ
 
+> **Out of date.** This guide describes the GLUT application framework, which has been
+> removed. Demos now derive from `OpenTissue::graphics::GlfwApplication`: implement
+> `init()`, `update(timestep)` and `action(choice)`, and provide a free
+> `createApplication(argc, argv)`. See `demos/opengl/gui_template/src/application.cpp`,
+> which is the minimal worked example and maps each old hook onto its replacement.
+
+
 * Question: Argh why do I need to be bothered with having to use this glut framework, why can't I just use my own way to do glut-stuff
 * Answer: If you want your code to be part of OpenTissue demos then your code must fit into this framework. There are mainly two reasons for this. It is easier for OpenTissue developers to maintain the code. If we find a bug in how glut is used then we only need to make the bug-fix in one place in order to make all the demo application run smoothly. Second, it is most nicer for new users to quickly get an overview of how a demo application work if all the demo applications have similar functionality.
 

@@ -9,7 +9,7 @@ Obviously removing entities (nodes or tetrahedra) alters the global index ranges
 
 The Tetrahedra mesh data structure is defined in the include header file
 
-    #include<OpenTissue/t4mesh/t4mesh.h>
+    #include<OpenTissue/core/containers/t4mesh/t4mesh.h>
 
 The data structure is a template class, which takes several arguments. A typical declaration looks like
 
@@ -17,7 +17,7 @@ The data structure is a template class, which takes several arguments. A typical
 
 This will create a default tetrahedra mesh, where every node has a single 3D coordinate vector named, m_coord. This default behavior is obtained from two default trait classes defined in the header file
 
-    #include<OpenTissue/t4mesh/t4mesh_default_traits.h>
+    #include<OpenTissue/core/containers/t4mesh/t4mesh_default_traits.h>
 
 There is no need to include this header file explicitly. The two classes in this header file defines all default data members of nodes and tetrahedra, which are the basic building blocks of a tetrahedra mesh.
 
@@ -84,11 +84,11 @@ Finally the tetrahedra mesh has support for iterating over nodes and tetrahedra 
 
 In many cases one wants to extend or change the default traits for the t4mesh data structure. The default traits are defined in the header
 
-    #include<OpenTissue/t4mesh/t4mesh_default_traits.h>
+    #include<OpenTissue/core/containers/t4mesh/t4mesh_default_traits.h>
 
 This header file is automatically included in the header file
 
-    #include<OpenTissue/t4mesh/t4mesh.h>
+    #include<OpenTissue/core/containers/t4mesh/t4mesh.h>
 
 As an example, say we want to create some sort of particle based simulation method, then we start by extending the node traits to contain relevant particle information.
 
@@ -174,11 +174,11 @@ Many algorithms in OpenTissue have been implemented in such a way that they do n
 
 The default point container class is located in the header file
 
-    #include<OpenTissue/t4mesh/t4mesh_default_traits.h>
+    #include<OpenTissue/core/containers/t4mesh/t4mesh_default_traits.h>
 
 and it is included automatically by including the header
 
-    #include<OpenTissue/t4mesh/t4mesh.h>
+    #include<OpenTissue/core/containers/t4mesh/t4mesh.h>
 
 The default point container class is used as follows
 
@@ -190,7 +190,7 @@ The default point container class is used as follows
 
 Faces are not stored explicitly in the t4mesh, but sometimes it is useful to extract the boundary faces of a t4mesh. OpenTissue provides a utility class for exactly this purpose. The class is located in the header
 
-    #include<OpenTissue/t4mesh/t4mesh_t4boundary_faces.h>
+    #include<OpenTissue/core/containers/t4mesh/t4mesh_t4boundary_faces.h>
 
 Let us work through a small example to learn how to use the utility. First we need a volume mesh
 
@@ -247,7 +247,7 @@ for(face_iterator face=boundary.begin();face!=boundary.end();++face)
 
 Edges are not represented explicitly in a t4mesh, only nodes and tetrahedra are represented. OpenTissue provides a utility class for extracting all unique edges from a t4mesh by traversing the t4mesh and generating explicit edges.
 
-    #include<OpenTissue/t4mesh/t4mesh_t4edges.h>
+    #include<OpenTissue/core/containers/t4mesh/t4mesh_t4edges.h>
 
 The workings of this utility class is exactly the same as the boundary face extraction tool (explained previously), we therefore just show a short example here
 
@@ -267,7 +267,7 @@ for(typename edges_type::edge_iterator edge=edges.begin();edge!=edges.end();++ed
 
 OpenTissue has its own XML-fileformat for storing t4meshes. The header files:
 
-    #include<OpenTissue/t4mesh/io/t4mesh_xml_read.h #include<OpenTissue/t4mesh/io/t4mesh_xml_write.h>
+    #include<OpenTissue/core/containers/t4mesh/io/t4mesh_xml_read.h #include<OpenTissue/core/containers/t4mesh/io/t4mesh_xml_write.h>
 
 defines read and write functions. These functions are used as follows
 
@@ -317,7 +317,7 @@ You may even decide not to store coordinates inside nodes, but instead have them
 
 OpenTissue also support importing TetGen files, the read function is defined in the header
 
-    #include<OpenTissue/t4mesh/io/t4mesh_tetgen_read.h>
+    #include<OpenTissue/core/containers/t4mesh/io/t4mesh_tetgen_read.h>
 
 And it is used in completely the same fashion as the XML read function
 
@@ -329,7 +329,7 @@ And it is used in completely the same fashion as the XML read function
 
 OpenTissue provides a simple OpenGL visualization function of tetrahedra meshes. The function is located in the header
 
-    #include<OpenTissue/utility/GL/gl_draw_t4mesh.h>
+    #include<OpenTissue/graphics/core/gl/gl_draw_t4mesh.h>
 
 The function assumes that nodes have a m_coord data member. The function is invoked as follows
 
@@ -362,7 +362,7 @@ Often a tetrahedra mesh is used with a conservative coverage of the surface mesh
 
 The mesh coupling functions are located in the header file
 
-    #include<OpenTissue/t4mesh/util/t4mesh_mesh_coupling.h>
+    #include<OpenTissue/core/containers/t4mesh/util/t4mesh_mesh_coupling.h>
 
 In order to use it, one must bind a surface mesh (PolyMesh or TriMesh) to the volume mesh (t4mesh).
 
@@ -385,7 +385,7 @@ This should be done prior to rendering the surface mesh.
 
 This utility function provides a wrapper interface for QHull, which performs a delaynay triangulation a given set of points. The utility function is located in the header file
 
-    #include<OpenTissue/t4mesh/util/t4mesh_delaunay_tesselator.h>
+    #include<OpenTissue/core/containers/t4mesh/util/t4mesh_delaunay_tetrahedralization.h>
 
 And it is invoked by supplying a container of points, that is
 

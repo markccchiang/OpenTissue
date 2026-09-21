@@ -29,7 +29,7 @@ There is also support for more advanced OpenGL features, such as handling of
 
 A single OpenGL wrapper file is provided in the header file
 
-    #include<OpenTissue/utility/gl_util.h>
+    #include<OpenTissue/graphics/core/gl/gl_util.h>
 
 This header file will automatically include all OpenGL utilities located in the folder
 
@@ -40,13 +40,13 @@ OpenTissue/utility/GL
 If only OpenGL support is wanted and none of the OpenTissue utilities is
 required one can simply include the header file
 
-    #include<OpenTissue/utility/GL/gl.h>
+    #include<OpenTissue/graphics/core/gl/gl.h>
 
 OpenTissue handles OpenGL extensions by using GLEW. This requires that header
 files are included in the correct order. It is therefore very important,
 whenever you use OpenGL, to include either
 
-    #include<OpenTissue/utility/gl_util.h>
+    #include<OpenTissue/graphics/core/gl/gl_util.h>
 
 or
 
@@ -65,7 +65,7 @@ in column major form and work directly with this brute representation.
 OpenTissue provides a small collection of functions for doing so, these are
 defined in the header file
 
-    #include<OpenTissue/utility/GL/gl_matrix_util.h>
+    #include<OpenTissue/graphics/core/gl/gl_matrix_util.h>
 
 A typical example usage is to extract model view and projection matrices and
 manipulate these, for instance
@@ -90,7 +90,7 @@ transpose), and orthonormalization (see orthonormalize).
 ## Material, Color Picking and Error Checking
 A easy to use OpenGL material wrapper is defined in the header file
 
-    #include<OpenTissue/utility/GL/gl_material.h>
+    #include<OpenTissue/graphics/core/gl/gl_material.h>
 
 During initialization a material can be defined by writing
 <pre>
@@ -118,7 +118,7 @@ In case you really do not care about whether OpenGL materials are used or
 not, a more simple utility is provided to set the color. It is defined in the
 header file
 
-    #include<OpenTissue/utility/GL/gl_color_picker.h>
+    #include<OpenTissue/graphics/core/gl/gl_color_picker.h>
 
 And you use it by writing
 
@@ -134,7 +134,7 @@ default to one.
 It may happen that you need to check whether some OpenGL error occurred. For this
 purpose a convenience utility is provided in the header file
 
-    #include<OpenTissue/utility/GL/check_gl_errors.h>
+    #include<OpenTissue/graphics/core/gl/gl_check_errors.h>
 
 And you use it by writing
 
@@ -153,7 +153,7 @@ x, y, and z- coordinates of the world point currently visible at the pixel at
 the specified screen coordinates, then one can use the utility in the header
 file
 
-    #include<OpenTissue/utility/GL/gl_screen2object.h>
+    #include<OpenTissue/graphics/core/gl/gl_screen2object.h>
 
 The utility is used as follows
 
@@ -179,7 +179,7 @@ std::cout << "pixel at ("
 
 Finally there is a picking tool available in the header file
 
-    #include<OpenTissue/utility/GL/gl_picking.h>
+    #include<OpenTissue/graphics/core/gl/gl_picking.h>
 
 We refer the reader to the header file for details.
 
@@ -298,12 +298,12 @@ changing the camera is in the mouse event handlers. For instance one could write
 This will support zooming, panning, and orbiting. For more details we refer
 the reader to the header file
 
-    #include<OpenTissue/utility/GL/gl_camera.h>
+    #include<OpenTissue/graphics/core/gl/gl_camera.h>
 
 If one wants to do frustum culling on the CPU then an utility class for doing
 this is provided in the header file
 
-    #include<OpenTissue/utility/GL/gl_frustum.h>
+    #include<OpenTissue/graphics/core/gl/gl_frustum.h>
 
 It works simply by updating an instance of the frustum class before testing,
 for instance one could add the following code to the display handler
@@ -325,11 +325,11 @@ Culling currently only supports spheres, AABBs and points.
 OpenTissue provides wrapper classes for OpenGL Framebuffer object and
 Renderbuffer, these are located in the header files
 
-    #include<OpenTissue/utility/GL/gl_frame_buffer_object.h>
+    #include<OpenTissue/graphics/core/gl/gl_frame_buffer_object.h>
 
 and
 
-    #include<OpenTissue/utility/GL/gl_render_buffer.h>
+    #include<OpenTissue/graphics/core/gl/gl_render_buffer.h>
 
 Framebuffer object is a convenient way to change the render target. Thus it
 provides functionality for setting up render to texture (RTT) functionality or
@@ -433,7 +433,7 @@ void Application::some_method()
 The Framebuffer Object class also have support for Texture3D, we redirect the
 reader to the header file
 
-    #include<OpenTissue/utility/GL/gl_frame_buffer_object.h>
+    #include<OpenTissue/graphics/core/gl/gl_frame_buffer_object.h>
 
 For more details.
 

@@ -188,17 +188,14 @@ Also one can iterate over the stored geometry using iterators
       ....
 
 # Utilities
-All utilities can be accessed by including a single header file
-
-    #include<OpenTissue/collision/bvh/util/bvh_util.h>
-
-Of course one can also include header-files of the individual utilities that are
+There is no longer a single header aggregating all the utilities; include the header-files
+of the individual utilities that are
 used. This approach is taken in the following sections.
 
 # Query Sets of Nodes
 The include header
 
-    #include<OpenTissue/collision/bvh/util/bvh_get_all_nodes.h>
+    #include<OpenTissue/collision/bvh/bvh_get_all_nodes.h>
 
 contains a template function for extracting all nodes of a BVH into a container,
 like this
@@ -208,18 +205,18 @@ like this
 
 In a similar fashion other queries can be performed, such as
 
-    #include<OpenTissue/collision/bvh/util/bvh_get_leaf_nodes.h>
+    #include<OpenTissue/collision/bvh/bvh_get_leaf_nodes.h>
     bvh_get_leaf_nodes(m_bvh,nodes);
 
-    #include<OpenTissue/collision/bvh/util/bvh_get_nodes_at_height.h>
+    #include<OpenTissue/collision/bvh/bvh_get_nodes_at_height.h>
     unsigned int height = 2;
     bvh_get_nodes_at_height(m_bvh,height,nodes);
 
-    #include<OpenTissue/collision/bvh/util/bvh_get_nodes_at_depth.h>
+    #include<OpenTissue/collision/bvh/bvh_get_nodes_at_depth.h>
     unsigned int depth = 2;
     bvh_get_nodes_at_depth(m_bvh,depth,nodes);
 
-    #include<OpenTissue/collision/bvh/util/bvh_get_nodes_at_closest_height.h>
+    #include<OpenTissue/collision/bvh/bvh_get_nodes_at_closest_height.h>
 
     bvh_get_nodes_at_closest_height(m_bvh,height,nodes);
 
@@ -261,7 +258,7 @@ have to make a policy similar to this
 
 Then you can create your top down algorithm type like this
 
-    #include <OpenTissue/collision/bvh/util/top_down_constructor/bvh_top_down_constructor.h>
+    #include <OpenTissue/collision/bvh/top_down_constructor/bvh_top_down_constructor.h>
     typedef BVHTopDownConstructor< bvh_type, top_down_policy<bvh_type> >   constructor_algorithm;
 
 And finally you can build a bvh like this
@@ -287,7 +284,7 @@ help of policies.
 
 Now the policy can be put to use as follows
 
-    #include <OpenTissue/collision/bvh/util/bvh_bottom_up_refitter.h>
+    #include <OpenTissue/collision/bvh/bvh_bottom_up_refitter.h>
 
     typedef OpenTissue::BVHBottomUpRefitter< refitter_policy<bvh_type> >  refitter_algorithm;
     refitter_algorithm refitter;
@@ -312,7 +309,7 @@ volume overlaps etc.. should be done.
 
 And next
 
-    #include <OpenTissue/collision/bvh/util/bvh_model_collision_query.h>
+    #include <OpenTissue/collision/bvh/bvh_model_collision_query.h>
     typedef BVHModelCollisionQuery< collision_policy<bvh_type> > collision_query_algorithm;
     collision_query_algorithm   query;
     query.run(A2B,bvhA,bvhB,results);

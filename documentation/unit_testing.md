@@ -34,7 +34,7 @@ All unit tests should be put in a top level test suite named with the name space
     #include <OpenTissue/configuration.h>
 
     // Add Include headers from the code being tested
-    #include <OpenTissue/math/basic_math_types.h>
+    #include <OpenTissue/core/math/math_basic_types.h>
 
     #define BOOST_AUTO_TEST_MAIN
     #include <boost/test/auto_unit_test.hpp>

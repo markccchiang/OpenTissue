@@ -10,11 +10,11 @@ Further, some of these tools have become large enough to form a sub-library of t
 
 A small utility function has been implemented, in order to make it easy to interact with the system environment variables, regardless of whether one runs linux or windows. The function is located in the header file:
 
-    #include<OpenTissue/utility/get_environment_variable.h>
+    #include<OpenTissue/utility/utility_get_environment_variable.h>
 
 One can use this function by including the header file and the calling the function as follows
 
-    #include<OpenTissue/utility/get_environment_variable.h>
+    #include<OpenTissue/utility/utility_get_environment_variable.h>
     std::string path = get_environment_variable("OPENTISSUE");
 
 This will retrieve the string-value of the environment variable OPENTISSUE. Which (if one have installed OpenTissue correctly) points to the folder, where OpenTissue is installed on your hard drive.
@@ -22,24 +22,21 @@ This will retrieve the string-value of the environment variable OPENTISSUE. Whic
 
 A set of memory query functions for windows applications have also been added to OpenTissue. These memory query functions are located in the header file:
 
-    #include<OpenTissue/utility/get_system_memory_info.h>
+    #include<OpenTissue/utility/utility_get_system_memory_info.h>
 
-Working with STL hash_map is not always pleasant due to compiler differences. Therefore OpenTissue contains a header wrapper:
-
-    #include<OpenTissue/utility/hash_map.h>
-
-This header takes care of differences between various compilers implementation of the hash_map container.
+OpenTissue used to ship a `hash_map` wrapper that papered over differences between compilers'
+pre-standard hash containers. It has been removed: use `std::unordered_map`.
 
 
 Calling the QuickHull library from inside a function can be a little difficult due to difference in calling conventions between C and C++. OpenTissue has a header file that cleanly includes the QuickHull library.
 
-    #include<OpenTissue/utility/qhull.h>
+    #include<OpenTissue/utility/utility_qhull.h>
 
 If one wants to use QuickHull in OpenTissue, then all one has to do is to include this header file.
 
 Timing computations is often needed. OpenTissue has a high resolution timer implemented for this purpose.
 
-    #include<OpenTissue/utility/high_res_timer.h>
+    #include<OpenTissue/utility/utility_timer.h>
 
 It is a template parameterized class taking one argument. The argument indicates the data type used for internal computations. We recommend using double or single precision floating points. Example usage:
 
@@ -52,7 +49,7 @@ It is a template parameterized class taking one argument. The argument indicates
 
 When setting up configurations for animation or simulation, it is often quite useful to have a unique way to identify objects. OpenTissue has an identifier utility for this purpose. The utility is located in the header file:
 
-    #include<OpenTissue/utility/identifier.h>
+    #include<OpenTissue/utility/utility_identifier.h>
 
 It is used by inheriting from this class, as e.g.
 
@@ -70,19 +67,19 @@ A priority heap is often needed with the following properties
 
 OpenTissue implements a Heap class that makes it easy to deal with the priority-feature coupling and to be able to heapify single elements rather than the entire heap. The Heap class is located in the header file:
 
-	#include<OpenTissue/utility/heap.h><br />
+	#include<OpenTissue/core/containers/containers_heap.h><br />
 
 For example usage, see the implementation of the polymesh_triangulate function located in the header file
 	
-	#include<OpenTissue/mesh/polymesh/util/polymesh_triangulate.h>
+	#include<OpenTissue/core/containers/mesh/polymesh/util/polymesh_triangulate.h>
 
 Keeping iterators to elements can sometimes be a problem when using a data container such as the STL vector. The problem is that the iterators are not persistent on insertion and deletion. This is unfortunate, therefore OpenTissue provides an alternative: an index based iterator, which is implemented in the header file
 
-	#include<OpenTissue/utility/index_iterator.h>
+	#include<OpenTissue/utility/utility_index_iterator.h>
 
 One may desire to iterate over data stored in a STL map container. When doing so, it can become tedious that elements of such a container really is a pair. For iterating over the data only, one only cares about the second member of the pairs. OpenTissue therefore has a map data iterator.
 
-	#include<OpenTissue/utility/map_data_iterator.h>
+	#include<OpenTissue/utility/utility_map_data_iterator.h>
 
 Example usage is given below:
 
@@ -96,7 +93,7 @@ Example usage is given below:
 
 OpenTissue also contains a map indirect data iterator. It is located in the header file:
 
-	#include<OpenTissue/utility/map_indirect_data_iterator.h>
+	#include<OpenTissue/utility/utility_map_data_iterator.h>
 
 This iterator is similar to the other, but is very convenient, when the stored data is pointers to something else. In such a case one often wants to be able to avoid having to write a double derefering. An example of its use is:
 

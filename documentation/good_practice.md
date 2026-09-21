@@ -599,7 +599,7 @@ TBD...
 
 To ease compiler load (and pre-pare for precompiled headers) it is forbidden to use the grand-include headers inside OpenTissue library components. For example if one is developing a particle system that is using some mesh utility (compute face normal or something like that) then one should not write
 
-    #include <OpenTissue/mesh/mesh.h>
+    #include <OpenTissue/core/containers/mesh/mesh.h>
 
 Instead one must dig out the specific header implementing the utility (data structure or whatever functionality that ones desire) and include this explicitly.
 

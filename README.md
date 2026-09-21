@@ -44,10 +44,10 @@ Kinematics - Methods for kinematic animations, including inverse kinematics, ski
 
 GPU - Collection of general purpose algorithms and methods performed on the GPU (GPGPU).
   * [The Image and Texture Programming Guide](documentation/texture.md)
-  * [Volume Visualization](documentation/volviz.md)
+  * [Volume Visualization](documentation/volviz.md) — *historical; the modules it describes were removed*
 
 Utility - Large collection of miscellaneous utilities, mostly for OT-based applications.
-  * [Using the Demo Glut Application Framework](documentation/using_demo_framework.md)
+  * [Using the Demo Application Framework](documentation/using_demo_framework.md) — *out of date; GLUT was replaced by GLFW*
   * [The OpenGL Programming Guide](documentation/using_opengl.md)
   * [Utility Programming Guide](documentation/utility.md)
 
