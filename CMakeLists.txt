@@ -110,6 +110,10 @@ endif()
 #
 include(OpenTissueDependencies)
 
+# Needed before descending into the subdirectories: OpenTissue/graphics installs its
+# generated export header and so needs CMAKE_INSTALL_INCLUDEDIR to be defined.
+include(GNUInstallDirs)
+
 #-----------------------------------------------------------------------------
 #
 # Look into subfolders
@@ -152,10 +156,23 @@ endif()
 #
 include(CMakePackageConfigHelpers)
 include(CPack)
-include(GNUInstallDirs)
+
+# OpenTissueGraphics is only defined when the OpenGL/GLEW/GLFW/GLUT stack was found, so
+# everything below has to cope with it being absent.
+set(OPENTISSUE_EXPORT_TARGETS headers depends)
+if(TARGET OpenTissueGraphics)
+  list(APPEND OPENTISSUE_EXPORT_TARGETS OpenTissueGraphics)
+endif()
+
+# Recorded for OpenTissueConfig.cmake, which must pull in the graphics stack for consumers
+# only when the exported target set actually contains the graphics library.
+set(OPENTISSUE_EXPORTS_GRAPHICS 0)
+if(TARGET OpenTissueGraphics)
+  set(OPENTISSUE_EXPORTS_GRAPHICS 1)
+endif()
 
 export(PACKAGE OpenTissue) # Makes OT discoverable, via ~/.cmake
-export(TARGETS headers depends NAMESPACE OpenTissue:: FILE OpenTissueTargets.cmake)
+export(TARGETS ${OPENTISSUE_EXPORT_TARGETS} NAMESPACE OpenTissue:: FILE OpenTissueTargets.cmake)
 
 configure_file(
   "${PROJECT_SOURCE_DIR}/cmake/OpenTissueConfig.cmake.in"
@@ -176,7 +193,7 @@ write_basic_package_version_file(
   COMPATIBILITY SameMajorVersion
 )
 
-install(TARGETS headers depends
+install(TARGETS ${OPENTISSUE_EXPORT_TARGETS}
   EXPORT OpenTissueTargets
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}

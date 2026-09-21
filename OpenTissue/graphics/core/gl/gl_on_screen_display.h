@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/graphics/core/gl/gl_color_picker.h>
+
 #define OSD_CUSTOM 0
 #define OSD_TOP_LEFT 1
 #define OSD_TOP_RIGHT 2
@@ -27,7 +29,7 @@
 #ifdef DEFINE_GLUI
 #include <GL/glui.h>
 #else
-#include <GL/glut.h>
+#include <OpenTissue/graphics/core/gl/gl_glut.h>
 #endif
 
 namespace OpenTissue

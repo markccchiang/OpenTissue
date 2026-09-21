@@ -11,6 +11,9 @@
 #   OpenTissue::depends : Empty interface target, reserved for third-party
 #                         linkage. Exported for compatibility; linking it does
 #                         nothing today.
+#   OpenTissue::graphics: The compiled GLFW application framework and GL helpers.
+#                         Present only when OpenTissue was built with the
+#                         OpenGL/GLEW/GLFW/GLUT stack available.
 #
 # Typical use:
 #
@@ -40,6 +43,16 @@ endif()
 # Boost::disable_autolinking target, so that target must exist before
 # OpenTissueTargets.cmake is imported below.
 find_dependency(Boost @OPENTISSUE_BOOST_VERSION@)
+
+# When the graphics library was built it is part of the exported target set, and its PUBLIC
+# link interface names OpenGL, GLEW and GLFW. Those imported targets have to exist before
+# OpenTissueTargets.cmake is included, or importing the package fails.
+if(@OPENTISSUE_EXPORTS_GRAPHICS@)
+  set(OpenGL_GL_PREFERENCE GLVND)
+  find_dependency(OpenGL)
+  find_dependency(GLEW)
+  find_dependency(glfw3)
+endif()
 
 check_required_components(OpenTissue)
 

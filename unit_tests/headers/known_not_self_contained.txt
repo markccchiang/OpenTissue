@@ -9,26 +9,18 @@
 # Blank lines and #-comments are ignored.
 
 #----------------------------------------------------------------------------------------------
-# Needs a third-party library that was not available when this list was generated (9).
-# These are not known to be broken; install the library and try removing them.
+# Needs an optional third-party library that is off by default (5).
+# These are not known to be broken; enable the library and try removing them.
 #----------------------------------------------------------------------------------------------
 
-# requires GLFW
-OpenTissue/graphics/core/main.h
-OpenTissue/graphics/glfw/glfw_application.h
-OpenTissue/graphics/glfw/glfw_window.h
-
-# requires TetGen
+# requires TetGen (OPENTISSUE_WITH_TETGEN=ON)
 OpenTissue/core/containers/t4mesh/util/t4mesh_tetgen_constrained_delaunay_tetrahedralization.h
 OpenTissue/core/containers/t4mesh/util/t4mesh_tetgen_mesh_lofter.h
 OpenTissue/core/containers/t4mesh/util/t4mesh_tetgen_quality_tetrahedralization.h
 
-# requires Triangle
+# requires Triangle (OPENTISSUE_WITH_TRIANGLE=ON)
 OpenTissue/core/containers/mesh/polymesh/util/polymesh_compute_delaunay2D.h
 OpenTissue/core/containers/mesh/polymesh/util/polymesh_compute_voronoi.h
-
-# requires GLUT (still needed by the GL text helpers)
-OpenTissue/graphics/core/gl/gl_on_screen_display.h
 
 #----------------------------------------------------------------------------------------------
 # Genuine defects still to fix (1).

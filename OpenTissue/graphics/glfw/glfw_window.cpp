@@ -8,6 +8,7 @@
 
 #include "OpenTissue/graphics/glfw/glfw_window.h"
 
+#include <iostream>
 #include <string>
 
 #include "OpenTissue/graphics/core/gl/gl.h"
@@ -71,19 +72,35 @@ void GlfwWindow::init()
       std::string error("Error: Failed to initialize GLFW.");
       throw std::runtime_error(__PRETTY_FUNCTION__ + error);
     }
+    // Report only. This callback is invoked from GLFW's own C frames, and throwing
+    // through those is undefined behaviour; in practice it terminated the process
+    // instead of letting the error be handled.
     glfwSetErrorCallback([](int error, const char *description){
-      std::string message(" :GLFW Error: ");
-      throw std::runtime_error(__PRETTY_FUNCTION__ + message + description);
+      std::cerr << "GLFW error " << error << ": " << description << std::endl;
     });
   }
 
-  #ifdef __APPLE__
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-  #endif
+  // No GLFW_OPENGL_FORWARD_COMPAT / core profile hint here.
+  //
+  // It used to be set on Apple, without a context version, which GLFW rejects outright:
+  // forward-compatibility is only defined from OpenGL 3.0 and the default hint is 1.0, so
+  // creating the window failed and the demo died on startup.
+  //
+  // Asking for a forward-compatible context would be wrong even with a version attached.
+  // OpenTissue draws with the fixed-function pipeline throughout -- glBegin/glVertex, GLU
+  // quadrics, GLUT text -- and a forward-compatible core profile removes all of it. The
+  // default context is a compatibility one, which is what this code needs.
 
   m_handle = std::shared_ptr<GLFWwindow>(
       glfwCreateWindow((int)m_data->width, (int)m_data->height, m_data->title.c_str(), nullptr, nullptr),
       glfwDestroyWindow);
+
+  if(!m_handle)
+  {
+    std::string error(": Failed to create a GLFW window.");
+    throw std::runtime_error(__PRETTY_FUNCTION__ + error);
+  }
+
   ++m_count;
 
   glfwMakeContextCurrent(m_handle.get());

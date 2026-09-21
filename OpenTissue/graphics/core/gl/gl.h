@@ -20,12 +20,14 @@
 #if defined(__APPLE__) && !defined (VMDMESA)
 #include <OpenGL/gl.h>
 #include <OpenGL/glu.h>
-#include <GLUT/glut.h>
 #else
 #include <GL/gl.h>
 #include <GL/glu.h>
-#include <GL/freeglut.h>
 #endif
+
+// GLUT is deliberately not included here. Only the text helpers need it, and they include
+// <OpenTissue/graphics/core/gl/gl_glut.h> themselves, so the rest of the GL code builds
+// against OpenGL and GLEW alone.
 
 //OPENTISSUE_UTILITY_GL_GL_GL_H
 #endif

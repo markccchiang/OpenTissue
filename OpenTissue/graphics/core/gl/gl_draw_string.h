@@ -9,7 +9,7 @@
 //
 #include <OpenTissue/configuration.h>
 
-#include <OpenTissue/graphics/core/gl/gl.h>
+#include <OpenTissue/graphics/core/gl/gl_glut.h>  // glutStrokeCharacter, glutStrokeWidth
 
 #include <string>
 
