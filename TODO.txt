@@ -2,14 +2,6 @@
 are missing in a lot of the routines. Code coverage is pretty bad. Thus there is
 no way of telling which routines are actually working.
 
-[ISSUE]  utility/image_analysis: Should use math_types and value_traits, but it
-does not! Besides the library is not used anywhere in the code. Thus we have no
-way of knowing if it still works?
-
-[ISSUE] Should we drop core/containers/hash_map?
-
-[ISSUE] core/geometry/t4_gpu_scan: Should we add a namespace?
-
 [ISSUE] core/geometry/t4_cpu_scan: Should we add a namespace?
 
 [ISSUE] Use value traits in FEM library, replace unsigned int with size_t
