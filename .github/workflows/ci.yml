@@ -45,21 +45,39 @@ jobs:
       # failing the build, but CI installs them so that everything is covered.
       # TinyXML is not installed anywhere, on purpose, so that the FetchContent
       # fallback in cmake/OpenTissueDependencies.cmake is exercised on every run.
+      #
+      # The GL stack is needed even for jobs that never open a window. gl.h
+      # includes <GL/glew.h>, and it is reached from more than the graphics
+      # library: gpu/image/image.h pulls in the GL Texture2D class, so even the
+      # PNG test needs it, and the header self-containment check compiles every
+      # GL helper in the tree.
       # ---------------------------------------------------------------------
       - name: Install dependencies (Linux)
         if: runner.os == 'Linux'
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends \
-            libboost-test-dev libqhull-dev libpng-dev
+            libboost-dev libboost-test-dev \
+            libqhull-dev libpng-dev \
+            libglew-dev libglfw3-dev freeglut3-dev
 
       - name: Install dependencies (macOS)
         if: runner.os == 'macOS'
-        run: brew install boost qhull libpng
+        # OpenGL and GLUT are system frameworks on macOS; GLEW and GLFW are not.
+        run: brew install boost qhull libpng glew glfw
 
       - name: Install dependencies (Windows)
         if: runner.os == 'Windows'
-        run: vcpkg install boost-test:x64-windows qhull:x64-windows libpng:x64-windows
+        # boost-test alone is not enough: OpenTissue uses these Boost components
+        # throughout, and vcpkg ports them separately. The list is derived from the
+        # boost/ includes actually present in the tree.
+        run: |
+          vcpkg install --triplet x64-windows \
+            boost-algorithm boost-array boost-conversion boost-iterator \
+            boost-lexical-cast boost-multi-array boost-numeric-conversion \
+            boost-interval boost-optional boost-property-map boost-random \
+            boost-test boost-type-traits boost-ublas boost-utility \
+            qhull libpng glew glfw3 freeglut
         shell: bash
 
       - name: Configure
@@ -106,7 +124,10 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends \
-            libboost-test-dev libqhull-dev libpng-dev gcovr
+            libboost-dev libboost-test-dev \
+            libqhull-dev libpng-dev \
+            libglew-dev libglfw3-dev freeglut3-dev \
+            gcovr
 
       - name: Configure
         run: |

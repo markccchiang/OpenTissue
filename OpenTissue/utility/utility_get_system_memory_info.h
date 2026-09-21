@@ -85,7 +85,7 @@ namespace OpenTissue
       statex.dwLength = sizeof (statex);
       GlobalMemoryStatusEx (&statex);
       unsigned int free_virtual_memory_in_bytes = statex.ullAvailVirtual;
-      return free_virtual_memory;
+      return free_virtual_memory_in_bytes;
     }
 
     unsigned int get_free_extended_memory_in_bytes()
