@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <OpenTissue/core/math/math_matrix3x3.h>
+
 namespace OpenTissue
 {
 
@@ -70,9 +72,9 @@ namespace OpenTissue
       typedef typename vector3_type::value_traits   value_traits;
 
       mean = (mean1 + mean2)/value_traits::two();
-      matrix3x3_type KK = outer_prod<matrix3x3_type,vector3_type>(mean,mean);
-      matrix3x3_type NN = outer_prod<matrix3x3_type,vector3_type>(mean1,mean1);
-      matrix3x3_type MM = outer_prod<matrix3x3_type,vector3_type>(mean2,mean2);
+      matrix3x3_type KK = outer_prod(mean,mean);
+      matrix3x3_type NN = outer_prod(mean1,mean1);
+      matrix3x3_type MM = outer_prod(mean2,mean2);
       C = ((C1 + NN + C2 + MM)/value_traits::two() - KK) ;
     }
 

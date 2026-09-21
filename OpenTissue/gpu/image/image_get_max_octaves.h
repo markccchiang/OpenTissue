@@ -44,7 +44,7 @@ namespace OpenTissue
         mask = mask >> 1;
         ++i;
       }
-      size_t octaves = max(1u,i-2u);
+      size_t octaves = max(static_cast<size_t>(1), i - static_cast<size_t>(2));
       return octaves;
     }
 

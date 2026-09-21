@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <cmath>
+
 // gl.h rather than gl_util.h: the latter pulls in gl_frame_buffer_object.h, which
 // refers back to texture3D_pointer declared at the bottom of this header.
 #include <OpenTissue/graphics/core/gl/gl.h>

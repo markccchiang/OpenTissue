@@ -9,6 +9,7 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <algorithm>
 #include <vector>
 
 // Center of rotation by Kasper A. Andersen @ DIKU, spreak@spreak.dk

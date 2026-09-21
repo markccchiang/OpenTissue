@@ -6,6 +6,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <cmath>
+
 #include <OpenTissue/dynamics/mbd/interfaces/mbd_force_interface.h>
 
 namespace OpenTissue

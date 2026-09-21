@@ -6,6 +6,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <cmath>
+
 #include <OpenTissue/dynamics/mbd/mbd_compute_collision_matrix.h>
 #include <OpenTissue/dynamics/mbd/mbd_compute_relative_contact_velocity.h>
 

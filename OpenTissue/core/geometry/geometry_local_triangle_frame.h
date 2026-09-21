@@ -10,6 +10,7 @@
 #include <OpenTissue/configuration.h>
 
 #include <cassert>
+#include <cmath>
 
 namespace OpenTissue
 {

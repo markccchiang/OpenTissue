@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <cmath>
+
 namespace OpenTissue
 {
   namespace collision

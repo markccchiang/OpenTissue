@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <cmath>
+
 namespace OpenTissue
 {
   namespace grid
@@ -105,9 +107,9 @@ namespace OpenTissue
           im = ( i ) ?  im : 0;
           jm = ( j ) ?  jm : 0;
           km = ( k ) ?  km : 0;
-          ip = min( ip, I - 1 );
-          jp = min( jp, J - 1 );
-          kp = min( kp, K - 1 );
+          ip = min( ip, static_cast<int>(I) - 1 );
+          jp = min( jp, static_cast<int>(J) - 1 );
+          kp = min( kp, static_cast<int>(K) - 1 );
 
           //size_t idx   = ( k  * J + j )  * I + i;
           size_t idx_im  = ( k  * J + j  ) * I + im;

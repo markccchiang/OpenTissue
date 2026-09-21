@@ -8,6 +8,8 @@
 // OTTL is licensed under zlib: http://opensource.org/licenses/zlib-license.php
 //
 #include <OpenTissue/configuration.h>
+
+#include <cmath>
 #include <OpenTissue/core/geometry/geometry_base_shape.h>
 #include <OpenTissue/core/function/function_signed_distance_function.h>
 

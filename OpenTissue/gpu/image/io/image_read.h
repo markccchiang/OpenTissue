@@ -102,8 +102,6 @@ bool read(std::string const & filename
   int filter_method;
   png_get_IHDR(png, info, &width, &height, &bit_depth, &color_type, &interlaced_method, &compression_method, &filter_method);
 
-  auto channels   = png_get_channels(png, info);
-
   if (show_statistics)
   {
     std::cout << "--- file : " << filename << "---------------------------" << std::endl;
@@ -148,6 +146,16 @@ bool read(std::string const & filename
   }
 
   png_read_update_info(png, info);
+
+  // Query the channel count *after* png_read_update_info, not before.
+  //
+  // The transformations set above change how many channels come out: png_set_filler adds
+  // an alpha channel to RGB, grey and palette images, png_set_palette_to_rgb turns one
+  // channel into three, and so on. Reading png_get_channels() beforehand gave the channel
+  // count of the file rather than of the decoded rows, so an RGB image allocated three
+  // channels while libpng wrote four, overrunning the buffer by a quarter of the image.
+  // It went unnoticed because the previous test image was RGBA, where the two agree.
+  auto channels = png_get_channels(png, info);
 
   image.create(width, height, channels);
   auto data = static_cast<unsigned char*>(image.get_data());

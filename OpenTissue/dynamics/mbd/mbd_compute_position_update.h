@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <stdexcept>
+
 #include <OpenTissue/core/math/math_is_number.h>
 #include <OpenTissue/core/math/math_functions.h>
 

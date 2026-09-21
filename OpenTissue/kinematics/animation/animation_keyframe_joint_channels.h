@@ -9,6 +9,7 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <cassert>
 #include <vector>
 
 namespace OpenTissue

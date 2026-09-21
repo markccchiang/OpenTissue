@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <cmath>
+
 #include <boost/iterator/indirect_iterator.hpp>
 
 #include <vector>

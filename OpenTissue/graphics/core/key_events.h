@@ -7,6 +7,8 @@
 //
 #pragma once
 
+#include <cstdint>
+
 #include "OpenTissue/graphics/core/event.h"
 
 namespace OpenTissue {

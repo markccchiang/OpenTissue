@@ -9,6 +9,7 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <cmath>
 #include <iostream>
 
 namespace OpenTissue

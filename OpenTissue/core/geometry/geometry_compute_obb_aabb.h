@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <cmath>
+
 #include <OpenTissue/core/geometry/geometry_aabb.h>
 
 namespace OpenTissue

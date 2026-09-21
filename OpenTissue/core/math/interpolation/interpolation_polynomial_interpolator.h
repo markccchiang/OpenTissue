@@ -9,6 +9,7 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <cmath>
 #include <iostream>
 
 #include <OpenTissue/core/math/interpolation/interpolation_base_interpolator.h>

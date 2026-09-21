@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <vector>
+
 #include <OpenTissue/utility/utility_qhull.h>
 
 #include <iostream>
