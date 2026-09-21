@@ -5,12 +5,12 @@
 #include <OpenTissue/core/spline/spline.h>
 
 #define BOOST_AUTO_TEST_MAIN
-#include <boost/test/auto_unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 // Boost Test declaration and Checking macros
 #include <boost/test/unit_test_suite.hpp>
 #include <boost/test/test_tools.hpp>
-#include <boost/test/floating_point_comparison.hpp>
+#include <boost/test/tools/floating_point_comparison.hpp>
 
 typedef OpenTissue::spline::MathTypes<double, size_t>                           math_types;
 typedef math_types::vector_type                                                       vector_type;

@@ -14,11 +14,11 @@
 #include <OpenTissue/core/math/math_constants.h>
 
 
+#include <ctime>   // for std::time()
+#include <cstdlib> // for std::getenv(), std::strtoul(), std::srand() and std::rand()
+
 #ifdef BOOST_VERSION  //--- FIXME: Nicer way too see if we have boost?
 #  include <boost/random.hpp>
-#else
-#  include <ctime>   // for std::time()
-#  include <cstdlib> // for std::srand() and std::rand(), defaults to this if no boost!
 #endif
 
 namespace OpenTissue
@@ -26,6 +26,26 @@ namespace OpenTissue
 
   namespace math
   {
+
+    namespace detail
+    {
+      /**
+      * Seed used the first time a random generator is created.
+      *
+      * By default this is the wall clock, so a program gets different numbers on every
+      * run. Setting the environment variable OPENTISSUE_RANDOM_SEED pins it instead,
+      * which makes a run reproducible. The unit tests rely on this: several of them
+      * check numerical results over many random inputs, and with a clock seed they
+      * sample a different part of the error distribution on every run and fail
+      * intermittently.
+      */
+      inline unsigned int initial_random_seed()
+      {
+        if(char const * env = std::getenv("OPENTISSUE_RANDOM_SEED"))
+          return static_cast<unsigned int>(std::strtoul(env, 0, 10));
+        return static_cast<unsigned int>(std::time(0));
+      }
+    } // namespace detail
 
 #ifdef BOOST_RANDOM_HPP
 
@@ -41,11 +61,16 @@ namespace OpenTissue
 
       static generator_type &  generator()
       {
-        static generator_type tmp(static_cast<unsigned int>(std::time(0)));
+        static generator_type tmp( detail::initial_random_seed() );
         return tmp;
       }
 
     public:
+
+      /**
+      * Reseed the shared generator, so a sequence can be reproduced on demand.
+      */
+      static void seed(unsigned int s) { generator().seed(s); }
 
       typedef value_type                                                     T;
       typedef boost::uniform_real<T>                                         distribution_type;
@@ -107,10 +132,9 @@ namespace OpenTissue
         : m_lower(math::detail::zero<T>()) 
         , m_upper(math::detail::one<T>())
       {
-        using std::time;
         if(!is_initialized())
         {
-          std::srand(static_cast<unsigned int>(std::time(0)));
+          std::srand( detail::initial_random_seed() );
           is_initialized() = true;
         }
       }

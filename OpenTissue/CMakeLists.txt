@@ -40,7 +40,11 @@ target_compile_definitions(headers
     $<$<CXX_COMPILER_ID:MSVC>:_CRT_SECURE_NO_DEPRECATE>
     $<$<CXX_COMPILER_ID:MSVC>:_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS>
     $<$<CXX_COMPILER_ID:GNU>:_USE_MATH_DEFINES>
-    $<$<CXX_COMPILER_ID:GNU>:GL_SILENCE_DEPRECATION>
+    # Apple deprecated the whole of OpenGL in 10.14, and OpenTissue's GL helpers use the
+    # fixed-function API throughout, so a build produces hundreds of these warnings. This
+    # was guarded on CXX_COMPILER_ID:GNU, which never matches on macOS -- the compiler
+    # there is AppleClang -- so the define never actually took effect where it is needed.
+    $<$<PLATFORM_ID:Darwin>:GL_SILENCE_DEPRECATION>
 )
 
 target_link_libraries(OpenTissue

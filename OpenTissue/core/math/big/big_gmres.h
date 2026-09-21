@@ -9,6 +9,8 @@
 //
 #include <OpenTissue/configuration.h>
 
+#include <algorithm>
+
 #include <OpenTissue/core/math/big/big_identity_preconditioner.h>
 #include <OpenTissue/core/math/big/big_prod.h>
 #include <OpenTissue/core/math/big/big_residual.h>
@@ -322,7 +324,15 @@ namespace OpenTissue
           set_rotation ( a, b, c[j], s[j] );
 
           assert( a > value_traits::zero()                        || !"hessenberg_matrix_transform(): invalid rotation, diagonal should be positive?"); 
-          assert( fabs(b) < math::working_precision<value_type>() || !"hessenberg_matrix_transform(): invalid rotation, lower diagonal is nonzero?"); 
+
+          // The Givens rotation drives b to zero, but only to within rounding, and the
+          // rounding error scales with the magnitude of the entries. Comparing |b| against
+          // a fixed absolute tolerance therefore fires on well-conditioned input as soon as
+          // the matrix is not of order one: for a = 33.5 the spacing between representable
+          // doubles is already ~7e-15, larger than the tolerance itself. Scale by |a|, with
+          // a floor of one so small a keeps the original absolute behaviour.
+          assert( fabs(b) <= math::working_precision<value_type>() * std::max( value_traits::one(), fabs(a) )
+                  || !"hessenberg_matrix_transform(): invalid rotation, lower diagonal is nonzero?"); 
 
           //
           // See Proporsition 6.9 part 1 in the book of Saad (page 169 in second edition)

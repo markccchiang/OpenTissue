@@ -13,9 +13,9 @@
 
 #define BOOST_AUTO_TEST_MAIN
 #include <OpenTissue/utility/utility_push_boost_filter.h>
-#include <boost/test/auto_unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 #include <boost/test/unit_test_suite.hpp>
-#include <boost/test/floating_point_comparison.hpp>
+#include <boost/test/tools/floating_point_comparison.hpp>
 #include <boost/test/test_tools.hpp>
 #include <OpenTissue/utility/utility_pop_boost_filter.h>
 

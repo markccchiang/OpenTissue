@@ -1,0 +1,133 @@
+name: CI
+
+on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Linux / GCC
+            os: ubuntu-24.04
+            cc: gcc
+            cxx: g++
+          - name: Linux / Clang
+            os: ubuntu-24.04
+            cc: clang
+            cxx: clang++
+          - name: macOS / AppleClang
+            os: macos-14
+          - name: Windows / MSVC
+            os: windows-2022
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # ---------------------------------------------------------------------
+      # Dependencies.
+      #
+      # Boost is the only hard requirement. Qhull and libpng are optional: when
+      # they are missing the affected headers and tests are skipped rather than
+      # failing the build, but CI installs them so that everything is covered.
+      # TinyXML is not installed anywhere, on purpose, so that the FetchContent
+      # fallback in cmake/OpenTissueDependencies.cmake is exercised on every run.
+      # ---------------------------------------------------------------------
+      - name: Install dependencies (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            libboost-test-dev libqhull-dev libpng-dev
+
+      - name: Install dependencies (macOS)
+        if: runner.os == 'macOS'
+        run: brew install boost qhull libpng
+
+      - name: Install dependencies (Windows)
+        if: runner.os == 'Windows'
+        run: vcpkg install boost-test:x64-windows qhull:x64-windows libpng:x64-windows
+        shell: bash
+
+      - name: Configure
+        shell: bash
+        env:
+          CC: ${{ matrix.cc }}
+          CXX: ${{ matrix.cxx }}
+        run: |
+          TOOLCHAIN=""
+          if [ "$RUNNER_OS" = "Windows" ]; then
+            TOOLCHAIN="-DCMAKE_TOOLCHAIN_FILE=$VCPKG_INSTALLATION_ROOT/scripts/buildsystems/vcpkg.cmake"
+          fi
+          cmake -S . -B build \
+            -DCMAKE_BUILD_TYPE=Debug \
+            -DOPENTISSUE_ENABLE_UNIT_TESTS=ON \
+            -DOPENTISSUE_ENABLE_HEADER_TESTS=ON \
+            $TOOLCHAIN
+
+      - name: Build
+        run: cmake --build build --config Debug --parallel 4
+
+      # Compiles every header on its own. See unit_tests/headers/.
+      - name: Header self-containment
+        run: cmake --build build --config Debug --target opentissue_header_check --parallel 4
+
+      # The gating run. unit_kmeans and unit_bfgs carry the 'unreliable' label and
+      # are excluded here; see unit_tests/CMakeLists.txt for why.
+      - name: Test
+        run: ctest --test-dir build --build-config Debug --output-on-failure -LE unreliable
+
+      # Reported, never gating, so the known-unreliable tests stay visible.
+      - name: Test (known unreliable, informational)
+        if: always()
+        continue-on-error: true
+        run: ctest --test-dir build --build-config Debug --output-on-failure -L unreliable
+
+  coverage:
+    name: Coverage
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            libboost-test-dev libqhull-dev libpng-dev gcovr
+
+      - name: Configure
+        run: |
+          cmake -S . -B build \
+            -DCMAKE_BUILD_TYPE=Debug \
+            -DOPENTISSUE_ENABLE_UNIT_TESTS=ON \
+            -DOPENTISSUE_ENABLE_CODE_COVERAGE=ON
+
+      - name: Build
+        run: cmake --build build --parallel 4
+
+      - name: Test
+        run: ctest --test-dir build --output-on-failure -LE unreliable
+
+      - name: Report
+        run: |
+          gcovr --root . --filter 'OpenTissue/' \
+                --xml-pretty --output build/coverage.xml \
+                --html-details build/coverage.html \
+                --print-summary
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: |
+            build/coverage.xml
+            build/coverage*.html

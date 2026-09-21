@@ -64,11 +64,11 @@ add_library(opentissue_header_check OBJECT ${_generated})
 
 target_link_libraries(opentissue_header_check PRIVATE OpenTissue)
 
-# A header that is not self-contained must fail the check, not be quietly
-# tolerated, so warnings that indicate missing declarations are errors here.
-if(NOT MSVC)
-  target_compile_options(opentissue_header_check PRIVATE -Wall)
-endif()
+# Deliberately no -Wall here. A header that is not self-contained fails this check as a
+# hard compile error already, since C++ has no implicit declarations, so extra warnings add
+# nothing to what the check is for. They do add a great deal of noise: OpenTissue's code
+# standard asks for a block of typedefs at the top of every function, which makes
+# -Wunused-local-typedef alone produce thousands of hits and bury real output.
 
 # Optional dependencies are resolved per-header by the exclusion list rather
 # than per-target, so link whatever happens to be available.
