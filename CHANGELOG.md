@@ -46,6 +46,12 @@ Anything older than the entry below predates this file; see the git history.
   and its three callers now use the reentrant API, which every supported platform provides.
   Qhull's own CMake config package is preferred over the bundled find module, since it
   carries per-configuration library locations that matter for a Debug build on Windows.
+- **MSVC could not compile a translation unit that composes a multibody simulator**:
+  `error C1128: number of sections exceeded object file format limit`. OpenTissue's template
+  instantiations each need their own COMDAT section, and an assembled simulator goes past
+  the 65,279 the default object format allows. `OpenTissue::headers` now carries `/bigobj`
+  for MSVC. This had never been seen because the affected tests were the ones Qhull's absence
+  was skipping on Windows.
 - `t4mesh_delaunay_tetrahedralization.h` passed a null `FILE*` to `fprintf` when Qhull
   reported unfreed memory. That function sets `errfile` to 0, so the diagnostic path was
   undefined behaviour.

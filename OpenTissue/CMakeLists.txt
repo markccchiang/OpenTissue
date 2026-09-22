@@ -32,6 +32,24 @@ target_include_directories(headers
     $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
 )
 
+# MSVC's default object file format allows 65,279 sections, and a translation unit that
+# composes an OpenTissue simulator goes past that: the template instantiations each need
+# their own COMDAT section. The result is
+#
+#   error C1128: number of sections exceeded object file format limit: compile with /bigobj
+#
+# /bigobj raises the limit. It changes nothing but the object file format, so it is safe to
+# apply everywhere rather than hunting for the translation units that happen to cross the
+# line -- and consumers instantiating the same templates need it just as much as this
+# project's own tests do, which is why it goes on the interface target.
+#
+# This only surfaced once unit_multibody_build_test compiled on Windows for the first time.
+# Until Qhull was found there, the whole multibody test directory was skipped.
+target_compile_options(headers
+  INTERFACE
+    $<$<CXX_COMPILER_ID:MSVC>:/bigobj>
+)
+
 target_compile_definitions(headers
   INTERFACE
     $<$<CXX_COMPILER_ID:MSVC>:_SCL_SECURE_NO_WARNINGS>
