@@ -7,13 +7,16 @@ Anything older than the entry below predates this file; see the git history.
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-09-22
+
 A modernisation pass. The project had not built out of the box for some years: its
 dependencies came from a private package remote that no longer existed, and roughly a
 quarter of its headers no longer compiled against current standard libraries.
 
-The version in `CMakeLists.txt` is still `0.994` and has deliberately not been bumped —
-these changes are breaking enough to deserve a deliberate version decision rather than an
-incidental one.
+The version moves from `0.994` to `1.0.0`. The changes below are breaking — Conan is gone,
+the project builds as C++17, and Cg along with everything depending on it has been removed —
+and the package config declares `SameMajorVersion` compatibility, so a consumer asking for
+`find_package(OpenTissue 0.994)` will now correctly be told this is not that library.
 
 ### Added
 
