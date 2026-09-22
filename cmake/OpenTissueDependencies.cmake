@@ -52,6 +52,8 @@ option(OPENTISSUE_WITH_TETGEN
   "Enable t4mesh_tetgen_mesh_lofter.h (requires TetGen -- AGPL-3.0, see note above)" OFF)
 option(OPENTISSUE_WITH_TRIANGLE
   "Enable polymesh_compute_delaunay2D.h (requires Triangle -- non-commercial only, see note above)" OFF)
+option(OPENTISSUE_WITH_EIGEN3
+  "Use Eigen if available (enables the mbd Eigen math policy)" ON)
 
 # Records one human-readable line for the configure summary printed by
 # ot_report_dependencies(). A global property is used rather than a cache variable because
@@ -201,6 +203,42 @@ if(OPENTISSUE_WITH_TRIANGLE)
   endif()
 else()
   _ot_report("Triangle" "off" "non-commercial; opt in with OPENTISSUE_WITH_TRIANGLE=ON")
+endif()
+
+#-------------------------------------------------------------------------------------------------
+#
+# Eigen -- used by exactly one header, dynamics/mbd/math/mbd_eigen3_math_policy.h, which is an
+# alternative to the uBLAS math policies that mbd is normally built with.
+#
+# Not fetched: Eigen is header-only and packaged everywhere (brew install eigen,
+# apt install libeigen3-dev, vcpkg install eigen3).
+#
+# Note the target is called Eigen3::Eigen and the CMake package Eigen3, so OPENTISSUE_HAVE_EIGEN3
+# keeps that spelling. "eigen3" is used throughout rather than "eigen" because OpenTissue already
+# uses "eigen" for eigenvalue decomposition (core/math/math_eigen_system.h) -- a different thing.
+#
+# IMPORTANT: Eigen3::Eigen carries INTERFACE_COMPILE_FEATURES "cxx_std_14", so linking it against
+# the OpenTissue::headers interface target would impose C++14 on every consumer and break the
+# library's C++11 compatibility. It is deliberately NOT linked there; only the targets that
+# actually compile the Eigen policy (its unit test, and the header self-containment check) link
+# it, and users who want the policy link Eigen3::Eigen themselves.
+#
+#-------------------------------------------------------------------------------------------------
+set(OPENTISSUE_HAVE_EIGEN3 OFF)
+
+if(OPENTISSUE_WITH_EIGEN3)
+  if(NOT TARGET Eigen3::Eigen)
+    find_package(Eigen3 QUIET NO_MODULE)
+  endif()
+
+  if(TARGET Eigen3::Eigen)
+    set(OPENTISSUE_HAVE_EIGEN3 ON)
+    _ot_report("Eigen3" "found" "${Eigen3_VERSION}")
+  else()
+    _ot_report("Eigen3" "MISSING" "install eigen; mbd Eigen math policy unavailable")
+  endif()
+else()
+  _ot_report("Eigen3" "disabled" "OPENTISSUE_WITH_EIGEN3=OFF")
 endif()
 
 #-------------------------------------------------------------------------------------------------

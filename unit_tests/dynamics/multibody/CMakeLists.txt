@@ -55,3 +55,5 @@ install(
   )
 
 ot_add_test(unit_multibody)
+
+ot_add_test_subdirectory( eigen3_math_policy EIGEN3 )

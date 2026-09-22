@@ -33,6 +33,14 @@ foreach(_line IN LISTS _raw_exclusions)
 endforeach()
 list(LENGTH _excluded _excluded_count)
 
+# Headers that include a third-party header directly, and so cannot be compiled at all when
+# that library is absent. These are deliberately kept out of known_not_self_contained.txt:
+# they are not defects and not a ratchet. The header is skipped only while the library is
+# missing, and is checked again the moment it is installed.
+if(NOT OPENTISSUE_HAVE_EIGEN3)
+  list(APPEND _excluded "OpenTissue/dynamics/mbd/math/mbd_eigen3_math_policy.h")
+endif()
+
 file(GLOB_RECURSE _headers
   RELATIVE "${PROJECT_SOURCE_DIR}"
   CONFIGURE_DEPENDS
@@ -72,7 +80,7 @@ target_link_libraries(opentissue_header_check PRIVATE OpenTissue)
 
 # Optional dependencies are resolved per-header by the exclusion list rather
 # than per-target, so link whatever happens to be available.
-foreach(_dep TinyXML Qhull::libqhull TetGen Triangle PNG::PNG)
+foreach(_dep TinyXML Qhull::libqhull TetGen Triangle PNG::PNG Eigen3::Eigen)
   if(TARGET ${_dep})
     target_link_libraries(opentissue_header_check PRIVATE ${_dep})
   endif()

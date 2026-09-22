@@ -39,7 +39,10 @@ namespace OpenTissue
       using std::max;
 
       typedef typename math_policy::value_traits value_traits;
-      typedef typename vector_type::size_type    size_type;
+      // Taken from the policy rather than from vector_type, which is not required to have a
+      // nested size_type -- Eigen's vectors do not. Both uBLAS policies define
+      // size_type as vector_type::size_type, so this is the same type they always had.
+      typedef typename math_policy::size_type    size_type;
       typedef typename vector_type::value_type   real_type;
 
       vector_type y;

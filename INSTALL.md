@@ -30,6 +30,7 @@ configure telling you what was found.
 | TinyXML | the XML readers and writers under `*/io/` | ON, downloaded if absent |
 | Qhull | `utility_qhull.h` — convex hulls and Delaunay tetrahedralisation | ON |
 | libpng | `gpu/image/io/image_{read,write}.h` | ON |
+| Eigen | `dynamics/mbd/math/mbd_eigen3_math_policy.h` only | ON |
 | OpenGL, GLEW, GLFW, GLUT | `OpenTissueGraphics` and the demos | ON if found |
 | TetGen | `t4mesh_tetgen_mesh_lofter.h` only | **OFF** |
 | Triangle | `polymesh_compute_delaunay2D.h` only | **OFF** |
@@ -53,14 +54,14 @@ These are the exact commands CI uses, so they are known to work.
 ```sh
 sudo apt-get install -y \
   libboost-dev libboost-test-dev \
-  libqhull-dev libpng-dev \
+  libqhull-dev libpng-dev libeigen3-dev \
   libglew-dev libglfw3-dev freeglut3-dev
 ```
 
 **macOS (Homebrew)**
 
 ```sh
-brew install boost qhull libpng glew glfw
+brew install boost qhull libpng glew glfw eigen
 ```
 
 OpenGL and GLUT are system frameworks on macOS and need no installation.
@@ -73,11 +74,17 @@ vcpkg install --triplet x64-windows \
   boost-lexical-cast boost-multi-array boost-numeric-conversion \
   boost-interval boost-optional boost-property-map boost-random \
   boost-test boost-type-traits boost-ublas boost-utility \
-  qhull libpng glew glfw3 freeglut
+  qhull libpng glew glfw3 freeglut eigen3
 ```
 
 `boost-test` alone is not enough; OpenTissue uses the other components listed above and
 vcpkg ports them separately.
+
+Eigen is optional and used by a single header: an alternative math policy for the multibody
+engine (`mbd_eigen3_math_policy.h`). Note that Eigen requires C++14, so that one header raises
+the standard the including translation unit needs. It is deliberately not linked into the
+`OpenTissue::headers` target, so the rest of the library stays usable from C++11 -- link
+`Eigen3::Eigen` yourself if you want the policy.
 
 ## Building
 
@@ -107,6 +114,7 @@ want:
 | `OPENTISSUE_FETCH_DEPENDENCIES` | ON | Allow configure-time downloads |
 | `OPENTISSUE_WITH_TINYXML` | ON | |
 | `OPENTISSUE_WITH_QHULL` | ON | |
+| `OPENTISSUE_WITH_EIGEN3` | ON | |
 | `OPENTISSUE_WITH_TETGEN` | OFF | AGPL-3.0, see above |
 | `OPENTISSUE_WITH_TRIANGLE` | OFF | non-commercial licence, see above |
 
