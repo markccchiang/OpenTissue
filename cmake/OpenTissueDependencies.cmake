@@ -138,19 +138,31 @@ endif()
 # apt install libqhull-dev, vcpkg install qhull) and its CMake target names have changed
 # across releases, so auto-fetching would be more fragile than useful.
 #
+# OpenTissue uses the reentrant library, libqhull_r -- see cmake/FindQhull.cmake for why.
+#
+# Qhull's own config package is preferred over the bundled find module because it carries
+# per-configuration library locations. That matters on Windows, where vcpkg ships a debug
+# and a release build under the same file name in different directories; a plain
+# find_library() picks one of them and a Debug build then links the release library.
+# Debian does not ship that config package, so the find module remains as the fallback.
+#
 #-------------------------------------------------------------------------------------------------
 set(OPENTISSUE_HAVE_QHULL OFF)
 
 if(OPENTISSUE_WITH_QHULL)
-  if(NOT TARGET Qhull::libqhull)
-    find_package(Qhull QUIET)
+  if(NOT TARGET Qhull::qhull_r)
+    find_package(Qhull CONFIG QUIET)
   endif()
 
-  if(TARGET Qhull::libqhull)
+  if(NOT TARGET Qhull::qhull_r)
+    find_package(Qhull MODULE QUIET)
+  endif()
+
+  if(TARGET Qhull::qhull_r)
     set(OPENTISSUE_HAVE_QHULL ON)
-    _ot_report("Qhull" "found" "system")
+    _ot_report("Qhull" "found" "reentrant (libqhull_r)")
   else()
-    _ot_report("Qhull" "MISSING" "install qhull; convex hull utilities unavailable")
+    _ot_report("Qhull" "MISSING" "install qhull (reentrant libqhull_r); convex hull utilities unavailable")
   endif()
 else()
   _ot_report("Qhull" "disabled" "OPENTISSUE_WITH_QHULL=OFF")

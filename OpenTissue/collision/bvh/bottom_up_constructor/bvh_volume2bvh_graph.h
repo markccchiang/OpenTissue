@@ -75,12 +75,18 @@ namespace OpenTissue
           coords[j++] = volume->center()(2);
         }
 
-        exitcode= qh_new_qhull (dim, N, coords, ismalloc, flags, outfile, errfile);
+        // Qhull's reentrant API keeps its state here rather than in globals. The pointer has
+        // to be called qh, because that is the name the FORALLvertices macro below expands to.
+        qhT qh_instance;
+        qhT *qh = &qh_instance;
+        qh_zero(qh, errfile);
+
+        exitcode= qh_new_qhull (qh, dim, N, coords, ismalloc, flags, outfile, errfile);
         if(!exitcode)
         {
           vertexT *vertex;
           facetT *neighbor,**neighborp;
-          qh visit_id++;
+          qh->visit_id++;
           bool ** exist = new bool*[N];
           for(int i=0;i<N;++i)
           {
@@ -90,19 +96,19 @@ namespace OpenTissue
           }
           FORALLvertices
           {
-            vertex->visitid = qh visit_id;
-            unsigned int idA = qh_pointid (vertex->point);
+            vertex->visitid = qh->visit_id;
+            unsigned int idA = qh_pointid (qh, vertex->point);
             FOREACHneighbor_(vertex)
             {
-              if(neighbor->visitid != qh visit_id)
+              if(neighbor->visitid != qh->visit_id)
               {
-                neighbor->visitid = qh visit_id;
+                neighbor->visitid = qh->visit_id;
                 vertexT *vertex, **vertexp;
                 FOREACHvertex_(neighbor->vertices)
                 {
-                  if(vertex->visitid != qh visit_id)
+                  if(vertex->visitid != qh->visit_id)
                   {
-                    unsigned int idB = qh_pointid (vertex->point);
+                    unsigned int idB = qh_pointid (qh, vertex->point);
                     if(!exist[idA][idB])
                     {
                       exist[idA][idB] = true;
@@ -122,9 +128,9 @@ namespace OpenTissue
           }
           delete [] exist;
         }
-        qh_freeqhull(!qh_ALL);
+        qh_freeqhull(qh, !qh_ALL);
         int curlong, totlong;
-        qh_memfreeshort (&curlong, &totlong);
+        qh_memfreeshort (qh, &curlong, &totlong);
         if (curlong || totlong)
           fprintf (errfile, "qhull internal warning (main): did not free %d bytes of long memory (%d pieces)\n", totlong, curlong);
         delete [] coords;

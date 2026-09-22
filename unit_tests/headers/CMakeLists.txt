@@ -80,7 +80,7 @@ target_link_libraries(opentissue_header_check PRIVATE OpenTissue)
 
 # Optional dependencies are resolved per-header by the exclusion list rather
 # than per-target, so link whatever happens to be available.
-foreach(_dep TinyXML Qhull::libqhull TetGen Triangle PNG::PNG Eigen3::Eigen)
+foreach(_dep TinyXML Qhull::qhull_r TetGen Triangle PNG::PNG Eigen3::Eigen)
   if(TARGET ${_dep})
     target_link_libraries(opentissue_header_check PRIVATE ${_dep})
   endif()

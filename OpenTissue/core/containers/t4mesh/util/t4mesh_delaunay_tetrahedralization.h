@@ -64,7 +64,14 @@ namespace OpenTissue
       FILE *outfile = 0;
       FILE *errfile = 0;
       int exitcode;
-      exitcode = qh_new_qhull ( dim, N, coords, ismalloc, flags, outfile, errfile );
+
+      // Qhull's reentrant API keeps its state here rather than in globals. The pointer has
+      // to be called qh, because that is the name the FORALLfacets macro below expands to.
+      qhT qh_instance;
+      qhT *qh = &qh_instance;
+      qh_zero(qh, errfile);
+
+      exitcode = qh_new_qhull ( qh, dim, N, coords, ismalloc, flags, outfile, errfile );
       if ( !exitcode )
       {
         facetT * facet;
@@ -72,7 +79,7 @@ namespace OpenTissue
         FORALLfacets {
           if ( !facet->upperdelaunay )
           {
-            assert( qh_setsize ( facet->vertices ) == 4 );
+            assert( qh_setsize ( qh, facet->vertices ) == 4 );
             typename t4mesh_type::node_iterator tmp[ 4 ];
             int j = 0;
             if ( !facet->toporient )
@@ -80,7 +87,7 @@ namespace OpenTissue
               // TODO: Compiler warning (VC++): assignment within conditional expression
               FOREACHvertexreverse12_( facet->vertices )
               {
-                int i = qh_pointid ( vertex->point );
+                int i = qh_pointid ( qh, vertex->point );
                 tmp[ j++ ] = nodeMap[ i ];
               }
             }
@@ -88,7 +95,7 @@ namespace OpenTissue
             {
               FOREACHvertex_( facet->vertices )
               {
-                int i = qh_pointid ( vertex->point );
+                int i = qh_pointid ( qh, vertex->point );
                 tmp[ j++ ] = nodeMap[ i ];
               }
             }
@@ -96,10 +103,12 @@ namespace OpenTissue
           }
         }
       }
-      qh_freeqhull( !qh_ALL );
+      qh_freeqhull( qh, !qh_ALL );
       int curlong, totlong;
-      qh_memfreeshort ( &curlong, &totlong );
-      if ( curlong || totlong )
+      qh_memfreeshort ( qh, &curlong, &totlong );
+      // errfile is null here, so the warning has to be guarded -- fprintf to a null FILE*
+      // is undefined, and this is the path taken when Qhull fails to free its memory.
+      if ( errfile && ( curlong || totlong ) )
         fprintf ( errfile, "qhull internal warning (main): did not free %d bytes of long memory (%d pieces)\n", totlong, curlong );
       delete [] coords;
 

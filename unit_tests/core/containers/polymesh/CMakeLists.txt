@@ -2,7 +2,7 @@ add_executable(unit_polymesh src/unit_polymesh.cpp)
 
 target_link_libraries(unit_polymesh
   PRIVATE
-      Qhull::libqhull
+      Qhull::qhull_r
       Boost::unit_test_framework
       OpenTissue
 )

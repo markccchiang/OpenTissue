@@ -55,19 +55,27 @@ namespace OpenTissue
       }
       std::vector<vertex_handle> handles(N);
       int iN = boost::numeric_cast<int,size_t>(N);
-      exitcode= qh_new_qhull (dim,  iN, coords, ismalloc, flags, outfile, errfile);
+
+      // Qhull's reentrant API keeps its state here rather than in globals. The pointer has
+      // to be called qh, because that is the name the FORALLfacets and FOREACHvertex_
+      // macros below expand to.
+      qhT qh_instance;
+      qhT *qh = &qh_instance;
+      qh_zero(qh, errfile);
+
+      exitcode= qh_new_qhull (qh, dim,  iN, coords, ismalloc, flags, outfile, errfile);
       if(!exitcode)
       {
         facetT *facet;
         vertexT *vertex, **vertexp;
-        qh visit_id++;
+        qh->visit_id++;
         FORALLfacets
         {
-          facet->visitid = qh visit_id;
+          facet->visitid = qh->visit_id;
           std::list<vertex_handle> tmp;
           FOREACHvertex_(facet->vertices)
           {
-            int idx = qh_pointid(vertex->point);
+            int idx = qh_pointid(qh, vertex->point);
             if(handles[idx].is_null())
               handles[idx] = mesh.add_vertex( vector3_type( vertex->point[0],vertex->point[1],vertex->point[2] )  );
             tmp.push_back(handles[idx]);
@@ -77,9 +85,9 @@ namespace OpenTissue
           mesh.add_face(tmp.begin(),tmp.end());
         }
       }
-      qh_freeqhull(!qh_ALL);
+      qh_freeqhull(qh, !qh_ALL);
       int curlong, totlong;
-      qh_memfreeshort (&curlong, &totlong);
+      qh_memfreeshort (qh, &curlong, &totlong);
       if (curlong || totlong)
         fprintf (errfile, "qhull internal warning (main): did not free %d bytes of long memory (%d pieces)\n", totlong, curlong);
       delete [] coords;

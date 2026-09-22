@@ -26,7 +26,7 @@ add_library(unit_multibody_build_test ${SRC_FILES})
 target_link_libraries(unit_multibody_build_test
   PRIVATE
     Boost::unit_test_framework
-    Qhull::libqhull
+    Qhull::qhull_r
     OpenTissue
 )
 
@@ -45,7 +45,7 @@ add_executable(unit_multibody
 target_link_libraries(unit_multibody
   PRIVATE
     Boost::unit_test_framework
-    Qhull::libqhull
+    Qhull::qhull_r
     OpenTissue
 )
 

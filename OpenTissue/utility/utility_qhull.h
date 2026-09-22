@@ -11,17 +11,19 @@
 
   //////////////////////////////////////////////////////////////////
   //
-  // This is a bit tricky, I cant just include qhull_a.h as
-  // QHull advices, because MVC complains about math.h which
-  // is included "indirectly by qhull_a.h
+  // This pulls in Qhull's *reentrant* C library, libqhull_r, rather than the
+  // original libqhull.
   //
-  // Hopefully furture releases of QHull will allow me to
-  // just write:
+  // The two differ in where Qhull keeps its state. libqhull keeps it in
+  // globals, reached through a "qh" macro; libqhull_r keeps it in a qhT that
+  // the caller owns and passes to every function. Upstream deprecated the
+  // former, and packagers have followed -- vcpkg builds only the reentrant
+  // library -- so the non-reentrant one is simply not available everywhere
+  // any more.
   //
-  //  extern "C"
-  //  {
-  //    #include <Qhull/qhull_a.h>
-  //  }
+  // The headers are still included through extern "C". Qhull advises including
+  // qhull_ra.h instead of the individual headers, but that pulls in math.h in a
+  // way MSVC objects to from inside an extern "C" block.
   //
 #if defined(__cplusplus)
   extern "C"
@@ -29,14 +31,14 @@
 #endif
 #include <stdio.h>
 #include <stdlib.h>
-#include <libqhull/libqhull.h>
-#include <libqhull/mem.h>
-#include <libqhull/qset.h>
-#include <libqhull/geom.h>
-#include <libqhull/merge.h>
-#include <libqhull/poly.h>
-#include <libqhull/io.h>
-#include <libqhull/stat.h>
+#include <libqhull_r/libqhull_r.h>
+#include <libqhull_r/mem_r.h>
+#include <libqhull_r/qset_r.h>
+#include <libqhull_r/geom_r.h>
+#include <libqhull_r/merge_r.h>
+#include <libqhull_r/poly_r.h>
+#include <libqhull_r/io_r.h>
+#include <libqhull_r/stat_r.h>
 #if defined(__cplusplus)
   }
 #endif

@@ -2,7 +2,7 @@ add_executable(unit_vclip src/unit_vclip.cpp)
 
 target_link_libraries(unit_vclip
   PRIVATE
-      Qhull::libqhull
+      Qhull::qhull_r
       Boost::unit_test_framework
       OpenTissue
 )

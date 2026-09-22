@@ -28,7 +28,7 @@ configure telling you what was found.
 | --- | --- | --- |
 | Boost | most of OpenTissue; the tests also need `Boost::unit_test_framework` | **required** |
 | TinyXML | the XML readers and writers under `*/io/` | ON, downloaded if absent |
-| Qhull | `utility_qhull.h` — convex hulls and Delaunay tetrahedralisation | ON |
+| Qhull | `utility_qhull.h` — convex hulls and Delaunay tetrahedralisation (needs the reentrant `libqhull_r`) | ON |
 | libpng | `gpu/image/io/image_{read,write}.h` | ON |
 | Eigen | `dynamics/mbd/math/mbd_eigen3_math_policy.h` only | ON |
 | OpenGL, GLEW, GLFW, GLUT | `OpenTissueGraphics` and the demos | ON if found |
@@ -44,6 +44,11 @@ Triangle is licensed for non-commercial use only, neither of which is compatible
 OpenTissue's zlib licence. Turning them on is a deliberate choice you should make with their
 terms in mind. Note that the TetGen *file format* readers parse plain text and do not need
 the library.
+
+OpenTissue uses Qhull's **reentrant** library, `libqhull_r`, not the original `libqhull`.
+Upstream deprecated the latter and packagers have followed -- vcpkg builds only the reentrant
+one. The packages listed above all provide it: Homebrew's `qhull` and Debian/Ubuntu's
+`libqhull-dev` ship both libraries, and vcpkg's `qhull` ships the reentrant one.
 
 ### Installing the dependencies
 

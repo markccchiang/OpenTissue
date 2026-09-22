@@ -4,7 +4,7 @@ target_link_libraries(unit_trimesh
   PRIVATE
       Boost::unit_test_framework
       OpenTissue
-      Qhull::libqhull
+      Qhull::qhull_r
 )
 
 install(

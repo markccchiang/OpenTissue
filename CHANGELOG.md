@@ -24,6 +24,11 @@ Anything older than the entry below predates this file; see the git history.
 - `unit_eigen3_math_policy`, which checks the new policy against the uBLAS one operation by
   operation and then runs the real `ProjectedGaussSeidel` solver through both, comparing the
   solutions.
+- `unit_convex_hull`, the first test to actually *run* `mesh::convex_hull`. The polymesh and
+  trimesh tests that mention it are compile-only -- they take a function's address and never
+  call it -- so nothing verified that OpenTissue's use of Qhull produced a correct hull.
+  It checks that interior points are dropped, that every extreme point survives, and that
+  the result is a closed surface by Euler's formula.
 
 ### Changed
 
@@ -33,6 +38,19 @@ Anything older than the entry below predates this file; see the git history.
 
 ### Fixed
 
+- **The Qhull-dependent code was silently skipped on Windows.** OpenTissue called Qhull's
+  original, non-reentrant library, which keeps its state in globals; upstream deprecated it
+  in favour of the reentrant `libqhull_r` and vcpkg now builds only the latter, so
+  `find_package` came up empty and four test directories -- `vclip`, `polymesh`, `trimesh`
+  and `multibody` -- were dropped while the job still reported success. `utility_qhull.h`
+  and its three callers now use the reentrant API, which every supported platform provides.
+  Qhull's own CMake config package is preferred over the bundled find module, since it
+  carries per-configuration library locations that matter for a Debug build on Windows.
+- `t4mesh_delaunay_tetrahedralization.h` passed a null `FILE*` to `fprintf` when Qhull
+  reported unfreed memory. That function sets `errfile` to 0, so the diagnostic path was
+  undefined behaviour.
+- `FindQhull.cmake` set `IMPORTED_LOCATION_RELEASE` from the *debug* library when both were
+  present, so a release build could link the debug one.
 - `unit_timer` asserted that a two-second `sleep()` returned in under 2.1 seconds. `sleep()`
   guarantees only that it will not return *early*, so that bound measured how busy the host
   was rather than anything about `Timer`; it failed on a CI runner that took 2.11 s. The
