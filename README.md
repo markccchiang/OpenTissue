@@ -44,6 +44,7 @@ Kinematics - Methods for kinematic animations, including inverse kinematics, ski
 
 GPU - Collection of general purpose algorithms and methods performed on the GPU (GPGPU).
   * [The Image and Texture Programming Guide](documentation/texture.md)
+  * [Visualising OpenTissue Data in ParaView](documentation/paraview.md)
   * [Volume Visualization](documentation/volviz.md) — *historical; the modules it describes were removed*
 
 Utility - Large collection of miscellaneous utilities, mostly for OT-based applications.

@@ -33,7 +33,11 @@ incidental one.
 - **`demos/opengl/gui_template`**, the minimal demo, ported to `GlfwApplication`. It is the
   worked template for restoring the other 28 demos that commit `dc6f0aa` removed; those
   sources remain in git history at `dc6f0aa^:demos/opengl/glut/`.
-- `INSTALL.md` and this changelog.
+- **`grid_metaimage_write.h`**, which writes any grid as a MetaImage (`.mhd` plus `.raw`)
+  for ParaView and other VTK-based tools. The header records the grid's origin and voxel
+  spacing, so the volume loads at the position and scale the simulation used. Verified by
+  reading the output back with VTK's own `vtkMetaImageReader`, the reader ParaView uses.
+- `INSTALL.md`, `documentation/paraview.md` and this changelog.
 
 ### Changed
 
