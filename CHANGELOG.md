@@ -31,6 +31,14 @@ Anything older than the entry below predates this file; see the git history.
   uBLAS policies define the former as the latter, so the type is unchanged for them; Eigen's
   vectors simply have no nested `size_type`.
 
+### Fixed
+
+- `unit_timer` asserted that a two-second `sleep()` returned in under 2.1 seconds. `sleep()`
+  guarantees only that it will not return *early*, so that bound measured how busy the host
+  was rather than anything about `Timer`; it failed on a CI runner that took 2.11 s. The
+  upper bound is now 3.0 s, which still catches a stopped clock, a wrong unit or an
+  uninitialised start.
+
 ## [1.0.0] - 2026-09-22
 
 A modernisation pass. The project had not built out of the box for some years: its
