@@ -9,56 +9,40 @@ Anything older than the entry below predates this file; see the git history.
 
 ### Added
 
-- **An Eigen-backed math policy for the multibody engine**
-  (`dynamics/mbd/math/mbd_eigen3_math_policy.h`), alongside the two existing uBLAS ones.
-  mbd composes its linear algebra through a math policy, so this is a drop-in alternative
-  to the uBLAS policies -- once the engine's own code goes through the policy, which it did
-  not everywhere (see Fixed). It exists because uBLAS is not
-  vectorised and its sparse products are slow enough that OpenTissue carries hand-written
-  replacements for them in `core/math/big/big_prod*.h`.
-  On a 2000-body, 4000-contact problem (16000 constraint rows, 20 solver iterations) it runs
-  the same solve in 16 ms against uBLAS's 598 ms, to an identical solution.
-  Gated on `OPENTISSUE_WITH_EIGEN3`; Eigen is optional and never downloaded.
-  `Eigen3::Eigen` requires C++14 and is therefore deliberately *not* linked into the
-  `OpenTissue::headers` interface target, which keeps the rest of the library compiling at
-  C++11.
-- `unit_eigen3_math_policy`, which checks the new policy against the uBLAS one operation by
-  operation and then runs the real `ProjectedGaussSeidel` solver through both, comparing the
-  solutions.
 - `unit_convex_hull`, the first test to actually *run* `mesh::convex_hull`. The polymesh and
   trimesh tests that mention it are compile-only -- they take a function's address and never
   call it -- so nothing verified that OpenTissue's use of Qhull produced a correct hull.
   It checks that interior points are dropped, that every extreme point survives, and that
   the result is a closed surface by Euler's formula.
+- `unit_mbd_math_policy_equivalence`, the first test to actually *run* a multibody
+  simulator; the existing mbd tests only compile one. It steps the ball-joint scene from the
+  original multibody demo on both math policies and compares the trajectories, which agree to
+  round-off, and checks the mass and inverse mass matrices entry by entry against the masses
+  and inertias put in.
 - `demos/console/benchmark_swe` and `demos/console/benchmark_lu`, which compare OpenTissue's
   uBLAS-based solvers with Eigen on identical input. They were written to decide whether
   porting `core/math/big/` to Eigen was worthwhile, and showed it was not: Eigen's conjugate
   gradient is no faster on the shallow-water system (0.9x), where assembly rather than the
   solve dominates each step; and while Eigen's dense LU is 11-12x faster, its only caller in
-  OpenTissue is the variational interpolator, which nothing uses. Built only when Eigen is
-  found.
+  OpenTissue is the variational interpolator, which nothing uses. They are the only code in
+  the tree that uses Eigen, which OpenTissue itself does not depend on, and are built only
+  when it is found.
 
 ### Changed
 
-- `mbd_merit.h` takes `size_type` from the math policy instead of from `vector_type`. Both
-  uBLAS policies define the former as the latter, so the type is unchanged for them; Eigen's
-  vectors simply have no nested `size_type`.
+- **The multibody engine now reaches its linear algebra only through its math policy.**
+  Twenty mbd headers bypassed it for uBLAS API -- `vector_type::size_type`, `.clear()`,
+  `.empty()`, writing into a sparse matrix with `operator()`, and an unqualified `prod` that
+  only resolved through argument-dependent lookup -- so a policy could not in practice use
+  anything but uBLAS types. They now go through the policy, which none of this changes for
+  the two uBLAS policies.
+  This came out of an experiment with an Eigen-backed math policy, dropped before release:
+  it was 37x faster than `default_ublas_math_policy` on a 16000-row contact problem, but
+  `optimized_ublas_math_policy`, which never forms the system matrix, was 1.5x faster than
+  Eigen.
 
 ### Fixed
 
-- **No simulator could be assembled on the Eigen math policy.** The policy's operations and
-  `ProjectedGaussSeidel` were tested, but the code that builds the mass matrices, the
-  Jacobian and the state vectors bypassed the policy for uBLAS-only API:
-  `vector_type::size_type`, `.clear()`, `.empty()`, writing into a sparse matrix with
-  `operator()`, and an unqualified `prod` that only resolved through argument-dependent
-  lookup. Every simulator failed to compile. Twenty mbd headers now go through the policy
-  instead; none of the changes alters what the uBLAS policies do.
-  `unit_multibody_eigen3_build_test` assembles every stepper and collision resolver under every
-  simulator on the Eigen policy, and `unit_mbd_math_policy_equivalence` steps a real simulator
-  on all three policies: their trajectories agree to within 4e-15 over 100 steps, and the mass
-  matrices are checked entry by entry against the masses and inertias put in.
-- `FindQhull.cmake` pointed the fallback library location at the release library even when
-  only a debug one had been found, so any non-Debug build failed to link.
 - **The Qhull-dependent code was silently skipped on Windows.** OpenTissue called Qhull's
   original, non-reentrant library, which keeps its state in globals; upstream deprecated it
   in favour of the reentrant `libqhull_r` and vcpkg now builds only the latter, so

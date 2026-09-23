@@ -6,7 +6,6 @@
 
 #include <OpenTissue/dynamics/mbd/math/mbd_default_math_policy.h>
 #include <OpenTissue/dynamics/mbd/math/mbd_optimized_ublas_math_policy.h>
-#include <OpenTissue/dynamics/mbd/math/mbd_eigen3_math_policy.h>
 #include <OpenTissue/dynamics/mbd/mbd.h>
 
 #define BOOST_AUTO_TEST_MAIN
@@ -21,13 +20,15 @@
 #include <vector>
 
 //
-// The three math policies are meant to be interchangeable. The compile tests check that a
-// simulator can be assembled on each; these check that it then does the same thing.
+// The two math policies are meant to be interchangeable: the default one assembles the
+// system matrix A = J W J^T, the optimized one never forms it and works from J and W J^T
+// instead. The compile tests check that a simulator can be assembled on each; these check
+// that it then does the same thing.
 //
 // Two kinds of check, because each misses what the other catches:
 //
-//   * Known values. The mass-matrix assembly is shared by all three policies, so comparing
-//     them against each other cannot catch an indexing mistake there -- they would all make
+//   * Known values. The mass-matrix assembly is shared by both policies, so comparing
+//     them against each other cannot catch an indexing mistake there -- both would make
 //     it. Those matrices are checked entry by entry against the masses and inertias put in.
 //
 //   * Equivalence. A real simulator is stepped on each policy -- a box swinging on a ball
@@ -174,13 +175,10 @@ namespace
     Pendulum & operator=(Pendulum const &);
   };
 
-  // Reading back one entry, whatever kind of sparse matrix the policy uses. uBLAS is read
-  // through a const reference, because its non-const operator() inserts the element.
+  // Reading back one entry. Through a const reference, because the non-const operator() of a
+  // uBLAS sparse matrix inserts the element it is asked for.
   template<typename T>
   double entry(boost::numeric::ublas::compressed_matrix<T> const & M, size_t i, size_t j) { return M(i, j); }
-
-  template<typename T, int options>
-  double entry(Eigen::SparseMatrix<T, options> const & M, size_t i, size_t j) { return M.coeff(i, j); }
 
   /**
   * Build the mass and inverse mass matrices for two bodies of known mass and inertia, and
@@ -279,7 +277,6 @@ BOOST_AUTO_TEST_SUITE(opentissue_dynamics_mbd_math_policy_equivalence);
 
 BOOST_AUTO_TEST_CASE(mass_matrices_default_ublas)   { check_mass_matrices< OpenTissue::mbd::default_ublas_math_policy<double> >(); }
 BOOST_AUTO_TEST_CASE(mass_matrices_optimized_ublas) { check_mass_matrices< OpenTissue::mbd::optimized_ublas_math_policy<double> >(); }
-BOOST_AUTO_TEST_CASE(mass_matrices_eigen3)          { check_mass_matrices< OpenTissue::mbd::eigen3_math_policy<double> >(); }
 
 //
 // Before comparing policies, make sure the reference does something worth comparing: the box
@@ -310,31 +307,23 @@ BOOST_AUTO_TEST_CASE(pendulum_swings_and_the_joint_holds)
 }
 
 //
-// The equivalence itself. The policies do the same arithmetic in different orders -- Eigen
-// vectorises its sums -- so the trajectories agree to round-off rather than exactly.
+// The equivalence itself. The policies reach the solution by different arithmetic, so the
+// trajectories agree to round-off rather than exactly.
 //
-BOOST_AUTO_TEST_CASE(pendulum_trajectory_is_the_same_on_every_policy)
+BOOST_AUTO_TEST_CASE(pendulum_trajectory_is_the_same_on_both_policies)
 {
   std::vector<double> const reference = trajectory< OpenTissue::mbd::default_ublas_math_policy<double>   >(steps);
   std::vector<double> const optimized = trajectory< OpenTissue::mbd::optimized_ublas_math_policy<double> >(steps);
-  std::vector<double> const eigen     = trajectory< OpenTissue::mbd::eigen3_math_policy<double>          >(steps);
 
   BOOST_REQUIRE_EQUAL(reference.size(), optimized.size());
-  BOOST_REQUIRE_EQUAL(reference.size(), eigen.size());
 
-  double worst_optimized = 0.0;
-  double worst_eigen     = 0.0;
+  double worst = 0.0;
   for(size_t i = 0; i < reference.size(); ++i)
-  {
-    worst_optimized = std::max(worst_optimized, std::fabs(reference[i] - optimized[i]));
-    worst_eigen     = std::max(worst_eigen,     std::fabs(reference[i] - eigen[i]));
-  }
+    worst = std::max(worst, std::fabs(reference[i] - optimized[i]));
 
-  BOOST_TEST_MESSAGE("largest position difference from default_ublas_math_policy over "
-    << steps << " steps: optimized_ublas " << worst_optimized << ", eigen3 " << worst_eigen);
+  BOOST_TEST_MESSAGE("largest position difference between the policies over " << steps << " steps: " << worst);
 
-  BOOST_CHECK_SMALL(worst_optimized, 1e-9);
-  BOOST_CHECK_SMALL(worst_eigen,     1e-9);
+  BOOST_CHECK_SMALL(worst, 1e-9);
 }
 
 BOOST_AUTO_TEST_SUITE_END();

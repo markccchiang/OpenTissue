@@ -58,13 +58,13 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends \
             libboost-dev libboost-test-dev \
-            libqhull-dev libpng-dev libeigen3-dev \
+            libqhull-dev libpng-dev \
             libglew-dev libglfw3-dev freeglut3-dev
 
       - name: Install dependencies (macOS)
         if: runner.os == 'macOS'
         # OpenGL and GLUT are system frameworks on macOS; GLEW and GLFW are not.
-        run: brew install boost qhull libpng glew glfw eigen
+        run: brew install boost qhull libpng glew glfw
 
       # vcpkg keeps its built packages in the GitHub Actions cache, so once a run has
       # succeeded later runs restore them instead of rebuilding ~60 packages from source.
@@ -98,7 +98,7 @@ jobs:
                  boost-lexical-cast boost-multi-array boost-numeric-conversion \
                  boost-interval boost-optional boost-property-map boost-random \
                  boost-test boost-type-traits boost-ublas boost-utility \
-                 qhull libpng glew glfw3 freeglut eigen3
+                 qhull libpng glew glfw3 freeglut
             then
               echo "::endgroup::"
               exit 0
@@ -156,7 +156,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends \
             libboost-dev libboost-test-dev \
-            libqhull-dev libpng-dev libeigen3-dev \
+            libqhull-dev libpng-dev \
             libglew-dev libglfw3-dev freeglut3-dev \
             gcovr
 
