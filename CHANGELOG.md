@@ -29,6 +29,13 @@ Anything older than the entry below predates this file; see the git history.
   call it -- so nothing verified that OpenTissue's use of Qhull produced a correct hull.
   It checks that interior points are dropped, that every extreme point survives, and that
   the result is a closed surface by Euler's formula.
+- `demos/console/benchmark_swe` and `demos/console/benchmark_lu`, which compare OpenTissue's
+  uBLAS-based solvers with Eigen on identical input. They were written to decide whether
+  porting `core/math/big/` to Eigen was worthwhile, and showed it was not: Eigen's conjugate
+  gradient is no faster on the shallow-water system (0.9x), where assembly rather than the
+  solve dominates each step; and while Eigen's dense LU is 11-12x faster, its only caller in
+  OpenTissue is the variational interpolator, which nothing uses. Built only when Eigen is
+  found.
 
 ### Changed
 
