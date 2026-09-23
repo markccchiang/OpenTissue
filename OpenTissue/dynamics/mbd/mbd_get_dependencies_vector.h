@@ -54,7 +54,7 @@ namespace OpenTissue
         typedef typename group_type::math_policy                                math_policy;
         typedef typename group_type::const_indirect_constraint_iterator         const_indirect_constraint_iterator;
         typedef typename group_type::const_indirect_contact_iterator            const_indirect_contact_iterator;
-        typedef typename idx_vector_type::size_type                             size_type;
+        typedef typename math_policy::size_type                                 size_type;
         typedef typename math_policy::idx_vector_range                          idx_vector_range;
 
         math_policy::resize(pi,m);

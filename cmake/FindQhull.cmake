@@ -89,12 +89,20 @@ if(Qhull_FOUND)
         IMPORTED_LOCATION_DEBUG "${Qhull_LIBRARY_DEBUG}")
     endif()
 
-    # A Debug build with only a release library available has to resolve to something, or the
-    # link line comes out empty. IMPORTED_LOCATION is the fallback CMake uses when no
-    # configuration-specific location matches.
+    # IMPORTED_LOCATION is what CMake falls back to when no configuration-specific location
+    # matches -- a Debug build when only the release library was found, or any other build when
+    # only the debug one was. Point it at whichever library exists, preferring release, or that
+    # build gets Qhull_LIBRARY_RELEASE-NOTFOUND on its link line.
+    if(EXISTS "${Qhull_LIBRARY_RELEASE}")
+      set(_qhull_fallback_location "${Qhull_LIBRARY_RELEASE}")
+    else()
+      set(_qhull_fallback_location "${Qhull_LIBRARY_DEBUG}")
+    endif()
+
     set_target_properties(Qhull::qhull_r PROPERTIES
-      IMPORTED_LOCATION "${Qhull_LIBRARY_RELEASE}"
+      IMPORTED_LOCATION "${_qhull_fallback_location}"
       INTERFACE_INCLUDE_DIRECTORIES "${Qhull_INCLUDE_DIR}")
+    unset(_qhull_fallback_location)
   endif()
 endif()
 

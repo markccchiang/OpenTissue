@@ -43,13 +43,11 @@ namespace OpenTissue
         typedef typename group_type::const_indirect_contact_iterator            const_indirect_contact_iterator;
         typedef typename group_type::const_indirect_body_iterator               const_indirect_body_iterator;
         typedef typename math_policy::matrix_range                              matrix_range;
-        typedef typename matrix_type::size_type                                 size_type;
+        typedef typename math_policy::size_type                                 size_type;
 
         size_type n = group.size_bodies();
 
         math_policy::resize(J,m,6*n);
-
-        J.clear();
 
         size_type tag = 0;
         for(const_indirect_body_iterator body = group.body_begin();body!=group.body_end();++body)

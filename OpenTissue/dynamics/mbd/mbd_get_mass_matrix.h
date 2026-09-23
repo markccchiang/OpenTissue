@@ -28,7 +28,8 @@ namespace OpenTissue
       typedef typename indirect_body_iterator::value_type  body_type;
       typedef typename body_type::math_policy              math_policy;
       typedef typename body_type::matrix3x3_type           matrix3x3_type;
-      typedef typename matrix_type::size_type              size_type;
+      typedef typename math_policy::size_type              size_type;
+      typedef typename math_policy::matrix_range           matrix_range;
       typedef typename matrix_type::value_type             real_type;
 
       matrix3x3_type I;
@@ -36,7 +37,6 @@ namespace OpenTissue
       size_type n = std::distance(begin,end);
 
       math_policy::resize( M, 6*n,6*n);      
-      M.clear();
       size_type tag=0;
 
       for(indirect_body_iterator body = begin;body!=end;++body)
@@ -61,19 +61,22 @@ namespace OpenTissue
         assert(is_number(I(2,1)) || !"get_mass_matrix(): non number encountered");
         assert(is_number(I(2,2)) || !"get_mass_matrix(): non number encountered");
 
-        M(offset,offset)     = mass;
-        M(offset+1,offset+1) = mass;
-        M(offset+2,offset+2) = mass;
-        offset += 3;      
-        M(offset,offset)     = I(0,0);
-        M(offset,offset+1)   = I(0,1);
-        M(offset,offset+2)   = I(0,2);
-        M(offset+1,offset)   = I(1,0);
-        M(offset+1,offset+1) = I(1,1);
-        M(offset+1,offset+2) = I(1,2);
-        M(offset+2,offset)   = I(2,0);
-        M(offset+2,offset+1) = I(2,1);
-        M(offset+2,offset+2) = I(2,2);
+        // Written through a view onto this body's 6x6 diagonal block rather than by indexing
+        // M directly: a sparse matrix need not be writable element by element -- Eigen's is not --
+        // and the policy's subrange() is what every math policy provides for exactly this.
+        matrix_range block = math_policy::subrange(M, offset, offset + 6, offset, offset + 6);
+        block(0,0) = mass;
+        block(1,1) = mass;
+        block(2,2) = mass;
+        block(3,3) = I(0,0);
+        block(3,4) = I(0,1);
+        block(3,5) = I(0,2);
+        block(4,3) = I(1,0);
+        block(4,4) = I(1,1);
+        block(4,5) = I(1,2);
+        block(5,3) = I(2,0);
+        block(5,4) = I(2,1);
+        block(5,5) = I(2,2);
       }
     }
 

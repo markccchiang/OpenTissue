@@ -12,7 +12,8 @@ Anything older than the entry below predates this file; see the git history.
 - **An Eigen-backed math policy for the multibody engine**
   (`dynamics/mbd/math/mbd_eigen3_math_policy.h`), alongside the two existing uBLAS ones.
   mbd composes its linear algebra through a math policy, so this is a drop-in alternative
-  that needs no changes to the engine's algorithms. It exists because uBLAS is not
+  to the uBLAS policies -- once the engine's own code goes through the policy, which it did
+  not everywhere (see Fixed). It exists because uBLAS is not
   vectorised and its sparse products are slow enough that OpenTissue carries hand-written
   replacements for them in `core/math/big/big_prod*.h`.
   On a 2000-body, 4000-contact problem (16000 constraint rows, 20 solver iterations) it runs
@@ -45,6 +46,19 @@ Anything older than the entry below predates this file; see the git history.
 
 ### Fixed
 
+- **No simulator could be assembled on the Eigen math policy.** The policy's operations and
+  `ProjectedGaussSeidel` were tested, but the code that builds the mass matrices, the
+  Jacobian and the state vectors bypassed the policy for uBLAS-only API:
+  `vector_type::size_type`, `.clear()`, `.empty()`, writing into a sparse matrix with
+  `operator()`, and an unqualified `prod` that only resolved through argument-dependent
+  lookup. Every simulator failed to compile. Twenty mbd headers now go through the policy
+  instead; none of the changes alters what the uBLAS policies do.
+  `unit_multibody_eigen3_build_test` assembles every stepper and collision resolver under every
+  simulator on the Eigen policy, and `unit_mbd_math_policy_equivalence` steps a real simulator
+  on all three policies: their trajectories agree to within 4e-15 over 100 steps, and the mass
+  matrices are checked entry by entry against the masses and inertias put in.
+- `FindQhull.cmake` pointed the fallback library location at the release library even when
+  only a debug one had been found, so any non-Debug build failed to link.
 - **The Qhull-dependent code was silently skipped on Windows.** OpenTissue called Qhull's
   original, non-reentrant library, which keeps its state in globals; upstream deprecated it
   in favour of the reentrant `libqhull_r` and vcpkg now builds only the latter, so

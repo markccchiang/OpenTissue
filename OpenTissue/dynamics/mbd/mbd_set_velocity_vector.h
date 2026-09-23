@@ -27,7 +27,8 @@ namespace OpenTissue
     {
       typedef typename indirect_body_iterator::value_type  body_type;
       typedef typename body_type::vector3_type    vector3_type;
-      typedef typename vector_type::size_type     size_type;
+      typedef typename body_type::math_policy     math_policy;
+      typedef typename math_policy::size_type     size_type;
 
       vector3_type V,W;
       size_type n = std::distance(begin,end);

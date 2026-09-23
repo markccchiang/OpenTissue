@@ -32,14 +32,16 @@ namespace OpenTissue
       typedef typename indirect_body_iterator::value_type   body_type;
       typedef typename body_type::math_policy               math_policy;
       typedef typename body_type::indirect_edge_iterator    indirect_edge_iterator;
-
-
+      typedef typename math_policy::matrix_range            matrix_range;
       typedef typename matrix_type::value_type              value_type;
 
       size_t n = std::distance(begin,end);
 
       math_policy::resize(C,n,n);
-      C.clear();
+
+      // Written through the policy's view rather than by indexing C directly, which a sparse
+      // matrix need not support -- Eigen's does not.
+      matrix_range entries = math_policy::subrange(C,0,n,0,n);
 
       typename body_type::size_type i = 0;
       for(indirect_body_iterator body=begin;body!=end;++body,++i)
@@ -51,7 +53,7 @@ namespace OpenTissue
         {
           if(edge->is_up_to_date())
           {
-            C(edge->get_body_A()->m_tag,edge->get_body_B()->m_tag) = value_type(edge->size_contacts());
+            entries(edge->get_body_A()->m_tag,edge->get_body_B()->m_tag) = value_type(edge->size_contacts());
           }
         }
       }

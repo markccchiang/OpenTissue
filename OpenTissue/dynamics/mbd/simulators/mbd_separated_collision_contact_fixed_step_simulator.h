@@ -73,7 +73,7 @@ namespace OpenTissue
     {
     protected:
 
-      typedef typename mbd_types::math_policy          math_policy;
+      typedef typename mbd_types::math_policy            math_policy;
       typedef typename math_policy::index_type           size_type;
       typedef typename math_policy::real_type            real_type;
       typedef typename math_policy::vector3_type         vector3_type;
@@ -216,7 +216,7 @@ namespace OpenTissue
         mbd::get_external_force_vector(*m_all,m_F, true);
         mbd::get_velocity_vector(*m_all, m_u);
 
-        m_u += prod(m_invM, m_F)*h;
+        math_policy::prod_add(m_invM, m_F, m_u, h);   // m_u += invM * F * h
 
         mbd::compute_position_update(*m_all,m_s_cur,m_u,h,m_s_predicted);
         mbd::set_position_vector(*m_all,m_s_predicted);

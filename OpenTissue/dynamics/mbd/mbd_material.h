@@ -41,7 +41,7 @@ namespace OpenTissue
     {
     public:
 
-      typedef typename mbd_types::math_policy    math_policy;
+      typedef typename mbd_types::math_policy      math_policy;
       typedef typename math_policy::real_type      real_type;
       typedef typename math_policy::value_traits   value_traits;
       typedef typename math_policy::index_type     index_type;
@@ -197,7 +197,9 @@ namespace OpenTissue
        */
       real_type get_isotropic_friction_coefficient() const
       {
-        if( m_mu.empty() )
+        // size() rather than empty(): the vector type comes from the math policy, and Eigen's
+        // vectors have no empty().
+        if( m_mu.size() == 0 )
           return value_traits::zero();
         return m_mu(0);
       }

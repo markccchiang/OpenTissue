@@ -56,7 +56,7 @@ namespace OpenTissue
       typedef typename body_type::value_traits                value_traits;
       typedef typename body_type::vector3_type                vector3_type;
       typedef typename body_type::quaternion_type             quaternion_type;
-      typedef typename vector_type::size_type                 size_type;
+      typedef typename math_policy::size_type                 size_type;
 
       using std::cos;
 

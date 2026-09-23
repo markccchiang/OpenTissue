@@ -40,7 +40,7 @@ namespace OpenTissue
       typedef typename group_type::math_policy                 math_policy;
       typedef typename group_type::indirect_constraint_iterator         indirect_constraint_iterator;
       typedef typename group_type::indirect_contact_iterator   indirect_contact_iterator;
-      typedef typename vector_type::size_type                  size_type;
+      typedef typename math_policy::size_type                  size_type;
 
       assert(x.size()==m || !"set_cached_solution(): wrong dimension");
 

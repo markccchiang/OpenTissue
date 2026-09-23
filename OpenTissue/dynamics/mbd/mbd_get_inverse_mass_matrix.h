@@ -28,7 +28,8 @@ namespace OpenTissue
       typedef typename indirect_body_iterator::value_type  body_type;
       typedef typename body_type::matrix3x3_type           matrix3x3_type;
       typedef typename body_type::math_policy              math_policy;
-      typedef typename matrix_type::size_type              size_type;
+      typedef typename math_policy::size_type              size_type;
+      typedef typename math_policy::matrix_range           matrix_range;
       typedef typename matrix_type::value_type             real_type;
 
       matrix3x3_type invI;
@@ -36,7 +37,6 @@ namespace OpenTissue
       size_type n = std::distance(begin,end);
 
       math_policy::resize(invM,6*n,6*n);
-      invM.clear();
       size_type tag=0;
 
       for(indirect_body_iterator body = begin;body!=end;++body)
@@ -61,19 +61,22 @@ namespace OpenTissue
         assert(is_number(invI(2,1)) || !"get_inverse_mass_matrix(): non number encountered");
         assert(is_number(invI(2,2)) || !"get_inverse_mass_matrix(): non number encountered");
 
-        invM(offset,offset)     = inv_mass;
-        invM(offset+1,offset+1) = inv_mass;
-        invM(offset+2,offset+2) = inv_mass;
-        offset += 3;      
-        invM(offset,offset)     = invI(0,0);
-        invM(offset,offset+1)   = invI(0,1);
-        invM(offset,offset+2)   = invI(0,2);
-        invM(offset+1,offset)   = invI(1,0);
-        invM(offset+1,offset+1) = invI(1,1);
-        invM(offset+1,offset+2) = invI(1,2);
-        invM(offset+2,offset)   = invI(2,0);
-        invM(offset+2,offset+1) = invI(2,1);
-        invM(offset+2,offset+2) = invI(2,2);
+        // Written through a view onto this body's 6x6 diagonal block rather than by indexing
+        // invM directly: a sparse matrix need not be writable element by element -- Eigen's is not --
+        // and the policy's subrange() is what every math policy provides for exactly this.
+        matrix_range block = math_policy::subrange(invM, offset, offset + 6, offset, offset + 6);
+        block(0,0) = inv_mass;
+        block(1,1) = inv_mass;
+        block(2,2) = inv_mass;
+        block(3,3) = invI(0,0);
+        block(3,4) = invI(0,1);
+        block(3,5) = invI(0,2);
+        block(4,3) = invI(1,0);
+        block(4,4) = invI(1,1);
+        block(4,5) = invI(1,2);
+        block(5,3) = invI(2,0);
+        block(5,4) = invI(2,1);
+        block(5,5) = invI(2,2);
       }
     }
 
