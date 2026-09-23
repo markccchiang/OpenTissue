@@ -43,6 +43,20 @@ Anything older than the entry below predates this file; see the git history.
 
 ### Fixed
 
+- **The spatial hash could hang for large tables.** `math_prime_numbers.h` computed
+  products of residues in `int`, which overflows once the modulus passes 46341, so its
+  Miller-Rabin test called nearly every larger prime composite and `modular_exponentiation`
+  returned wrong, even negative, results. `prime_search()`, which sizes the spatial hash
+  table used by mbd's broad phase, SPH and the versatile model, then scanned towards
+  `INT_MAX` for a prime it could not recognise: `prime_search(100000)` never returned, so a
+  multibody scene of that many bodies hung while setting up collision detection. The
+  arithmetic is now 64-bit. The same function was also missing a pair of braces, so it
+  miscounted the bits it walked, and shifted a signed `int` into its sign bit. New test:
+  `unit_prime_numbers`.
+- **`utility::Identifier` read past the end of a string literal.** It built each object's
+  name as `"ID" + m_index` -- pointer arithmetic, not concatenation -- so from the fourth
+  object on it read beyond `"ID"`. Every multibody body is an `Identifier`, so any scene
+  triggered it, and AddressSanitizer stopped on the first one. New test: `unit_identifier`.
 - **The Qhull-dependent code was silently skipped on Windows.** OpenTissue called Qhull's
   original, non-reentrant library, which keeps its state in globals; upstream deprecated it
   in favour of the reentrant `libqhull_r` and vcpkg now builds only the latter, so

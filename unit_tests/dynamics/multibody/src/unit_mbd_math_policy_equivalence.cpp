@@ -96,15 +96,19 @@ namespace
 
     typedef Setup<math_policy_type>  setup;
 
+    // Declaration order is destruction order reversed, and it matters here. The configuration
+    // refers to the bodies and to the joint, and tears them down in its own destructor -- so
+    // everything it refers to has to be declared before it and so outlive it. The joint in
+    // turn refers to the sockets, and the bodies to their geometry.
     typename setup::gravity_type           m_gravity;
-    std::vector<typename setup::body_type> m_bodies;
-    typename setup::simulator_type         m_simulator;
-    typename setup::configuration_type     m_configuration;
-    typename setup::material_library_type  m_library;
     typename setup::box_type               m_boxes[2];
+    std::vector<typename setup::body_type> m_bodies;
     typename setup::socket_type            m_socket_A;
     typename setup::socket_type            m_socket_B;
     typename setup::ball_type              m_ball;
+    typename setup::material_library_type  m_library;
+    typename setup::configuration_type     m_configuration;
+    typename setup::simulator_type         m_simulator;
 
     Pendulum()
       : m_bodies(3)

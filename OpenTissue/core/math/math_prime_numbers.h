@@ -35,21 +35,36 @@ namespace OpenTissue
       */
       inline bool withness(int a,int n)
       {
-        int ndec = n-1;int d  = 1; int k = ndec;
+        // Products of two residues are formed in 64 bits. Both are below n, so they fit, but
+        // their product overflows int as soon as n passes 46341 -- which is what made this
+        // report nearly every prime above that as composite.
+        typedef long long wide_type;
+
+        wide_type const modulus = n;
+        wide_type const ndec    = modulus - 1;
+        wide_type       d       = 1;
+
+        // Walk the bits of n-1 from the most significant set bit down. Unsigned, so that
+        // shifting a bit into the top position is well defined.
+        unsigned int k = static_cast<unsigned int>(n - 1);
         if(k!=0)
         {
           int c=0;
-          while((k&0x80000000)==0)
-            k<<=1;c++;
+          while((k&0x80000000u)==0)
+          {
+            k<<=1;
+            ++c;
+          }
           while(c<32)
           {
-            int x =d;
-            d=(d*d)%n;
+            wide_type const x = d;
+            d=(d*d)%modulus;
             if((d==1)&&(x!=1)&&(x!=ndec))
               return true;//--- Notrival square root of 1 was discovered.
-            if((k&0x80000000)!=0)
-              d=(d*a)%n;
-            k<<=1;c++;
+            if((k&0x80000000u)!=0)
+              d=(d*a)%modulus;
+            k<<=1;
+            ++c;
           }
         }
         if(d!=1)
@@ -95,15 +110,21 @@ namespace OpenTissue
     */
     inline int modular_exponentiation(int a,int b,int n)
     {
-      int d = 1;
+      // 64-bit intermediates for the same reason as in withness(): a*a and d*a overflow int
+      // once n passes 46341.
+      typedef long long wide_type;
+
+      wide_type const modulus = n;
+      wide_type       base    = a % modulus;
+      wide_type       d       = 1;
       while(b!=0)
       {
         if((b&1)!=0)
-          d=(d*a)%n;
-        a = (a*a)%n;
+          d=(d*base)%modulus;
+        base = (base*base)%modulus;
         b>>=1;
       }
-      return d;
+      return static_cast<int>(d);
     }
 
     /**

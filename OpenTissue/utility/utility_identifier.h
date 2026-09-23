@@ -39,7 +39,9 @@ namespace OpenTissue
       Identifier()
       {
         generate_new_index();
-        m_ID = "ID" + m_index;
+        // std::to_string, not "ID" + m_index: that is pointer arithmetic on the literal, and
+        // from the fourth object on it read past the end of "ID".
+        m_ID = "ID" + std::to_string(m_index);
       }
 
       virtual  ~Identifier(){}

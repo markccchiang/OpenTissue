@@ -53,10 +53,11 @@
 # too deep and every #include would then fail.
 find_path(Qhull_INCLUDE_DIR NAMES libqhull_r/libqhull_r.h)
 
-# Shared first, then static. Qhull's own build appends _d to the debug library on the
-# platforms that distinguish them.
+# Shared first, then static. Qhull's own build names the debug libraries by appending a
+# plain "d" -- qhull_rd and qhullstatic_rd, which is what vcpkg installs under debug/ -- not
+# "_d".
 find_library(Qhull_LIBRARY_RELEASE NAMES qhull_r qhullstatic_r)
-find_library(Qhull_LIBRARY_DEBUG   NAMES qhull_r_d qhullstatic_r_d)
+find_library(Qhull_LIBRARY_DEBUG   NAMES qhull_rd qhullstatic_rd)
 
 if(Qhull_LIBRARY_RELEASE)
   set(Qhull_LIBRARIES ${Qhull_LIBRARY_RELEASE})
