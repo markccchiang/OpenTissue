@@ -9,6 +9,10 @@ Anything older than the entry below predates this file; see the git history.
 
 ### Added
 
+- `demos/console/paraview_export`, a complete, runnable example of getting OpenTissue data
+  into ParaView: a mesh, its signed distance field, and an animated series of that field.
+  It ships with `render.py`, which renders the output with ParaView's `pvbatch`; both have
+  been run against ParaView 5.11.
 - `unit_convex_hull`, the first test to actually *run* `mesh::convex_hull`. The polymesh and
   trimesh tests that mention it are compile-only -- they take a function's address and never
   call it -- so nothing verified that OpenTissue's use of Qhull produced a correct hull.
@@ -43,6 +47,13 @@ Anything older than the entry below predates this file; see the git history.
 
 ### Fixed
 
+- **`documentation/paraview.md` gave instructions that did not work.** Its script used a
+  `MetaFileReader` that ParaView does not have (`OpenDataFile()` or `MetaFileSeriesReader`),
+  its signed distance field example called `mesh2phi(mesh, phi, 64)` as though 64 were the
+  resolution when that overload treats it only as a cap -- a plain box came out at 16^3 --
+  and its animation section did not say that every frame must share one grid. ParaView takes
+  a series' grid geometry from its first file, so frames with differing grids are drawn
+  distorted. All three are corrected, and the guide's snippets have now been run.
 - **The spatial hash could hang for large tables.** `math_prime_numbers.h` computed
   products of residues in `int`, which overflows once the modulus passes 46341, so its
   Miller-Rabin test called nearly every larger prime composite and `modular_exponentiation`

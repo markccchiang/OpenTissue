@@ -2,6 +2,7 @@ add_subdirectory(benchmark_bfgs)
 add_subdirectory(benchmark_gjk)
 add_subdirectory(benchmark_svd)
 add_subdirectory(dynamic_table_dispatcher)
+add_subdirectory(paraview_export)
 
 # These two compare OpenTissue's uBLAS-based solvers with Eigen on the same input. They are
 # the record of why OpenTissue does not use Eigen, and the only code in the tree that does:

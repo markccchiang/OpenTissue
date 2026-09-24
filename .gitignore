@@ -35,6 +35,10 @@ OpenTissueConfig.cmake
 CLAUDE.md
 .DS_Store
 build/
+build-demos/
+
+# CLion / JetBrains project settings
+.idea/
 OpenTissue/configuration.h
 third_party/include/boost_bindings/
 third_party/include/TetGen/

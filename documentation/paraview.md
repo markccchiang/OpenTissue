@@ -21,6 +21,69 @@ brew install --cask paraview     # macOS
 sudo apt-get install paraview    # Debian/Ubuntu
 ```
 
+## Trying it: the example program (on Mac)
+
+`demos/console/paraview_export` is a complete example of everything in this guide. It builds
+a box mesh, converts it to a signed distance field, and writes into the current directory:
+
+- `box.obj` — the mesh
+- `box_phi.mhd` and `box_phi.raw` — its signed distance field
+- `spin_0000.mhd` … `spin_0009.mhd` (each with its `.raw`) — the field of the box turning, as
+  an animation
+
+Next to it is `render.py`, a ParaView script that renders those files to `box_phi.png`,
+`spin_first.png` and `spin_last.png` without opening a window.
+
+Run these commands from the root of the OpenTissue checkout. There are two ways to build it.
+
+**Through CMake**, as part of the demos:
+
+```sh
+cmake -S . -B build-demos -DCMAKE_BUILD_TYPE=Release -DOPENTISSUE_ENABLE_DEMOS=ON
+cmake --build build-demos --target paraview_export
+
+cd build-demos/demos/console/paraview_export
+./paraview_export
+pvbatch render.py
+```
+
+The build copies `render.py` next to the program, so both commands run from the same
+directory. `OPENTISSUE_ENABLE_DEMOS` requires the OpenGL, GLEW, GLFW and GLUT development
+packages (see `INSTALL.md`), even though this demo does not draw anything itself.
+
+**By compiling the one file directly**, which needs none of the graphics packages:
+
+```sh
+c++ -std=c++17 -O2 -I. -Ibuild -I/opt/homebrew/include \
+    demos/console/paraview_export/src/paraview_export.cpp -o paraview_export
+
+mkdir -p out && cd out
+../paraview_export
+pvbatch ../demos/console/paraview_export/render.py
+```
+
+- `-I.` finds the OpenTissue headers. Nothing needs linking: the library is header-only.
+- `-Ibuild` finds `OpenTissue/configuration.h`, which CMake generates. It has to be a build
+  directory that has been configured at least once (`cmake -S . -B build`).
+- `-I/opt/homebrew/include` finds Boost when it was installed with Homebrew. Drop it where
+  Boost is in a standard location, as it is on Debian and Ubuntu.
+- The program writes into the current directory, hence `out/`.
+
+`pvbatch` comes with ParaView, but a macOS install does not put it on your `PATH`. Either
+call it by its full path, `/Applications/ParaView-<version>.app/Contents/bin/pvbatch`, or add
+that directory to `PATH`:
+
+```sh
+export PATH="/Applications/ParaView-5.11.0.app/Contents/bin:$PATH"   # match your version
+```
+
+On Linux the `paraview` package installs `pvbatch` on the `PATH`; on Windows it is in the
+`bin` folder of the ParaView installation.
+
+To explore the result interactively instead, open `box_phi.mhd` in ParaView, click
+**Apply**, and add a **Contour** filter at value 0: that surface should coincide with
+`box.obj` opened alongside it. Open `spin_0000.mhd` to get the animation as a group.
+
 ## Writing a grid
 
 `grid_metaimage_write.h` writes any OpenTissue grid as a MetaImage, which ParaView reads
@@ -58,9 +121,14 @@ typedef OpenTissue::math::BasicMathTypes<double, size_t>  math_types;
 typedef OpenTissue::grid::Grid<float, math_types>         grid_type;
 
 grid_type phi;
-OpenTissue::grid::mesh2phi(mesh, phi, 64);   // 64 is the resolution
+OpenTissue::grid::mesh2phi(mesh, phi, 0.25, 64);   // 0.25 margin around the mesh, 64 voxels per axis
 OpenTissue::grid::metaimage_write("phi", phi);
 ```
+
+Mind which `mesh2phi` overload you call. The shorter one, `mesh2phi(mesh, phi, 64)`, treats
+64 only as an *upper limit*: it derives the resolution from the mesh's smallest face and
+rounds it to a power of two, which for a plain box gives a 16x16x16 grid -- far too coarse to
+look at. The four-argument form above uses the resolution you give it.
 
 Open `phi.mhd` in ParaView and apply a **Contour** filter at value 0. That is the surface the
 distance field represents, and comparing it against the mesh you started from is a direct
@@ -84,22 +152,46 @@ first thing worth pressing.
 
 ## Animations
 
-Write one file per frame with a zero-padded number:
+Write one file per frame with a zero-padded number, and **keep the grid the same in every
+frame** -- same origin, same spacing, same number of voxels:
 
 ```cpp
+grid_type field;
+field.create(min_corner, max_corner, I, J, K);   // once, big enough for the whole run
+
 for(size_t frame = 0u; frame < frames; ++frame)
 {
   simulator.run(timestep);
+  // ... fill `field` for this frame ...
 
   std::ostringstream name;
   name << "phi_" << std::setw(4) << std::setfill('0') << frame;
-  OpenTissue::grid::metaimage_write(name.str(), phi);
+  OpenTissue::grid::metaimage_write(name.str(), field);
 }
 ```
 
 ParaView groups numbered files automatically: opening `phi_0000.mhd` offers `phi_..mhd` as a
 group, and the VCR controls in the toolbar then play through them. **File → Save Animation**
 writes the frames out as images or a movie.
+
+The fixed grid matters because ParaView reads the grid geometry of a series from its *first*
+file only and applies it to every other frame. If the origin or spacing changes from frame to
+frame, the later frames are drawn with the wrong ones: a rotating box comes out as a sheared
+parallelogram, although each file is correct when opened on its own.
+
+A simulation that works on a fixed grid satisfies this without trying. Watch out for anything
+that sizes the grid to its contents -- `mesh2phi()` does, fitting a new grid around the mesh
+each call. To animate the distance field of a moving mesh, create the grid once and refill it
+each frame with the scan conversion `mesh2phi()` uses internally:
+
+```cpp
+field.clear();                                            // back to "unused"
+OpenTissue::mesh::compute_angle_weighted_vertex_normals(mesh);
+OpenTissue::t4_cpu_scan(mesh, band, field, OpenTissue::t4_cpu_signed());
+```
+
+where `band` is how far from the surface to compute distances; make it large enough to cover
+the grid. `demos/console/paraview_export` does exactly this.
 
 ## Scripting
 
@@ -108,7 +200,7 @@ ParaView ships `pvpython`, so a figure can be reproduced without clicking:
 ```python
 from paraview.simple import *
 
-phi = MetaFileReader(FileName='phi.mhd')
+phi = OpenDataFile('phi.mhd')
 contour = Contour(Input=phi, ContourBy=['POINTS', 'MetaImage'], Isosurfaces=[0.0])
 Show(contour)
 Render()
@@ -117,6 +209,22 @@ SaveScreenshot('phi.png', ImageResolution=[1600, 1200])
 
 `pvbatch` does the same without opening a window, which is what you want on a cluster or in
 CI.
+
+`OpenDataFile()` picks the right reader from the file name, which is sturdier across ParaView
+versions than naming one. To load numbered frames as a time series, pass the list of files:
+
+```python
+import glob
+series = MetaFileSeriesReader(FileNames=sorted(glob.glob('phi_*.mhd')))
+scene = GetAnimationScene()
+scene.UpdateAnimationUsingDataTimeSteps()
+for t in series.TimestepValues:
+    scene.AnimationTime = t
+    Render()
+```
+
+`demos/console/paraview_export/render.py` is a complete script along these lines, run
+against that demo's output.
 
 ## What this does not cover
 
