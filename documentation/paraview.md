@@ -80,9 +80,63 @@ export PATH="/Applications/ParaView-5.11.0.app/Contents/bin:$PATH"   # match you
 On Linux the `paraview` package installs `pvbatch` on the `PATH`; on Windows it is in the
 `bin` folder of the ParaView installation.
 
-To explore the result interactively instead, open `box_phi.mhd` in ParaView, click
-**Apply**, and add a **Contour** filter at value 0: that surface should coincide with
-`box.obj` opened alongside it. Open `spin_0000.mhd` to get the animation as a group.
+### Exploring the output in the ParaView GUI
+
+Start ParaView from the directory the program wrote to, so that **File → Open** starts there
+-- `build-demos/demos/console/paraview_export` for the CMake build, `out` for the direct one:
+
+```sh
+cd build-demos/demos/console/paraview_export
+/Applications/ParaView-5.11.0.app/Contents/MacOS/paraview
+```
+
+The GUI program is in `Contents/MacOS`, not in `Contents/bin` with `pvbatch`, so the `PATH`
+change above does not reach it. Opening ParaView from the Dock and browsing to the directory
+works just as well.
+
+**1. The distance field and the mesh**
+
+1. **File → Open**, choose `box_phi.mhd`, **OK**, then **Apply** in the Properties panel on
+   the left. Only a bounding-box outline appears: that is the default for a volume.
+2. With `box_phi.mhd` selected in the **Pipeline Browser** (top left), **Filters → Common →
+   Contour**.
+3. In Properties, set the value under **Isosurfaces** to **0**, then **Apply**. The box
+   appears: this is the zero surface of the distance field.
+4. **File → Open**, choose `box.obj`, **Apply**, and switch its representation in the
+   toolbar drop-down from *Surface* to **Wireframe**. Its edges should sit exactly on the
+   contour -- the check that the distance field is right.
+
+**2. The values inside and outside**
+
+1. Select `box_phi.mhd` in the Pipeline Browser again, **Filters → Common → Slice**,
+   **Apply**.
+2. In the toolbar's colouring drop-down, choose **MetaImage**. Negative values are inside the
+   box, positive ones outside.
+3. Drag the slice plane's arrow in the view to move the plane through the volume.
+
+The eye icon beside each item in the Pipeline Browser hides or shows it.
+
+**3. The animation**
+
+1. **File → Open**. The ten numbered files show up as a single entry, `spin_..mhd`, with a
+   small arrow beside it. Select that **group entry** -- not `spin_0000.mhd` inside it, which
+   would load one frame only -- then **OK** and **Apply**.
+2. **Filters → Common → Contour** at value **0** again, then **Apply**.
+3. Press **▶** in the VCR controls on the toolbar at the top of the window: the box turns 9°
+   per frame for ten frames. If the buttons are greyed out, only one time step was loaded --
+   go back to step 1. If they are missing, **View → Toolbars → VCR Controls**.
+
+Hide the objects from the first two parts with their eye icons so they do not overlap.
+
+**Tips**
+
+- Left-drag rotates the view, right-drag or the scroll wheel zooms, and middle-drag or
+  Shift+drag pans. **Reset Camera** in the toolbar recentres everything.
+- Nothing changes after editing a setting? Press **Apply** -- ParaView waits for it.
+- **File → Save State** writes a `.pvsm` file; `paraview --state=yourfile.pvsm` brings the
+  whole setup back, camera included.
+- `paraview --script=render.py` builds the same scene as the script automatically and leaves
+  it open to explore.
 
 ## Writing a grid
 
@@ -170,8 +224,9 @@ for(size_t frame = 0u; frame < frames; ++frame)
 }
 ```
 
-ParaView groups numbered files automatically: opening `phi_0000.mhd` offers `phi_..mhd` as a
-group, and the VCR controls in the toolbar then play through them. **File → Save Animation**
+ParaView groups numbered files automatically: the **File → Open** dialog lists them as a
+single entry, `phi_..mhd`. Open that group entry rather than one of the files inside it, and
+the VCR controls in the toolbar then play through the frames. **File → Save Animation**
 writes the frames out as images or a movie.
 
 The fixed grid matters because ParaView reads the grid geometry of a series from its *first*
