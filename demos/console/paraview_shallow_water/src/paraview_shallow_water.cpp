@@ -5,7 +5,7 @@
 //
 // OTTL and OTTL Demos are licensed under zlib.
 //
-// A physical simulation, rendered in ParaView. See documentation/paraview.md.
+// A physical simulation, rendered in ParaView. See documentation/paraview_example_shallow_water.md.
 //
 // A drop of water falls into a pool 10 units across and 1 unit deep, with a hill on the
 // bottom. OpenTissue's shallow water solver moves the water; the rings spread out, bounce off

@@ -5,7 +5,7 @@
 //
 // OTTL and OTTL Demos are licensed under zlib.
 //
-// OpenTissue -> ParaView, end to end. See documentation/paraview.md.
+// OpenTissue -> ParaView, end to end. See documentation/paraview_example_distance_field.md.
 //
 // Builds a box mesh, converts it to a signed distance field, and writes into the current
 // directory:
