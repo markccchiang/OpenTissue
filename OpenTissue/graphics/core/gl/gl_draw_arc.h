@@ -27,7 +27,7 @@ namespace OpenTissue
     * Draw Arc (draws a 2D arc in the xy-plane, rotates about the z-axis)
     *
     * @param x0, x1     The end points of the arc.
-    * @parem angle      The (start) angle at the (start) point in radians [
+    * @param angle      The (start) angle at the (start) point in radians [
     *                   This angle is relative to the base line segment (x1 - x0).
     * @param segments   Amount of line steps between x0 and x1 (the higher the smoother)
     * @param wireframe  Draw in wireframe or normal.
@@ -93,7 +93,7 @@ namespace OpenTissue
     * Draw Circle Arc (draws a 2D circular arc in the xy-plane, rotates about the z-axis)
     *
     * @param x0, x1     The end points of the arc.
-    * @parem radius     The radius of the circlular arc in radians.
+    * @param radius     The radius of the circlular arc in radians.
     *                   This angle is relative to the base line segment (x1 - x0).
     * @param segments   Amount of line steps between x0 and x1 (the higher the smoother)
     * @param wireframe  Draw in wireframe or normal.

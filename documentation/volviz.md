@@ -248,8 +248,7 @@ protected:
 
 You need a pointer to the render, because Cg programs are used. This
 requires that you must setup a Cg context before instantiating any Cg
-programs (as explained in [The Shader
-Programming Guide](using_shaders.md)). Thus during initialization you will have to
+programs (as explained in the Shader Programming Guide, which was removed together with the Cg code). Thus during initialization you will have to
 write
 
 <pre>

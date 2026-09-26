@@ -29,9 +29,9 @@ namespace OpenTissue
         * @param l            A functor used to retrieve information about the lower bound function.
         * @param u            A functor used to retrieve information about the upper bound function.
         * @param bitmask      A bitmask. 
-        *                     The i'th value is equal to ``in active'' (=4) if and only if  y(i) \leq (x(i) - lo(i)) &&  y(i) \geq (x(i) - hi(i))
-        *                     The i'th value is equal to ``in upper'' (=2) if and only if  y(i) < (x(i) - hi(i))
-        *                     The i'th value is equal to ``in lower'' (=1) if and only if  y(i) > (x(i) - lo(i))
+        *                     The i'th value is equal to "in active" (=4) if and only if  y(i) <= (x(i) - lo(i)) &&  y(i) >= (x(i) - hi(i))
+        *                     The i'th value is equal to "in upper" (=2) if and only if  y(i) < (x(i) - hi(i))
+        *                     The i'th value is equal to "in lower" (=1) if and only if  y(i) > (x(i) - lo(i))
         * @param J            Upon return this argument holds the value of the Jacobian matrix.
         */
         template<typename T, typename bound_function_type>

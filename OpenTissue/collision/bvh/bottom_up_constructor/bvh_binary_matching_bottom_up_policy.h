@@ -66,7 +66,6 @@ namespace OpenTissue
       * node after a collapse operation.
       *
       *
-      * @param node    A pointer to the node.
       */
       void update(node_ptr_type /*node*/)
       {

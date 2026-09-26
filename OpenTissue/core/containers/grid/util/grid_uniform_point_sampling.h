@@ -20,7 +20,7 @@ namespace OpenTissue
     *
     * @param phi              The (signed distance grid) level set grid.
     * @param points           Upon return this container containts the random points.
-    * @param sub_Sample       Optimal argument, allows one to control the density of points.
+    * @param sub_sample       Optimal argument, allows one to control the density of points.
     */
     template<typename grid_type,typename vector3_container>
     inline void uniform_point_sampling(

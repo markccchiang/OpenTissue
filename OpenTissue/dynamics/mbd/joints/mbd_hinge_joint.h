@@ -125,7 +125,7 @@ namespace OpenTissue
 
         Q_cur = conj(Q_B) % Q_A;
 
-        //--- Now ``subtract'' the initial relative orientation
+        //--- Now "subtract" the initial relative orientation
         //--- what is left is the change of joint position. The
         //--- formula is as follows:
         //---
@@ -204,7 +204,7 @@ namespace OpenTissue
 
         m_t1 = this->m_socketA->get_axis1_world();
         m_t2 = this->m_socketA->get_axis2_world();
-        //--- Compute ``correction'' rotation axe used to set up b_error
+        //--- Compute "correction" rotation axe used to set up b_error
         m_u = cross(m_s_A_wcs , m_s_B_wcs);
 
         m_rows = 5;

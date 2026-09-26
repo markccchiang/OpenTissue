@@ -115,7 +115,7 @@ namespace OpenTissue
       /**
       * Insert Node.
       *
-      * @param geometry  The initial geometry covered by the new node.
+      * @param g         The initial geometry covered by the new node.
       *
       * @return          A pointer to the new node.
       */
@@ -138,7 +138,7 @@ namespace OpenTissue
       * Insert Node.
       *
       * @param volume    The initial volume of the new node.
-      * @param geometry  The initial geometry covered by the new node.
+      * @param g         The initial geometry covered by the new node.
       *
       * @return          A pointer to the new node.
       */

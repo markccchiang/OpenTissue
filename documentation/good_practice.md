@@ -611,12 +611,12 @@ To help developers in keeping the strategy design pattern we have decided upon u
 
 Here is an example of a imaginary folder structure that can help   assist one in achieving this
 
-<pre>
+```text
 $(OPENTISSUE)\OpenTissue\...\mylibary\
 $(OPENTISSUE)\OpenTissue\...\mylibary\io
 $(OPENTISSUE)\OpenTissue\...\mylibary\util
 $(OPENTISSUE)\OpenTissue\...\mylibary\policies
-</pre>
+```
 
 In general data structures should go into the main mylibrary folder. Also algorithms/methods working on the data structures can be located in this folder.
 

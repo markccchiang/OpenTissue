@@ -183,7 +183,8 @@ namespace OpenTissue
         * Initialize KMeans Algorithm.
         * This method creates an initial set of clusters and assign feature points to them.
         *
-        * @param points   An array type container of feature points.
+        * @param begin    An iterator to the first feature point.
+        * @param end      An iterator to one past the last feature point.
         * @param K        The wanted number of clusters.
         */
         template<typename vector_iterator>
@@ -286,7 +287,7 @@ namespace OpenTissue
                 vector_type diff = *p - c->m_mean;
                 // Mahalonobis type of distance measure, seems to make convergence really bad!!!
                 //   real_type squared_distance = inner_prod( diff,  prod( c->m_invC , diff) );
-                // So we use Euclidean (``spherical'') distances
+                // So we use Euclidean ("spherical") distances
                 real_type squared_distance = inner_prod( diff, diff );
                 if(squared_distance < min_squared_distance)
                 {

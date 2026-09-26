@@ -21,10 +21,10 @@ namespace OpenTissue
     * magnitude is modulated by a cosine signal.
     *
     * The initial un-modulated force is represented as F = m G, where
-    * m is the body mass and G is an initial ``gravitational'' acceleration.
+    * m is the body mass and G is an initial "gravitational" acceleration.
     * The driving force is computed as:
     *  
-    *  F(t) = m cos(\omega t + \phi) G
+    * \f[ F(t) = m \cos(\omega t + \phi) G \f]
     *
     * This class was contributed by Ricardo Ortiz-Rosado (UIOWA) and
     * tweaked by Kenny Erleben.

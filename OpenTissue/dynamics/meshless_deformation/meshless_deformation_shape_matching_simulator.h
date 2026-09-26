@@ -23,7 +23,7 @@ namespace OpenTissue
     *
     * This implementation is based on the paper
     *
-    *    @article{1073216,
+    *    \@article{1073216,
     *     author = {Matthias M\"{u}ller and Bruno Heidelberger and Matthias Teschner and Markus Gross},
     *     title = {Meshless deformations based on shape matching},
     *     journal = {ACM Trans. Graph.},

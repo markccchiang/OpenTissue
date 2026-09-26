@@ -317,7 +317,7 @@ Furthermore every algorithm class must implement an inner node and edge traits
 class. The TypeBinder assumes this, and will concatenate all traits into one
 huge traits class.
 
-<pre>
+```cpp
 template<typename types>
 class Edge : public types::edge_traits
 {
@@ -398,7 +398,7 @@ void test(void)
   edge.m_n1 = &node;
   edge.m_n2 = &node;
 };
-</pre>
+```
 
 ## Static Member initialized in Header (SMIIH) Design Pattern
 

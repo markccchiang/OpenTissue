@@ -36,9 +36,9 @@ namespace OpenTissue
         *
         * In some problems the bound functions l(x) and u(x) would be passed
         * directly to some solver. However, in other cases a solver or method
-        * may work with a more general ``constraint'' function. That is we
+        * may work with a more general "constraint" function. That is we
         * can rewrite either the lower or upper bounds into a inequality
-        * constraint of the type c(x) \geq 0,
+        * constraint of the type \f$c(x) \geq 0\f$,
         *
         *     c(x) =  u(x) - x \geq 0 or c(x) = x - l(x) \geq 0
         *
@@ -85,7 +85,7 @@ namespace OpenTissue
 
             size_t         m_index;     ///< The current index value of the iterator.
             size_t         m_end;       ///< The index value one position past the last element (if zero-based indexing is used, then this is the size of a vector).
-            bound_iterator m_pos;       ///< A iterator to the ``native'' vector_iterator on the bound function.
+            bound_iterator m_pos;       ///< A iterator to the "native" vector_iterator on the bound function.
             bool           m_is_lower;  ///< Boolean flag, if set to true then the constraint functions corresponds to a lower bound otherwise the constraint function corresponds to an upper bound.
             size_t         m_i;         ///< The variable index.
 

@@ -17,7 +17,7 @@ namespace OpenTissue
     * This is basically an empty class it usage
     * is intended as a default argument for the
     * many algorithms and data structures where
-    * the default traits is simply the ``empty''
+    * the default traits is simply the "empty"
     * traits.
     *
     */

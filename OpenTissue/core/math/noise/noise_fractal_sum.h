@@ -21,7 +21,7 @@ namespace OpenTissue
     /**
     * Fractal Sum Noise Function
     *
-    *    sum_{i=0}^{octaves-1} \frac{noise(2^i x,2^i y,2^i z) }{ 2^i}
+    * \f[ \sum_{i=0}^{\text{octaves}-1} \frac{\text{noise}(2^i x,2^i y,2^i z) }{ 2^i} \f]
     */
     template<typename real_type_>
     class FractalSumNoise

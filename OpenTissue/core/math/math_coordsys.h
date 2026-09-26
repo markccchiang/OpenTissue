@@ -143,7 +143,7 @@ namespace OpenTissue
       *        Tnew =  Tx Rx Told
       *        Rnew =  Rx Rold
       *
-      * @param X    The transform by which the current
+      * @param X1   The transform by which the current
       *             transform should be changed with..
       */
       CoordSys operator*(CoordSys const & X1) const

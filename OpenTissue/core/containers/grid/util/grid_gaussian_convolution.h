@@ -112,7 +112,7 @@ namespace OpenTissue
           {
             for ( int i = 0; i < xdim; ++i )
             {
-              //--- Check if we should happen to be in the ``void'' of the image.
+              //--- Check if we should happen to be in the "void" of the image.
               //--- In this case we simply choose to ignore the gaussian bluring.
               int idx = ( i * ydim + j ) * zdim + k;
               if ( input[ idx ] == OpenTissue::math::detail::highest<value_type>() )

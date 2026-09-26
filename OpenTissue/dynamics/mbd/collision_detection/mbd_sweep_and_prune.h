@@ -330,7 +330,7 @@ namespace OpenTissue
         //--- Values must be sorted in increasing order from left to right
         if(right->m_value<left->m_value)
           return true;
-        //--- Endpoints must be sorted so ``begin '' comes before ``end''
+        //--- Endpoints must be sorted so "begin " comes before "end"
         if(right->m_value==left->m_value)
         {
           if((right->m_type==0)&&(left->m_type==1))

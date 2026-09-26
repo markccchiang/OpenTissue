@@ -293,7 +293,7 @@ namespace OpenTissue
         }
 
         // Test relative stopping criteria, so see if we do not make enough
-        // progress toward the ``solution''
+        // progress toward the "solution"
         if( (old_squared_distance - squared_distance) <= (relative_tolerance*old_squared_distance) )
         {
           // If relative test succedes then it means that this is as good as it

@@ -19,7 +19,7 @@ namespace OpenTissue
     * Compute Signed Distance to Triangle .
     * This method implicitly assumes that the triangle is non-degenerate!
     *
-    * @parma p     A point in space
+    * @param p     A point in space
     * @param pi    First vertex of triangle.
     * @param pj    Second vertex of triangle.
     * @param pk    Third vertex of triangle.

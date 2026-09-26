@@ -90,7 +90,7 @@ namespace OpenTissue
       /**
       * Set Rest Length.
       *
-      * @param length
+      * @param l
       */
       void set_rest_length(real_type l)
       {

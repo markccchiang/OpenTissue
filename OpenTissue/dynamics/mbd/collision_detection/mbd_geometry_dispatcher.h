@@ -67,7 +67,7 @@ namespace OpenTissue
        * This method binds a collision handler to the geometry dispatcher.
        *
        * @param f    The collision handler function. The first two arguments must
-       *             be ``geometry types'' the third argument must be a collision
+       *             be "geometry types" the third argument must be a collision
        *             info and the return value must be bool.
        */
       template < class T1, class T2 >

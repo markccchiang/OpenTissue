@@ -94,15 +94,15 @@ namespace OpenTissue
       * Copy constructor.
       * Works in the same way as the corresponding assignment method.
       *
-      * @param Eq  Another plane equation.
+      * @param p   Another plane equation.
       */
       Plane(Plane const & p)    {      set(p);    }
 
       /**
       * Special Constructor.
       *
-      * @param n  The direction of the normal vector of this plane.
-      * @param d  The orthogonal distance from origo.
+      * @param n_val The direction of the normal vector of this plane.
+      * @param d_val The orthogonal distance from origo.
       */
       explicit Plane(vector3_type const & n_val, real_type const & d_val){      set(n_val,d_val);    }
 
@@ -142,7 +142,7 @@ namespace OpenTissue
       * Assigns the values of the specified plane
       * equation to this plane equation.
       *
-      * @param Eq  Another plane equation.
+      * @param p   Another plane equation.
       */
       void set(plane_type const & p)
       {
@@ -153,8 +153,8 @@ namespace OpenTissue
       /**
       * Assignment Method.
       *
-      * @param n  The direction of the normal vector of this plane.
-      * @param d  The orthogonal distance from origo.
+      * @param n_val The direction of the normal vector of this plane.
+      * @param d_val The orthogonal distance from origo.
       */
       void set(vector3_type const & n_val,real_type const & d_val)
       {
@@ -399,8 +399,6 @@ namespace OpenTissue
       * This method computes an axis aligned bounding
       * box (AABB) that encloses the geometry.
       *
-      * @param r           The position of the model frame (i.e the coordinate frame the geometry lives in).
-      * @param R           The orientation of the model frame (i.e the coordinate frame the geometry lives in).
       * @param min_coord   Upon return holds the minimum corner of the box.
       * @param max_coord   Upon return holds the maximum corner of the box.
       *

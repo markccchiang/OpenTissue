@@ -26,7 +26,9 @@ namespace OpenTissue
     * various geometric structures. For instace a tetrahedra mesh can benefit
     * from it as shown in the example below.
     *
-    * Example usage
+    * Example usage:
+    *
+    * @code
     *
     *  typedef OpenTissue::math::BasicMathTypes<double,size_t>  math_types;
     *  typedef OpenTissue::PlaneBox<math_types>  plane_box_type;
@@ -79,6 +81,7 @@ namespace OpenTissue
     *        std::cout << "You pressed " << choice << std::endl;    break;
     *      };
     *    }
+    * @endcode
     */
     template<typename math_types>
     class PlaneBox

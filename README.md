@@ -25,7 +25,7 @@ Free for commercial use, open source under the [Zlib license](http://opensource.
   * The book: [Physics-Based Animation](https://iphys.wordpress.com/2020/01/12/free-textbook-physics-based-animation/)
 
 ## Programming Guides
-Core- Atomic building blocks that are commonly used throughout all OpenTissue components, including data structures and algorithms.</font>
+Core- Atomic building blocks that are commonly used throughout all OpenTissue components, including data structures and algorithms.
   * [BIG Matrix-Vector Library (large scale)](documentation/big.md)
   * [The Mesh Programming Guide](documentation/mesh.md)
   * [The Tetrahedra Mesh Programming Guide](documentation/t4mesh.md)

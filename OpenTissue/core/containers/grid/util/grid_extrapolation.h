@@ -23,7 +23,6 @@ namespace OpenTissue
     /**
     *
     * @param max_iterations   The maximum number of iterations allowed to do extrapolation.
-    * @param stead_threshold  The threshold value used to test for steady state.
     */
     template < typename grid_type >
     inline void extrapolation(

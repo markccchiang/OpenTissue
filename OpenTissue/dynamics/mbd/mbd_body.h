@@ -444,7 +444,7 @@ namespace OpenTissue
       /**
       *  Get the world frame inertia tensor.
       *
-      * @param invI_WCS   Upon return this argument holds the value of the world frame inertia tensor.
+      * @param I_WCS      Upon return this argument holds the value of the world frame inertia tensor.
       */
       void get_inertia_wcs(matrix3x3_type & I_WCS) const
       {
@@ -490,7 +490,7 @@ namespace OpenTissue
       * Set material_type Index.
       * material_type properties are defined between two materials, a material
       * is uniquely identified by an index value. So if you want a material
-      * like iron dedicate a unique index to mean ``iron'', if you have another
+      * like iron dedicate a unique index to mean "iron", if you have another
       * object made of say rubber, it will have another unique index. If the
       * iron and rubber objects come into contact, their material indices are
       * used to look up the material properties between iron and rubber.

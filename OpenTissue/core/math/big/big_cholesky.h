@@ -17,7 +17,7 @@
 // 2007-9-28: The implementation in this file is based on a
 // modification of code originally developed by Gunter Winkler and Konstantin Kutzkow.
 // 
-/** -*- c++ -*- \file cholesky.hpp \brief cholesky decomposition */
+/* -*- c++ -*- cholesky decomposition */
 /*
 -   begin                : 2005-08-24
 -   copyright            : (C) 2005 by Gunter Winkler, Konstantin Kutzkow

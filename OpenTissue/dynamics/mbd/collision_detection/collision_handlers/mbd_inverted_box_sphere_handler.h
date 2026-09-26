@@ -122,7 +122,7 @@ namespace OpenTissue
 
           //--- If the the center-line did intersect the box faces or
           //--- if the sphere center lies inside the box then we are in
-          //--- the case of being ``inside''.
+          //--- the case of being "inside".
           if(inside)
           {
             info.get_contacts()->clear();

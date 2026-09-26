@@ -65,8 +65,8 @@ namespace OpenTissue
     /**
     * Write a grid as a MetaImage, for ParaView and other VTK-based tools.
     *
-    * Two files are produced: a short text header, <filename>.mhd, and the voxel data as
-    * <filename>.raw. Opening the .mhd in ParaView gives a correctly sized and positioned
+    * Two files are produced: a short text header, filename.mhd, and the voxel data as
+    * filename.raw. Opening the .mhd in ParaView gives a correctly sized and positioned
     * volume, ready for a contour or volume-rendering filter.
     *
     * This is the compact route. grid_matlab_write.h is more convenient for small grids one

@@ -67,7 +67,6 @@ namespace OpenTissue
       /**
       * Evaluate motor constraint.
       *
-      * @param offset   joint_type offset (i.e. linear displacement from initial pose).
       * @param s_wcs    joint_type axis in world coordinate system.
       * @param r_A      Center of mass position of body A in world coordinate system.
       * @param r_B      Center of mass position of body B in world coordinate system.

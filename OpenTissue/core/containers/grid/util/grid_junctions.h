@@ -155,7 +155,6 @@ namespace OpenTissue
     * KE 2006-02-15: This is work in progress, please ignore it!
     *
     * @param aof        A the aof grid.
-    * @param F          A grid containing non-zero values for junctions.
     */
     template<typename grid_type, typename mesh_type, typename point_container >
     inline void junctions(

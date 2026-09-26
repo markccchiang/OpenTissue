@@ -33,8 +33,8 @@ namespace OpenTissue
     * have any knowledge of  halfedge and edge traits.
     *
     *
-    * @param in      Reference to input mesh.
-    * @param out     Reference to output mesh.
+    * @param mesh    Reference to input mesh.
+    * @param flipped Reference to output mesh.
     *
     * @return        The value true if succesful otherwise false.
     */

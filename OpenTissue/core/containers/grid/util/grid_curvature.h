@@ -25,8 +25,8 @@ namespace OpenTissue
     * @param  i           Node coordinate
     * @param  j           Node coordinate
     * @param  k           Node coordinate
-    * @param H            Upon return this value contains the mean curvature.
-    * @param K            Upon return this value contains the gauss curvature.
+    * @param K            Upon return this value contains the mean curvature.
+    * @param G            Upon return this value contains the gauss curvature.
     * @param k1            Upon return this value contains the first principal curvature.
     * @param k2            Upon return this value contains the second principal curvature.
     */
@@ -164,7 +164,7 @@ namespace OpenTissue
     *
     * This is similar to the approach used in the paper:
     *
-    *   @inproceedings{museth.breen.ea02,
+    *   \@inproceedings{museth.breen.ea02,
     *      author = {Ken Museth and David E. Breen and Ross T. Whitaker and Alan H. Barr},
     *      title = {Level set surface editing operators},
     *      booktitle = {Proceedings of the 29th annual conference on Computer graphics and interactive techniques},

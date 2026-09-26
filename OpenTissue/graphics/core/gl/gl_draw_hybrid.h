@@ -26,7 +26,7 @@ namespace OpenTissue
     * Draw Hybrid
     * This method draws the hybrid volume in the world coordinate system.
     *
-    * @param hybdrid     A reference to the Hybrid that should be drawn.
+    * @param hybrid      A reference to the Hybrid that should be drawn.
     * @param wireframe   Draw in wireframe or normal.
     */
     template<typename hybrid_type>

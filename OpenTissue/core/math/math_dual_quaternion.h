@@ -72,7 +72,7 @@ namespace OpenTissue
        *
        * @param v Vector describing a translation
        *
-       * @return A dual quaternion describing the translation given
+       * Creates a dual quaternion describing the translation given
        */
       DualQuaternion( vector3_type const & v )
         : m_real( quaternion_type( value_traits::one(), value_traits::zero(), value_traits::zero(), value_traits::zero() ) )
@@ -85,7 +85,7 @@ namespace OpenTissue
        * @param rotation A unit quaternion describing a rotation
        * @param translation A vector describing a translation
        *
-       * @return A unit dual quaternion describing the rotation and translation given
+       * Creates a unit dual quaternion describing the rotation and translation given
        */
       DualQuaternion( quaternion_type const & rotation, vector3_type const & translation )
         : m_real( rotation )

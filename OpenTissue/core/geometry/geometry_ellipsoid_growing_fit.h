@@ -23,15 +23,14 @@ namespace OpenTissue
 
     /**
     * Fitting by growing Ellipsoid.
-    * Determines ``largest'' possible (inner) empty ellipsoid by a growing strategy. 
+    * Determines "largest" possible (inner) empty ellipsoid by a growing strategy. 
     *
     *
     * @param p       The surface point, used to set the starting position of the growing ellipsoid.
-    * @param n       The ``outward'' pointing normal at the surface point p.
+    * @param n       The "outward" pointing normal at the surface point p.
     * @param begin   An iterator to the first sample point.
     * @param end     An iterator one past the last sample point.
-    *
-    * @return        The fitted ellipsoid.
+    * @param E       Upon return this argument holds the fitted ellipsoid.
     */
     template<typename vector3_type, typename vector3_iterator, typename ellipsoid_type>
     void ellipsoid_growth_fit(

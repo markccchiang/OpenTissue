@@ -17,12 +17,12 @@ namespace OpenTissue
   {
     /**
     * Sub Constraint base Class.
-    * Sub constraints are ``extra'' constrains on constraints between body pairs.
+    * Sub constraints are "extra" constrains on constraints between body pairs.
     *
     * For instance an joint limit or motor is an extra constraint on a hinge joint.
     *
     * These kind of constraints are termed sub-constraints, because they are subsequent
-    * constraints on a ``base'' constraint.
+    * constraints on a "base" constraint.
     */
     template< typename mbd_types  >
     class SubConstraintInterface : public CoreConstraintInterface<mbd_types>

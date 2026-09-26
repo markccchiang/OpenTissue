@@ -131,7 +131,7 @@ namespace OpenTissue
     * Invert a 4x4 matrix
     *
     * @param M   the matrix to be inverted
-    * @param iM  the inverted matrix
+    * @param I   the inverted matrix
     *
     * @return    the determinant of M. If zero, the matrix is invertible.
     */

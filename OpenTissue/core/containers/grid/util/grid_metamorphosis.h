@@ -137,17 +137,17 @@ namespace OpenTissue
     *
     *  Solve the PDE:
     *
-    *    \frac{\partial \phi(x) }{  \partial t}  = | \nabla \phi(x)| \gamma(x)
+    * \f[ \frac{\partial \phi(x) }{  \partial t}  = | \nabla \phi(x)| \gamma(x) \f]
     *
-    * where \gamma usually is an inside-outside function of the target
+    * where \f$\gamma\f$ usually is an inside-outside function of the target
     * object. Usually the signed distance map of the target is used as
-    * \gamma. That is
+    * \f$\gamma\f$. That is
     *
-    *    \gamma (x)  = \phi_target (x)
+    * \f[ \gamma (x)  = \phi_{\text{target}} (x) \f]
     *
     * It could be defined more genrally as
     *
-    *   \gamma (x)  = f ( \phi_target (x) )
+    * \f[ \gamma (x)  = f ( \phi_{\text{target}} (x) ) \f]
     *
     * where the function f is used to control the speed of the moving
     * interface of phi.
@@ -159,17 +159,16 @@ namespace OpenTissue
     *
     * The final metamorphosis strategy is
     *
-    *    \frac{\partial \phi(x) }{  \partial t}  = | \nabla \phi(x)| \gamma( T(x,alpha) )
+    * \f[ \frac{\partial \phi(x) }{  \partial t}  = | \nabla \phi(x)| \gamma( T(x,\alpha) ) \f]
     *
     * Given the coordinate transform:
     *
-    *   y = T(x,alpha)
+    * \f[ y = T(x,\alpha) \f]
     *
     * where x is a point in source and y is corresponding point in
-    * target, and 0 \leq alpha \leq 1 is a parameterization such that
+    * target, and \f$0 \leq \alpha \leq 1\f$ is a parameterization such that
     *
-    *   T(x,0) = x
-    *   T(x,1) = y
+    * \f[ T(x,0) = x, \qquad T(x,1) = y \f]
     *
     * The transform T is for instance useful for alignment of the objects.
     *

@@ -19,7 +19,7 @@ namespace OpenTissue
     * Index To Coordinate Conversion.
     * This method computes the coordinates of the voxel with indices (i,j,k)
     *
-    * @param map     The grid.
+    * @param grid    The grid.
     * @param i       The index of the voxel along the I-axe.
     * @param j       The index of the voxel along the J-axe.
     * @param k       The index of the voxel along the K-axe.

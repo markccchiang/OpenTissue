@@ -20,7 +20,7 @@ namespace OpenTissue
 // 2007-07-24 kenny: Where is the unit-test for this new piece of code?
 //   2007-07-24 micky: Unit-test, are you serious? Ain't this a bit overkill?
 //     2007-07-24 kenny: Yes I am very serious... Too many times we have got into trouble by not making sure small simple pieces of code are not consistent and working (last time were when we re-factored vector3 class)
-//     2007-09-18 kenny: he he, just to add some salt to the wound, do you recall what happended with the ``clamp'' unit-test:-)
+//     2007-09-18 kenny: he he, just to add some salt to the wound, do you recall what happended with the "clamp" unit-test:-)
 //       2007-09-25 micky: I'll add the unit test ASAP.
     /**
     * Compute Perpendicular Line Point in nD.
@@ -45,7 +45,7 @@ namespace OpenTissue
 //       2007-07-24 micky: My last comment still stands, and frankly it's quite realistic. Besides if the caller uses int as a real type he's a victim of his own incompetence.
 //         2007-07-24 kenny: So why not make sure the compiler tells the caller that he is doing something stupid?
 //           2007-09-25 micky: Should we try to wrap up this one? I world like both template args to stay. They both are used implicitly from the caller.
-//             2007-07-26 kenny: Fine, but maybe you should add a note about this ``implicitly'' handling of types, either as source comments or as doxygen comments? Maybe this way it will be easy for others to track down future problems of implicit type conversions?
+//             2007-07-26 kenny: Fine, but maybe you should add a note about this "implicitly" handling of types, either as source comments or as doxygen comments? Maybe this way it will be easy for others to track down future problems of implicit type conversions?
     template<typename vector_type, typename real_type>
     void compute_perpendicular_line_point( vector_type const & p0
                                                 , vector_type const & p1

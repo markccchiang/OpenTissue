@@ -25,7 +25,7 @@ namespace OpenTissue
     *
     * The reach cone modelling idea was inspired from the work
     *
-    *  @article{wilhelms.van_gelder.01,
+    *  \@article{wilhelms.van_gelder.01,
     *     author = {Jane Wilhelms and Allen Van Gelder},
     *     title = {Fast and easy reach-cone joint limits},
     *     journal = {J. Graph. Tools},
@@ -40,7 +40,7 @@ namespace OpenTissue
     *
     * See http://jgt.akpeters.com/papers/WilhelmsVanGelder01/ also have a look at 
     *
-    * @article{WilhelmsVanGelder01,
+    * \@article{WilhelmsVanGelder01,
     *   author = "Jane Wilhelms and Allen Van Gelder",
     *   title = "Fast and Easy Reach-Cone joint_type Limits",
     *   journal = "journal of graphics tools",
@@ -55,7 +55,7 @@ namespace OpenTissue
     *
     * Initially the joint limits are specified by a face-plane normal of each side
     * of the cone. This is simply another way of specifying an angular limit
-    * on a ``rotational'' joint type. When the method ReachCone::evaluate
+    * on a "rotational" joint type. When the method ReachCone::evaluate
     * is invoked active cone constraints are converted into the typical representation
     * of an angular joint limit (rotation axis and error angle).
     *
@@ -115,7 +115,7 @@ namespace OpenTissue
                                                 ///< containing the joint position (the pivot point
                                                 ///< of the rotation) and an inward unit plane normal (normal points to
                                                 ///< the legal reach region).
-                                                ///< It is implictly assumed that the ``convex'' inside
+                                                ///< It is implictly assumed that the "convex" inside
                                                 ///< region of the planes correspond to the reach cone.
 
       size_type          m_cone_sides;       ///< The number of cone sides.
@@ -210,7 +210,7 @@ namespace OpenTissue
           //---      theta = n*s
           //---
           real_type theta_err = n_local * s_local;
-          //--- If the angle violates the plane ``slope'' then create a angular joint limit.
+          //--- If the angle violates the plane "slope" then create a angular joint limit.
 
           //--- The normal points to the inside region of the cone, thus we need to
           //--- test whether the s_local vector have tipped to the other side of the

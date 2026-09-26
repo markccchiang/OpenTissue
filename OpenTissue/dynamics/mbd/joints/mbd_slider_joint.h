@@ -186,7 +186,7 @@ namespace OpenTissue
                                                    //--- instance if axe dot product is sligtly above value_traits::one() a
                                                    //--- NAN is returned
 
-        //--- The ``bend'' error could also be computed by using quaterions.
+        //--- The "bend" error could also be computed by using quaterions.
         //--- The formula is:
         //---
         //---   Q_true = Q_initial    because relative orientation should be unchanged for a slider

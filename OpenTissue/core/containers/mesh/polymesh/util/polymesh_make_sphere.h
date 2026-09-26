@@ -21,9 +21,9 @@ namespace OpenTissue
     * Sphere Generation.
     *
     * @param radius             The size of the radius of the sphere.
-    * @param n                  The number of sub-divisions (if use_tetrahedron is on then #faces = 4^n otherwise #faces = 20^n).
+    * @param n                  The number of sub-divisions (if use_tetrahedron is on then the number of faces is 4^n, otherwise it is 20^n).
     * @param mesh               Upon return this argument holds the generated sphere.
-    * @param use_tetrahedorn    Controls whether sphere is genereted by subdivision of tetrahedron or icosahedron. Default value is false.
+    * @param use_tetrahedron    Controls whether sphere is genereted by subdivision of tetrahedron or icosahedron. Default value is false.
     *
     * @return        If succesful then true otherwise false.
     */

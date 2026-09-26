@@ -39,7 +39,7 @@ namespace OpenTissue
        * The convert function should be able to convert back and forth
        * between a transform_type and a coordsys_type. In our case where
        * our transform_type is simply a coordsys_type we can settle with
-       * a single and very simple implementation of the ``convert'' method.
+       * a single and very simple implementation of the "convert" method.
        * In a general setting one would probably have to make two overloaded
        * versions of the convert function.
        *

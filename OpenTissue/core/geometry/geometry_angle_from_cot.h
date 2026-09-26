@@ -18,7 +18,7 @@ namespace OpenTissue
   {
 
     /**
-    * Retrives the ``angle'' from the cotangent of two vectors, (pi-p) and (pj-p).
+    * Retrives the "angle" from the cotangent of two vectors, (pi-p) and (pj-p).
     * This implementation is based on the paper:
     *
     *    Meyer, M., Desbrun, M., Schröder, P., AND Barr, A. H. Discrete Differential Geometry Operators for Triangulated 2-Manifolds, 2002. VisMath.

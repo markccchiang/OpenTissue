@@ -53,7 +53,7 @@ namespace OpenTissue
 
       /**
       * Compute Minimum Angle.
-      * This method computes the minimum ``vertex'' angle of two neighboring
+      * This method computes the minimum "vertex" angle of two neighboring
       * triangles.
       *
       * The first triangle is formed by the vertices (v0,v1,v2) and the second

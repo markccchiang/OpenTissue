@@ -19,25 +19,25 @@ namespace OpenTissue
       * Get Stabilization Terms.
       * The evaluate_constraints() method is supposed to be invoked prior to this function.
       *
-      * This function extracts a vector $\vec b_{text{stabilization}}$. This vector makes it
+      * This function extracts a vector \f$\vec b_{\text{stabilization}}\f$. This vector makes it
       * possible to add extra terms to the b-vector in the linear relation
       *
-      *  \vec y = A \vec x + \vec b
+      * \f[ \vec y = A \vec x + \vec b \f]
       *
-      * Where $\vec y$ measures the relative velocities of the constraints, and 
+      * Where \f$\vec y\f$ measures the relative velocities of the constraints, and
       * vector x is a Lagrange multiplier vector. Thus, one have
-      * 
-      *  \vec b^{\prime} = \vec b + \vec b_{text{stabilization}}
+      *
+      * \f[ \vec b^{\prime} = \vec b + \vec b_{\text{stabilization}} \f]
       *
       * And the linear relation then becomes
       *
-      *  \vec y = A \vec x + \vec b^{\prime}
+      * \f[ \vec y = A \vec x + \vec b^{\prime} \f]
       *
-      * The vector $\vec b_{text{stabilization}}$ can be used for constraint
+      * The vector \f$\vec b_{\text{stabilization}}\f$ can be used for constraint
       * stabilization and bounce (simple Newton Impact type of law).
       *
       * Observe that for constanct points the kind of terms added to the vector
-      * $\vec b_{text{stabilization}}$  dependes on the arguments given to
+      * \f$\vec b_{\text{stabilization}}\f$  dependes on the arguments given to
       * the method evaluate_constraints.
       *
       *

@@ -167,7 +167,8 @@ namespace OpenTissue
 
       /**
       *
-      * @param volumes
+      * @param begin
+      * @param end
       * @param graph
       */
       template<typename volume_iterator>

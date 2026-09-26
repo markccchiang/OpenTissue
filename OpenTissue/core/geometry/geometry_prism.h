@@ -110,7 +110,7 @@ namespace OpenTissue
       /**
       * Assignment method.
       *
-      * @param prism
+      * @param p
       *
       */
       void set(Prism const & p)  {  set(p.m_p0,p.m_p1,p.m_p2,p.m_height);  }
@@ -118,10 +118,10 @@ namespace OpenTissue
       /**
       * Assignment method.
       *
-      * @param p0
-      * @param p1
-      * @param p2
-      * @param height
+      * @param p0_
+      * @param p1_
+      * @param p2_
+      * @param height_
       */
       void set( vector3_type const & p0_, vector3_type const & p1_, vector3_type const & p2_, real_type const & height_)
       {

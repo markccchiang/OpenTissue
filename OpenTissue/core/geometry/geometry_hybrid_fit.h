@@ -29,7 +29,7 @@ namespace OpenTissue
 
     /**
     * Hybrid Fit.
-    * This computes  a``tight'' fitting enclosing Hybrid around a given point cloud.
+    * This computes  a"tight" fitting enclosing Hybrid around a given point cloud.
     *
     * Example Usage:
     *

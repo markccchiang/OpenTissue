@@ -64,7 +64,7 @@ namespace OpenTissue
 
           bool                          m_is_lower;  ///< This boolean value indicates whether the functor represents lower bounds or upper bounds.
           ublas::vector<size_t> const & m_pi;        ///< Dependency index vector. This vector holds information about the coupling between tangential friction forces and the corresponding normal forces.
-          ublas::vector<T>      const & m_mu;        ///< Friction coefficient vector. The i'th entry holds the friction coefficient that should be used for the i'th ``force''. Note that the vector also holds values for normal forces. However, these values are ``don't cares'' and are ignored in this functor.
+          ublas::vector<T>      const & m_mu;        ///< Friction coefficient vector. The i'th entry holds the friction coefficient that should be used for the i'th "force". Note that the vector also holds values for normal forces. However, these values are "don't cares" and are ignored in this functor.
           ublas::vector<T>      const & m_val;       ///< If there is no dependent variable (not a friction force) then the bound value is constant and is taken from this value vector.
           size_t                        m_n;         ///< The number of constraints (ie. the dimension of the bound function).
 

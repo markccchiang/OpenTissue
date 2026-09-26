@@ -24,42 +24,44 @@ namespace OpenTissue
     *
     * Theory: Given the PDE
     *
-    *   \nabla^2 \phi = W
+    * \f[ \nabla^2 \phi = W \f]
     *
     * Solve for phi. Writing out we have
     *
-    *   \frac{\partial^2}{\partial x^2} phi + \frac{\partial^2}{\partial y^2} phi + \frac{\partial^2}{\partial z^2} phi  = W
+    * \f[ \frac{\partial^2 \phi}{\partial x^2} + \frac{\partial^2 \phi}{\partial y^2} + \frac{\partial^2 \phi}{\partial z^2} = W \f]
     *
     * Using central diff approximation leads to
     *
-    *                       a_2 ( phi_{i+1,j,k} + phi_{i-1,j,k} ) + a_1( phi_{i,j+1,k} + phi_{i,j-1,k} ) + a_0( phi_{i,j,k+1} + phi_{i,j,k-1} )  - a_3 W
-    *     phi_{i,j,k}  =  --------------------------------------------------------------------------------------------------------------------------------
-    *                                                                         2 a_4
+    * \f[
+    *   \phi_{i,j,k} = \frac{ a_2 ( \phi_{i+1,j,k} + \phi_{i-1,j,k} ) + a_1 ( \phi_{i,j+1,k} + \phi_{i,j-1,k} ) + a_0 ( \phi_{i,j,k+1} + \phi_{i,j,k-1} ) - a_3 W }{ 2 a_4 }
+    * \f]
     *
     *  where
     *
-    *    a_0 = (dx*dx*dy*dy)
-    *    a_1 = (dx*dx*dz*dz)
-    *    a_2 = (dy*dy*dz*dz)
-    *    a_3 = (dx*dx*dy*dy*dz*dz)
-    *    a_4 = a_0 + a_1 + a_2
+    * \f{align*}{
+    *   a_0 &= \Delta x^2 \Delta y^2, &
+    *   a_1 &= \Delta x^2 \Delta z^2, &
+    *   a_2 &= \Delta y^2 \Delta z^2, \\
+    *   a_3 &= \Delta x^2 \Delta y^2 \Delta z^2, &
+    *   a_4 &= a_0 + a_1 + a_2
+    * \f}
     *
-    *  In case dx=dy=dz this simplifies to
+    *  In case \f$\Delta x = \Delta y = \Delta z\f$ this simplifies to
     *
-    *                      phi_{i+1,j,k} + phi_{i-1,j,k} + phi_{i,j+1,k} + phi_{i,j-1,k} + phi_{i,j,k+1} + phi_{i,j,k-1}  - dx*dx W
-    *     phi_{i,j,k}  =  ----------------------------------------------------------------------------------------------------------
-    *                                                                    8
+    * \f[
+    *   \phi_{i,j,k} = \frac{ \phi_{i+1,j,k} + \phi_{i-1,j,k} + \phi_{i,j+1,k} + \phi_{i,j-1,k} + \phi_{i,j,k+1} + \phi_{i,j,k-1} - \Delta x^2 W }{ 6 }
+    * \f]
     *
     * The solver uses pure Neumann bondary conditions. i.e.:
     *
-    *   \nabla phi = 0 
+    * \f[ \nabla \phi = 0 \f]
     *
     * on any boundary. This means that values outside boundary are copied from
     * nearest boundary voxel => claming out-of-bound indices onto boundary.
     *
     * @param phi              Contains initial guess for solution, and upon
     *                         return contains the solution.
-    * @param b                The right hand side of the poisson equation.
+    * @param W                The right hand side of the poisson equation.
     * @param max_iterations   The maximum number of iterations allowed. Default is 30 iterations.
     */
     template < typename grid_type >

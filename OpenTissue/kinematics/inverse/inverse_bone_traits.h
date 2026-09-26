@@ -233,9 +233,9 @@ namespace OpenTissue
           /**
            * Computes the Jacobian matrix corresponding to this bone
            *
-           * @Param bone     The bone for which the Jacobian is to be calculated
-           * @Param chain    The corresponding chain for specified bone.
-           * @Param J        Upon return this holds the bub-block of the Jacobian
+           * @param bone     The bone for which the Jacobian is to be calculated
+           * @param chain    The corresponding chain for specified bone.
+           * @param J        Upon return this holds the bub-block of the Jacobian
            *                 corresponding to the specified bone and end-effector
            *                 of the corresponding chain.
            */

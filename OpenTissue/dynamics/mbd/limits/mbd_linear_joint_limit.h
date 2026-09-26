@@ -51,7 +51,7 @@ namespace OpenTissue
       /**
       * Set Minimum Limit.
       *
-      * @real_type d_min     The new minimum limit (must be non-positive).
+      * @param d_min     The new minimum limit (must be non-positive).
       */
       void set_min_limit(real_type const & d_min)
       {
@@ -70,7 +70,7 @@ namespace OpenTissue
       /**
       * Set Maximum Limit.
       *
-      * @real_type d_max     The new maximum limit (must be non-negative).
+      * @param d_max     The new maximum limit (must be non-negative).
       */
       void set_max_limit(real_type const & d_max)
       {

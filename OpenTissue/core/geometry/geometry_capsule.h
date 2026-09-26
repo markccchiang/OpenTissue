@@ -207,8 +207,6 @@ namespace OpenTissue
       * This method computes an axis aligned bounding
       * box (AABB) that encloses the geometry.
       *
-      * @param r           The position of the model frame (i.e the coordinate frame the geometry lives in).
-      * @param R           The orientation of the model frame (i.e the coordinate frame the geometry lives in).
       * @param min_coord   Upon return holds the minimum corner of the box.
       * @param max_coord   Upon return holds the maximum corner of the box.
       *

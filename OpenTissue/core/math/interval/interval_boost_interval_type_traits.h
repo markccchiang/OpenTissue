@@ -43,7 +43,7 @@ namespace OpenTissue
       *
       * It reads:
       *
-      *   ``for fast wide intervals without any rounding nor precision, use save_state_nothing<rounded_transc_exact<T>  >;''
+      *   "for fast wide intervals without any rounding nor precision, use save_state_nothing<rounded_transc_exact<T>  >;"
       *
       * From
       *
@@ -51,22 +51,24 @@ namespace OpenTissue
       *
       * We have:
       *
-      *  ``If you do not mind having undefined results when an empty interval
+      *  "If you do not mind having undefined results when an empty interval
       *    or an interval number is produced, your best bet is to create your
       *    own policy by overloading checking_base and modifying is_nan et is_empty
       *    in order for them to always return false. It is probably the fastest
       *    checking policy available; however, it suffers from its deficient
-      *    security.''
+      *    security."
       *
       * From these we have created our own rounding and checking policies. This
       * class provides an easy way to extract the interval type for this
-      * ``speed optimized'' interval usage:
+      * "speed optimized" interval usage:
       *
+      * @code
       *  #include <OpenTissue/core/math/interval/interval_boost_interval_type_traits.h>
       *
       *  typedef BoostIntervalTypeTraits<double>::interval_type interval_type;  
       *
       *   ....
+      * @endcode
       *
       * Initial testings (see interval demo application) With .NET 2005 C++ compiler,
       * this fast boost interval type outruns the OpenTissue interval type by a factor
@@ -78,7 +80,7 @@ namespace OpenTissue
       * type if you do not need the gcc-cutting edge.
       *
       *  Sometimes it is possible to add further optimizations by adding the
-      *  following code around interval ``intensive blocks''
+      *  following code around interval "intensive blocks"
       *
       *    typedef .... interval_type;
       *    // save and initialize the rounding mode
@@ -87,8 +89,8 @@ namespace OpenTissue
       *    typedef  boost::numeric::interval_lib::unprotect<interval_type>::type interval_type2;
       *
       * Now one should use interval_type2 in the following computaiton block. In our test runs
-      * this ``unprotect'' tweak did not add a lot of performance to the fast boost interval type
-      * this class provides. Thus we recommend only using the ``unprotect''-way if the default
+      * this "unprotect" tweak did not add a lot of performance to the fast boost interval type
+      * this class provides. Thus we recommend only using the "unprotect"-way if the default
       * boost interval type is used.
       */
       template<typename T>

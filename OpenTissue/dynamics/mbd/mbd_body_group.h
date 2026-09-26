@@ -32,7 +32,7 @@ namespace OpenTissue
 
       contact_ptr_container      m_contacts;          ///< Container of all current constraints in the group.
       constraint_ptr_container   m_constraints;       ///< Container of all current constraints in the group.
-      body_ptr_container         m_bodies;            ///< Container of all currently active ``physical'' bodies in the group.
+      body_ptr_container         m_bodies;            ///< Container of all currently active "physical" bodies in the group.
 
     public:
 

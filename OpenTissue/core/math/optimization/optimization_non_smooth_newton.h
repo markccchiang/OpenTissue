@@ -199,7 +199,7 @@ namespace OpenTissue
       *                              try to use a shur complement to reduce the linear subsystem into
       *                              a smaller system. It is implicitly assumed that some of the
       *                              sub-matrices have a particular nice pattern to be easily invertible.
-      *                              Default value is set to true. If set to false then a ``full'' jacobian
+      *                              Default value is set to true. If set to false then a "full" jacobian
       *                              matrix is used instead, and in this case there is no requirements on
       *                              the shape of the Jacobian matrix.
       * @param profiling             If this argument is null then profiling is off. If the pointer

@@ -30,7 +30,7 @@ namespace OpenTissue
     *
     * @param points     A container of Vector3<double> points, these will be the nodes in the
     *                   resulting tetrahedral mesh.
-    * @param mesh       A tetrahedral mesh, upon return this will contain the resulting
+    * @param output     A tetrahedral mesh, upon return this will contain the resulting
     *                   triangulation. It is expected that the mesh data structure conforms
     *                   with the t4mesh.
     */
@@ -119,7 +119,7 @@ namespace OpenTissue
     /**
     * Delaynay Surface Tetrahedralization.
     *
-    * @param surface   The input surface. The vertex coordinates are extracted and used for making a Delaunay tetrahedralization.
+    * @param input     The input surface. The vertex coordinates are extracted and used for making a Delaunay tetrahedralization.
     * @param output    Upon return this argument holds the resulting Delaynay tetrahedralization.
     */
     template <typename mesh_type, typename t4mesh_type>

@@ -128,7 +128,7 @@ namespace OpenTissue
       * @param Bi     Sub-block entries of B matrix of i'th node given in vector-form. Ie. Bi = [bi ci di]^T.
       * @param D      The elasticity matrix in vector form D = [D0 D1 D2]^T.
       * @param Bj     Sub-block entries of B matrix of i'th node given in vector-form. Ie. Bj = [bj cj dj]^T.
-      * @param V      The volume of the tetrahedron.
+      * @param volume The volume of the tetrahedron.
       * @param Ke_ij  Upon return, contains the computed value.
       */
       template<typename real_type, typename vector3_type, typename matrix3x3_type>

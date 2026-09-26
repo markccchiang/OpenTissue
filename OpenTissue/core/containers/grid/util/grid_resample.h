@@ -25,7 +25,7 @@ namespace OpenTissue
     * @param factor_i Scale factor in the I-direction of the grid.
     * @param factor_j Scale factor in the J-direction of the grid.
     * @param factor_k Scale factor in the K-direction of the grid.
-    * @return         Upon return the destination grid m contains the resampled grid.
+    * Upon return the destination grid m contains the resampled grid.
     */
     template <typename grid_type, typename real_type>
     inline void resample(grid_type const & M, grid_type & m, real_type factor_i, real_type factor_j, real_type factor_k)

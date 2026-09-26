@@ -33,7 +33,7 @@ namespace OpenTissue
 
       ring_container      rings;
 
-      //--- traverse open boundaries and collect ``rings'' of vertices.
+      //--- traverse open boundaries and collect "rings" of vertices.
       OpenTissue::mesh::clear_halfedge_tags(mesh);
 
       halfedge_iterator h = mesh.halfedge_begin();

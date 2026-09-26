@@ -117,7 +117,8 @@ namespace OpenTissue
       /**
       * Create the SPH system.
       *
-      * @param particle_mass  sets the const mass for all particles in this system
+      * @param material  The material of the particles.
+      * @param gravity   The gravitational acceleration.
       */
       template<typename MaterialPolicy>
       bool create(const MaterialPolicy& material, const vector& gravity)

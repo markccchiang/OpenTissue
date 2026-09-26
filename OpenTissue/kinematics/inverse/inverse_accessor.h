@@ -49,7 +49,7 @@ namespace OpenTissue
            *
            * @param bone    A reference to the bone.
            * @param i       The index of the joint parameter value.
-           * @return        The value of the i'th joint parameter value stored in the specified bone.
+           * @param value   The new value of the i'th joint parameter.
            */
           template<typename bone_type>
           static void unsynch_set_theta( bone_type & bone,  size_t const & i, typename bone_type::math_types::real_type const & value)

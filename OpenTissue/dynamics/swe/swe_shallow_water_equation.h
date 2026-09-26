@@ -32,7 +32,7 @@ namespace OpenTissue
     * Implementation is based on the paper:
     *
     *   Anita T. Layton and Michiel van de Panne,
-    *   `` A Numerically Efficient and Stable Algorithm for Animating Water Waves ,''
+    *   " A Numerically Efficient and Stable Algorithm for Animating Water Waves ,"
     *   the Visual Computer, Vol. 18, No. 1, pp. 41-53, 2002
     *
     *   http://www.amath.unc.edu/Faculty/layton/research/water/index.html
@@ -56,7 +56,7 @@ namespace OpenTissue
       unsigned int Y;       ///< Number of grid nodes along the y-direction.
       real_type dx;         ///< Step size between two neighboring nodes in the x-direction.
       real_type dy;         ///< Step size between two neighboring nodes in the y-direction.
-      array_type water;     ///< Boolean flag indicating which grid nodes are water and which ones are solid ``earth''
+      array_type water;     ///< Boolean flag indicating which grid nodes are water and which ones are solid "earth"
       array_type b;         ///< Bottom height
       array_type h;         ///< Water height
       array_type u;         ///< Water velocity in x-direction
@@ -584,7 +584,7 @@ namespace OpenTissue
       * @param i    The index of water node grid along x-axe direction
       * @param j    The index of water node grid along x-axe direction
       *
-      * @param height    The new bottom height value of the (i,j) water grid node.
+      * @param bottom    The new bottom height value of the (i,j) water grid node.
       */
       void setSeaBottom( const unsigned int i, const unsigned int j, const real_type bottom )
       {

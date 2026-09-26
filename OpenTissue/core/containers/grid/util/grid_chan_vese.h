@@ -30,7 +30,7 @@ namespace OpenTissue
 
       /**
       * Update Phi level set.
-      * Applies the ``Chan-Vese'' speed-function to phi, result is returned in psi.
+      * Applies the "Chan-Vese" speed-function to phi, result is returned in psi.
       *
       * @param phi      Input level set.
       * @param U        Input image.

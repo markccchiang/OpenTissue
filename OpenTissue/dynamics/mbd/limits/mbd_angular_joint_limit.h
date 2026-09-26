@@ -49,7 +49,7 @@ namespace OpenTissue
       /**
       * Set Minimum Limit.
       *
-      * @real_type theta_min     The new minimum limit (must be in range [-pi..0] or -infinity if unbounded).
+      * @param theta_min     The new minimum limit (must be in range [-pi..0] or -infinity if unbounded).
       */
       void set_min_limit(real_type const & theta_min)
       {
@@ -63,7 +63,7 @@ namespace OpenTissue
       /**
       * Set Maximum Limit.
       *
-      * @real_type theta_max     The new maximum limit (must be in range [0..pi] or infinity if unbounded).
+      * @param theta_max     The new maximum limit (must be in range [0..pi] or infinity if unbounded).
       */
       void set_max_limit(real_type const & theta_max)
       {

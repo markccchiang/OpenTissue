@@ -20,7 +20,7 @@ namespace OpenTissue
     /**
     * Prism Drawing Routine
     *
-    * @parma prism
+    * @param prism
     * @param mode        GL_LINE_LOOP or GL_POLYGON mode
     */
     template<typename prism_type>

@@ -30,7 +30,7 @@ namespace OpenTissue
 
     /**
     * Prism Fit.
-    * This computes  a``tight'' fitting enclosing Prism around a given point cloud.
+    * This computes  a"tight" fitting enclosing Prism around a given point cloud.
     *
     * Example Usage:
     *

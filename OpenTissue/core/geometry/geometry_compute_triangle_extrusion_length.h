@@ -18,7 +18,7 @@ namespace OpenTissue
 
     /**
     *  Compute Triangle Extrusion Length.
-    *  Maximum extrusion along normals, which do not result in a ``swallow tail'' case.
+    *  Maximum extrusion along normals, which do not result in a "swallow tail" case.
     *
     *  To get inward extrusion, flip normal directions!
     *

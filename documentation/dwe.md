@@ -4,9 +4,9 @@
 The Damped Wave Equations (DWE) is a simplified variant of the linearized Shallow Water Equations (SWE), which is a subject to the Computational Fluid Dynamics (CFD) library implemented in OpenTissue. The DWE system basically operates a 2D height map grid using, and employs the FDM to describe the diffusion of waves. By design DWE is de-coupled from any application relevant data.
 
 The DWE system can be employed simply by including the following header file:
-<pre>
-#include &lt;OpenTissue/dynamics/swe/swe_damped_wave_equation.h&gt;
-</pre>
+```cpp
+#include <OpenTissue/dynamics/swe/swe_damped_wave_equation.h>
+```
 An accompanying demo application is located in:
 <pre>
 /demos/opengl/waves

@@ -99,8 +99,8 @@ namespace OpenTissue
       *                     argument. The argument represents a stack layer, where the bottom-most
       *                     bodies are fixiated. The end user can run any kind of algorithm on this
       *                     stack-layer.
-      * @param fixate_tag   Tag dispatching, indicating that bottom-most objects should be fixiated before applying algorithm.
-      * @param upward_tag   Tag dispacthing, indicating that shock moves from bottom to top.
+      * The fixate_tag and upward_tag arguments select this overload by tag dispatching: bottom-most
+      * objects are fixiated before applying algorithm, and shock moves from bottom to top.
       */
       template <typename algorithm_type>
       void run(group_type & group, algorithm_type & algorithm, fixate_tag, upward_tag )

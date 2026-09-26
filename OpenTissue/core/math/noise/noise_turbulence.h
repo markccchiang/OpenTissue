@@ -21,7 +21,7 @@ namespace OpenTissue
     /**
     * Turbulence.
     *
-    *  F(x,y,z) =  \sum_{i=0}^{octaves-1}  \left| \frac{ noise(2^i x,2^i y,2^i z) }{ 2^i} \right|
+    * \f[ F(x,y,z) =  \sum_{i=0}^{\text{octaves}-1}  \left| \frac{ \text{noise}(2^i x,2^i y,2^i z) }{ 2^i} \right| \f]
     *
     */
     template<typename real_type_>
@@ -41,7 +41,6 @@ namespace OpenTissue
 
       /**
       *
-      * @param pixel_size
       */
       Turbulence(unsigned int octaves)
         : m_octaves(octaves)

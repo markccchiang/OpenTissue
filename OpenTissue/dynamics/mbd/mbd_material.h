@@ -124,8 +124,8 @@ namespace OpenTissue
       * This method is usefull if one want to get the hash key of a material property
       * that needs to be looked up in a hash map.
       *
-      * @param material_idx_A
-      * @param material_idx_B
+      * @param A
+      * @param B
       * @return
       */
       static index_type hash_key(index_type A, index_type B){ return (A < B) ? ((A<<16)|(B&0x0000FFFF)) : ((B<<16)|(A&0x0000FFFF)) ; }
@@ -291,7 +291,7 @@ namespace OpenTissue
       void set_use_sliding_direction(bool const & value) { m_use_sliding_direction = value; }
 
       /**
-       * Get value of ``use prefixed direction''.
+       * Get value of "use prefixed direction".
        * The use slidning direction takes precedience over this setting.
        *
        * @return  True if the relative sliding direction at a
@@ -301,7 +301,7 @@ namespace OpenTissue
       bool get_use_prefixed_direction() const { return m_use_prefixed_direction; }
 
       /**
-       * Set value of ``use prefixed direction''.
+       * Set value of "use prefixed direction".
        *
        * @param value     A boolean value indicating whether
        *                  the relative sliding direction at a

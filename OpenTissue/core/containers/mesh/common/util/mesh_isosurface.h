@@ -211,7 +211,8 @@ namespace OpenTissue
 
         /**
         *
-        * @param idx
+        * @param idx1
+        * @param idx2
         *
         * @return
         */
@@ -483,7 +484,7 @@ namespace OpenTissue
         /**
         *
         * @param phi
-        * @param isovalue
+        * @param isolevel
         * @param mesh
         */
         template<typename grid_type,typename mesh_type>

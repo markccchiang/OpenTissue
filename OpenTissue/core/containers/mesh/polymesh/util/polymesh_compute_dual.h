@@ -49,7 +49,7 @@ namespace OpenTissue
     * @param dual            The dual mesh. Coordinates and normals of the vertices in the new
     *                        mesh are computed using the vertex_policy template argument. The
     *                        policy is specfied using a tag argumnt.
-    * @param vertex_policy   A policy used to compute positions and normals of new vertices.
+    * @tparam vertex_policy  A policy used to compute positions and normals of new vertices.
     */
     template< typename mesh_type, typename vertex_policy >
     void compute_dual(mesh_type const & original, mesh_type & dual, vertex_policy const & /*tag*/  )

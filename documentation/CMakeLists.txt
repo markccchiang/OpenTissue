@@ -35,6 +35,10 @@ set(DOXYGEN_EXTRACT_ALL YES)
 # LaTeX is not installed every formula comes out as a broken image.
 set(DOXYGEN_USE_MATHJAX YES)
 
+# LaTeX macros that the formulas in the headers use but LaTeX does not define: \norm{x} and
+# \mat A. Without them MathJax renders those formulas as errors.
+set(DOXYGEN_FORMULA_MACROFILE "${CMAKE_CURRENT_SOURCE_DIR}/formula_macros.tex")
+
 # The README is the front page, and the guides are pages of the site. INSTALL.md and
 # CHANGELOG.md are included because the README links to them.
 set(DOXYGEN_USE_MDFILE_AS_MAINPAGE "${PROJECT_SOURCE_DIR}/README.md")

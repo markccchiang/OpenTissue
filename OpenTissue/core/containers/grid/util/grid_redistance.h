@@ -227,7 +227,7 @@ namespace OpenTissue
         * @param phi              Input level set that should be redistanced into a signed distance grid.
         * @param psi              Output level set. That is the redistaned phi.
         * @param max_iterations   The maximum number of iterations allowed to do re-initialization.
-        * @param stead_threshold  The threshold value used to test for steady state.
+        * @param steady_threshold The threshold value used to test for steady state.
         */
         template < typename grid_type >
         void operator()(
@@ -347,7 +347,7 @@ namespace OpenTissue
     * @param phi              Input level set that should be redistanced into a signed distance grid.
     * @param psi              Output level set. That is the redistanced phi.
     * @param max_iterations   The maximum number of iterations allowed to do re-initialization.
-    * @param stead_threshold  The threshold value used to test for steady state.
+    * @param steady_threshold The threshold value used to test for steady state.
     */
     template < typename grid_type >
     inline void redistance(

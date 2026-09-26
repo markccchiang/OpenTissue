@@ -92,7 +92,7 @@ namespace OpenTissue
 
       /**
       *
-      * @param m_pos  Semantic description of the display position
+      * @param pos    Semantic description of the display position
       * OSD_TOP_LEFT, OSD_TOP_RIGHT....
       */
       OnScreenDisplay(int pos)
@@ -123,7 +123,7 @@ namespace OpenTissue
       * Sets the display position using semantic description predefines
       * of the display position i.e. OSD_TOP_LEFT, OSD_TOP_RIGHT ...
       *
-      * @param m_pos  Semantic description predefine
+      * @param pos    Semantic description predefine
       */
       void set_pos(int pos)
       {

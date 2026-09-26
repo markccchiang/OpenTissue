@@ -31,7 +31,7 @@ namespace OpenTissue
     /**
      *
      * Introducing the concept of a geometry holder seems to be a really good
-     * idea. We no longer need to write ``geometry wrappers'' for each new type
+     * idea. We no longer need to write "geometry wrappers" for each new type
      * of geometry we add to the particle system library. Instead we just need to
      * add a set-method to the geometry holder class and extend the dispatch method
      * with a corresponding entry.

@@ -117,7 +117,7 @@ namespace OpenTissue
               // not simply use the first entry in the phi, psi and theta arrays?
               //
               // If there we some slight varition due to numerical precision and round-off
-              // then we could perhaps use the mean-angles as ``better'' estimates of the
+              // then we could perhaps use the mean-angles as "better" estimates of the
               // fixed pose?
               T const & phi   = phi_angles[0]; 
               T const & psi   = psi_angles[0]; 

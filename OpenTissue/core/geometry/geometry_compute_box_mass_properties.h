@@ -54,7 +54,7 @@ namespace OpenTissue
     * @param half_size          Half side extent of box
     * @param density         The mass density of the box.
     * @param mass            Upon return this argument holds the total mass of the box.
-    * @param intertia        Upon return this argument holds the body frame inertia tensor.
+    * @param inertia         Upon return this argument holds the body frame inertia tensor.
     *                        Note this is a diagnoal 3x3 matrix, so only 3 values are needed.
     */
     template<typename real_type,typename vector3_type>

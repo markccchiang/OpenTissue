@@ -317,7 +317,7 @@ namespace OpenTissue
     /**
     * Get Minimum Value.
     *
-    * @param map   The map from which the minimum value is wanted.
+    * @param G     The map from which the minimum value is wanted.
     *
     * @return      The minimum value stored in grid.
     */
@@ -337,7 +337,7 @@ namespace OpenTissue
     /**
     * Get Maximum Value.
     *
-    * @param map   The map from which the maximum value is wanted.
+    * @param G     The map from which the maximum value is wanted.
     *
     * @return      The maximum value stored in grid.
     */
@@ -359,7 +359,7 @@ namespace OpenTissue
     * Get absolute value.
     * Note this function changes the values stored in the arugment.
     *
-    * @param map   The map from which the maximum value is wanted.
+    * @param G     The map from which the maximum value is wanted.
     *
     * @return      A map containing the absolute value.
     */
@@ -383,7 +383,7 @@ namespace OpenTissue
     * Note this function changes the values stored in the arugment.
     *
     *
-    * @param map   The map to be negated.
+    * @param G     The map to be negated.
     *
     * @return      A map containing the negated values.
     */

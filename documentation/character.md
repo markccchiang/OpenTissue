@@ -5,12 +5,12 @@ The character animation system in OpenTissue supports deformation of skin meshes
 
 The character animation system no longer has a single umbrella header. Include the pieces
 you need from `OpenTissue/kinematics/`, as the demo does:
-<pre>
-#include &lt;OpenTissue/kinematics/skeleton/skeleton_types.h&gt;
-#include &lt;OpenTissue/kinematics/skinning/skinning_types.h&gt;
-#include &lt;OpenTissue/kinematics/animation/animation_keyframe_animation.h&gt;
-#include &lt;OpenTissue/kinematics/animation/animation_naive_blend_scheduler.h&gt;
-</pre>
+```cpp
+#include <OpenTissue/kinematics/skeleton/skeleton_types.h>
+#include <OpenTissue/kinematics/skinning/skinning_types.h>
+#include <OpenTissue/kinematics/animation/animation_keyframe_animation.h>
+#include <OpenTissue/kinematics/animation/animation_naive_blend_scheduler.h>
+```
 A ready-to-compile-and-run demo using the character animation system is located in:
 <pre>
 /demos/opengl/character_animation/

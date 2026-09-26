@@ -32,13 +32,17 @@ namespace OpenTissue
     *
     * This can be transformed to a system of 2x3n equations of first order derivative:
     *
-    *     x' = v
-    *   M v' = - C v - K (x-x_0) + f_ext
+    * \f{align*}{
+    *     \dot x &= v \\
+    *   M \dot v &= - C v - K (x-x_0) + f_{\text{ext}}
+    * \f}
     *
     * The semi-implicit Euler scheme approximates the above with:
     *
-    *     x^(i+1) = x^i + \delta t * v^(i+1)
-    *   M v^(i+1) = M v^i + \delta t ( - C v^(i+1)  - K ( x^i - x_0 ) + f^i_ext
+    * \f{align*}{
+    *     x^{i+1} &= x^i + \delta t \, v^{i+1} \\
+    *   M v^{i+1} &= M v^i + \delta t \left( - C v^{i+1}  - K ( x^i - x_0 ) + f^i_{\text{ext}} \right)
+    * \f}
     *
     * This is solved using implicit integration.
     *

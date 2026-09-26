@@ -22,7 +22,7 @@ namespace OpenTissue
       * Partition vector.
       *
       * @param x             The value of the vector.
-      * @param bitmask       A bitmask, the i'th element is equal to ``active'' value if and only if  y(i) \leq (x(i) - lo(i)) &&  y(i) \geq (x(i) - hi(i))
+      * @param bitmask       A bitmask, the i'th element is equal to "active" value if and only if  y(i) <= (x(i) - lo(i)) &&  y(i) >= (x(i) - hi(i))
       * @param old2new       This vector holds an index permutation of old indices
       *                      to new indices. The permutation is such that the first sub-block of
       *                      the new vector corresponds to active constraints. The second corresponds

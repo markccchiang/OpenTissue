@@ -27,7 +27,7 @@ namespace OpenTissue
     namespace polar_decomposition 
     {
       /*
-      * Polar Decomposition of matrix A (as described by Etzmuss et. al in ``A Fast Finite Solution for Cloth Modelling'')
+      * Polar Decomposition of matrix A (as described by Etzmuss et. al in "A Fast Finite Solution for Cloth Modelling")
       *
       *   A = R S
       *
@@ -93,7 +93,7 @@ namespace OpenTissue
       /**
       * This method is rather bad, it is iterative and there is no way of telling how good the solution is. thus we recommend the eigen method for polar decomposition.
       *
-      * Polar Decomposition as described by Shoemake and Duff in ``Matrix Animation and Polar Decomposition''
+      * Polar Decomposition as described by Shoemake and Duff in "Matrix Animation and Polar Decomposition"
       *
       *   A = R S
       *

@@ -45,7 +45,7 @@ namespace OpenTissue
     * @param envelope  The size of the collision envelope. If cloest point are separted by more than this distance then there is no contact.
     * @param p         Pointer to array of contact points, must have room for at least eight vectors.
     * @param n         Upon return this argument holds the contact normal pointing from box A towards box B.
-    * @param distance  Pointer to array of separation (or penetration) distances. Must have room for at least eight values.
+    * @param distances Pointer to array of separation (or penetration) distances. Must have room for at least eight values.
     *
     * @return          If contacts exist then the return value indicates the number of contacts, if no contacts exist the return valeu is zero.
     */

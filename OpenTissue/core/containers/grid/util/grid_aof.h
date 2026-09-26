@@ -33,7 +33,7 @@ namespace OpenTissue
       * @param i      The i'th index of the node.
       * @param j      The j'th index of the node.
       * @param k      The k'th index of the node.
-      * @param scale  Default value is 0.5, this determines the scale on which the flux is computed. 0.5 correponds to ``voxel-based''.
+      * @param scale  Default value is 0.5, this determines the scale on which the flux is computed. 0.5 correponds to "voxel-based".
       *
       * @return       The flux value.
       */

@@ -193,7 +193,7 @@ namespace OpenTissue
         //--- the node we are looking at from A lies sufficently far away from
         //--- any other nodes, so we simply create a corresponding node in B. Or
         //--- if we did find collisions but no corresponding nodes in B then it
-        //--- means we are looking at the first node from A lying in some ``cluster''
+        //--- means we are looking at the first node from A lying in some "cluster"
         //--- of nodes (that all will be merged into one single corresponding node
         //--- in B). In both of the above cases we must create a new corresponding
         //--- node in B.

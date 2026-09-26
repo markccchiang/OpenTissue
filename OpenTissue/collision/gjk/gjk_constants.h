@@ -12,7 +12,8 @@
 #include <string>
 
 /** 
-* @file This file defines constants used in the GJK algorithm.
+* @file
+* This file defines constants used in the GJK algorithm.
 * The constants are used to tell callers about the exit status of
 * the GJK algorithm. In this way a caller can see if GJK was succesfull
 * or not. In cases where GJK is not successfull the caller can use the

@@ -26,8 +26,10 @@ namespace OpenTissue
       * where
       *
 
-      *   A = M + \delta t C + \delta t^2 K
-      *   b = M v^i - \delta t (K x^i + f_0 + f_plas - f_ext)
+      * \f{align*}{
+      *   A &= M + \delta t C + \delta t^2 K \\
+      *   b &= M v^i - \delta t (K x^i + f_0 + f_{\text{plas}} - f_{\text{ext}})
+      * \f}
       *
       * In this implementation, the following holds:
       *
@@ -36,9 +38,9 @@ namespace OpenTissue
       *
       * Also plastic forces, f_plas, is ignored.
       *
-      * @param dt                The time step, \delta t, which is about to be taken.
+      * @param dt                The time step, \f$\delta t\f$, which is about to be taken.
       * @param mass_damping      Coefficient for mass damping in the Raleigh damping equation.
-      *                          The coefficient \alpha in C = \alpha M + \beta K. In this implementation \beta = 0.
+      *                          The coefficient \f$\alpha\f$ in \f$C = \alpha M + \beta K\f$. In this implementation \f$\beta = 0\f$.
       *
       *
       *

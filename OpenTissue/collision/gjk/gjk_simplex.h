@@ -93,7 +93,7 @@ namespace OpenTissue
     *
     * By convexity of \f$A\f$ and \f$B\f$ we know
     *
-    * \f[ q_a \in A \qquad \text{and} \qquad q_b \in B \f}
+    * \f[ q_a \in A \qquad \text{and} \qquad q_b \in B \f]
     *
     * Thus we have found to members of \f$A\f$ and \f$B\f$ that gives the
     * minimum norm point in the Minikowsky difference. In other words we

@@ -42,7 +42,7 @@ namespace OpenTissue
       * @param m            The number of active constraints in the group (i.e. the
       *                     number of rows in the Jacobian matrix).
       *
-      * @param dep   Upon return this vectors holds the indices of the dependent constraints.
+      * @param pi    Upon return this vectors holds the indices of the dependent constraints.
       */
       template<typename group_type,typename idx_vector_type>
       void get_dependencies_vector(  

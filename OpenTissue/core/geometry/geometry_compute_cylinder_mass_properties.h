@@ -57,7 +57,7 @@ namespace OpenTissue
     * @param half_height
     * @param density         The mass density of the cylinder.
     * @param mass            Upon return this argument holds the total mass of the cylinder.
-    * @param intertia        Upon return this argument holds the body frame inertia tensor.
+    * @param inertia         Upon return this argument holds the body frame inertia tensor.
     *                        Note this is a diagnoal 3x3 matrix, so only 3 values are needed.
     */
     template<typename real_type,typename vector3_type>

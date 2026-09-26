@@ -24,8 +24,8 @@ namespace OpenTissue
       /**
       * Signed Distance between a point and a vertex edge voronoi plane.
       * The vertex edge voronoi plane is defined such that the plane normal is given
-      * as the unit vector of the vector \fA-B\f and the point \fA\f is defined to
-      * lie in the plane, and the point \fB\f behind the plane.
+      * as the unit vector of the vector \f$A-B\f$ and the point \f$A\f$ is defined to
+      * lie in the plane, and the point \f$B\f$ behind the plane.
       *
       * @param p    The point that should be tested.
       * @param A    The first vertex of the edge.

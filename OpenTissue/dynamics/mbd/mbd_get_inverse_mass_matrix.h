@@ -20,7 +20,7 @@ namespace OpenTissue
     *
     * @param begin   An iterator to the first body in the sequence.
     * @param end     An iterator to the one past the last body in the sequence.
-    * @param M       Upon return this arguement contains the generalized inverse mass matrix.
+    * @param invM    Upon return this arguement contains the generalized inverse mass matrix.
     */
     template<typename indirect_body_iterator,typename matrix_type>
     void get_inverse_mass_matrix(indirect_body_iterator begin, indirect_body_iterator end, matrix_type & invM)

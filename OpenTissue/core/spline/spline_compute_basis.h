@@ -30,7 +30,7 @@ namespace OpenTissue
       * @param k  The order of the spline (and not the degree, which are k-1).
       * @param u  The parameter value at which the i'th basis function should
       *           be evaluated at.
-      * @param T  Knotvector.
+      * @param U  Knotvector.
       *
       * @return   The value of the i'th k'th order basis function at the
       *           parameter value u.

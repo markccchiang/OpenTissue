@@ -31,7 +31,7 @@ namespace OpenTissue
       * simplex containing the closest point.
       *
       * @param p         The test point.
-      * @param simplex   Initially this argument holds the edge simplex. Upon
+      * @param S         Initially this argument holds the edge simplex. Upon
       *                  return the argument holds the reduced simplex.
       */
       template< typename V >

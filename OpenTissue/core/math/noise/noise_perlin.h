@@ -177,7 +177,7 @@ namespace OpenTissue
       *    to the specified location is computed (and
       *    stored in the temporaries).
       *
-      * 4) Now a ``noise'' value is computed at each of
+      * 4) Now a "noise" value is computed at each of
       *    the eight corners, by taking the dot product
       *    between computed direction vector at that
       *    corner and the gradient at that corner.

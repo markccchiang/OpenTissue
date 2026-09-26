@@ -26,15 +26,15 @@ namespace OpenTissue
       * @param bitmask       A bitmask vector indicating set membership of the variables. The
       *                      encoding is as follows:
       *
-      *                      The i'th value is equal to ``in active'' if bitmask(i) = 4. In
+      *                      The i'th value is equal to "in active" if bitmask(i) = 4. In
       *                      terms of complementarity formulations this is true if and only
-      *                      if  y(i) \leq (x(i) - lo(i)) &&  y(i) \geq (x(i) - hi(i))
+      *                      if  y(i) <= (x(i) - lo(i)) &&  y(i) >= (x(i) - hi(i))
       *
-      *                      The i'th value is equal to ``in upper'' if bitmask(i) = 2. In
+      *                      The i'th value is equal to "in upper" if bitmask(i) = 2. In
       *                      terms of complementarity formulations this is true if and only
       *                      if  y(i) < (x(i) - hi(i))
       *
-      *                      The i'th value is equal to ``in lower'' if bitmask(i) = 1. In
+      *                      The i'th value is equal to "in lower" if bitmask(i) = 1. In
       *                      terms of complementarity formulations this is true if and only
       *                      if  y(i) > (x(i) - lo(i))    
       *
@@ -43,7 +43,7 @@ namespace OpenTissue
       *                      the new vector corresponds to active constraints. The second corresponds
       *                      to lower constraints and the last sub-block corresponds to the upper
       *                      constraints set.
-      * @oaram new2old       Upon return this vector holds the reversible permuation of old2new.
+      * @param new2old       Upon return this vector holds the reversible permuation of old2new.
       *
       */
       inline void  compute_index_reordering( 

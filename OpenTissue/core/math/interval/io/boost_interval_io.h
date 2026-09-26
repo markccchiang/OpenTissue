@@ -23,8 +23,8 @@ namespace OpenTissue
       /**
       * Stream Output Operator.
       *
-      * @param out   The stream.
-      * @param i     The interval that should be output to a stream.
+      * @param stream The stream.
+      * @param value The interval that should be output to a stream.
       *
       * @return    A reference to the stream.
       */
@@ -47,8 +47,8 @@ namespace OpenTissue
       /**
       * Stream Input Operator.
       *
-      * @param in   The stream.
-      * @param i    The interval that be input from the specified stream.
+      * @param stream The stream.
+      * @param value The interval that be input from the specified stream.
       *
       * @return    A reference to the stream.
       */

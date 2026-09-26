@@ -344,7 +344,7 @@ namespace OpenTissue
     * This method returns a general rotation matrix around a specified axe. It assumes that post-multiplication by colum vectors is used.
     *
     * @param radians           The rotation angle in radians.
-    * @param axe               A vector. This is the rotation axe.
+    * @param axis              A vector. This is the rotation axe.
     */
     template<typename T>
     inline Matrix3x3<T> Ru(T const & radians, Vector3<T> const & axis)

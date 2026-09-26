@@ -52,7 +52,9 @@ namespace OpenTissue
       /**
       * Hash Function.
       *
-      * @param p    A discretized point (this is not verified by the implementation) identifying a unique grid cell.
+      * @param i    The discretized i-coordinate of the grid cell (this is not verified by the implementation).
+      * @param j    The discretized j-coordinate of the grid cell.
+      * @param k    The discretized k-coordinate of the grid cell.
       * @return     The index of a hash cell, which the grid cell should be mapped to.
       */
       size_t operator()( int i,int j, int k )
@@ -68,7 +70,7 @@ namespace OpenTissue
       /**
       * The closest prime number is found and the size is set to this number.
       *
-      * @param size     New size of hashtable.
+      * @param new_size New size of hashtable.
       */
       void resize(size_t new_size)
       {

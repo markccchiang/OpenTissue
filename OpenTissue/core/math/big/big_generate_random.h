@@ -65,7 +65,7 @@ namespace OpenTissue
       * for quick-and-dirty initialization.
       *
       * @param n  The number of entries in the resulting vector.
-      * @param A  Upon return this argument holds an n-vector
+      * @param v  Upon return this argument holds an n-vector
       *           with a random value between zero and one in each
       *           entry.
       */

@@ -20,7 +20,7 @@ namespace OpenTissue
     * Extract Generalized Position Vector.
     * Note this call also affect the tag-member of all
     * bodies in the group. Thus, in a parallel computation
-    * side-effects could occur if bodies are ``shared'' among
+    * side-effects could occur if bodies are "shared" among
     * different groups.
     *
     * @param begin   An iterator to the first body in the sequence.

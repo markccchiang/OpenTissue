@@ -96,7 +96,7 @@ namespace OpenTissue
         //--- have the same sub-block pattern as the global K matrix.
         //---
         //--- A consistent mass matrix is often not used in computer graphics. Instead and
-        //--- ad-hoc approach named ``lumped'' mass matrix is applied.
+        //--- ad-hoc approach named "lumped" mass matrix is applied.
         //--- The lumped mass matrix is obtained by placing particle masses at the nodes.
         //--- This corresponds to shifting all the masses in the rows of (****) onto the
         //--- diagonal. In 3D this yields the element mass matrix

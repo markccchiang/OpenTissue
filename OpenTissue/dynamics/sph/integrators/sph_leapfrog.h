@@ -75,7 +75,6 @@ namespace OpenTissue
       /**
       * Integrate
       *
-      * @param timestep  > 0
       */
       void integrate(particle& par) const
       {

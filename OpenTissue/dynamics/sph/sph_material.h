@@ -65,7 +65,7 @@ namespace OpenTissue
 
       /**
       *
-      * @param radius  Upon return holds radius, such that we have X particles within a particle.
+      * @return  The radius, such that we have X particles within a particle.
       * @param X       Number of partilces to be wihtin radius of a particle.
       */
       virtual real_type radius(const real_type& X) const

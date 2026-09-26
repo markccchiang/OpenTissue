@@ -46,7 +46,7 @@ namespace OpenTissue
 
       ring_container rings;
 
-      //--- traverse open boundaries and collect ``rings'' of vertices.
+      //--- traverse open boundaries and collect "rings" of vertices.
       {
         mesh::clear_halfedge_tags(mesh);
 
@@ -153,7 +153,7 @@ namespace OpenTissue
       }
 
 
-      //--- for each set of ``planar'' rings build ring hierarchy
+      //--- for each set of "planar" rings build ring hierarchy
 
 
       //--- apply recursive divide and conquer algorithm to each ring hierarchy

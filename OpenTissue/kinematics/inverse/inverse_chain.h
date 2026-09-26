@@ -31,8 +31,8 @@ namespace OpenTissue
       *
       * Observe that the root of a kinematic chain does not need
       * to be the root of the skeleton. However, the root of the
-      * chain does need to be the ``inboard'' bone and the end-effector
-      * needs to the be the ``outboard'' bone.
+      * chain does need to be the "inboard" bone and the end-effector
+      * needs to the be the "outboard" bone.
       * 
       * By inboard we mean closer to the root of the skeleton and by
       * outboard we mean further away from the skeleton root.
@@ -282,7 +282,7 @@ namespace OpenTissue
         /**
         * Get Root Bone.
         *
-        * @Return   A pointer to the root bone of the chain or null
+        * @return   A pointer to the root bone of the chain or null
         *          if the chain is not initialised.
         */
         bone_type * const get_root()         const 

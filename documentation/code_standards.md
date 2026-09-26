@@ -283,7 +283,7 @@ void my_function () {}
 
 Every library file of OpenTissue should comply with a layout like this
 
-<pre>
+```cpp
 #ifndef OPENTISSUE_XXX_H
 #define OPENTISSUE_XXX_H
 //
@@ -295,12 +295,11 @@ Every library file of OpenTissue should comply with a layout like this
 
 // OPENTISSUE_XXX_H
 #endif
-
-</pre>
+```
 
 Here the XXX-part should be replaced with a string indicating folder, file and name space location of the code contained in the header-file (read more about this in our section on folder and file naming conventions). In short summary one should make sure that there is a one-to-one relationship between the include guards and the file paths.
 
-Observe that the first two lines of the file is always the include guard. This is important because some compilers only look for include guards in the first 10 lines ore so of a header file. Observe that a comment is used on the final #endif to indicate what the #endif is matching the include guard of the header file.
+Observe that the first two lines of the file is always the include guard. This is important because some compilers only look for include guards in the first 10 lines ore so of a header file. Observe that a comment is used on the final `#endif` to indicate what the `#endif` is matching the include guard of the header file.
 
 Furthermore notice that every header file must end with a single empty line. This is to avoid compiler warnings/errors when compiler with GCC.
 
@@ -311,7 +310,7 @@ The copyright notice should be written exactly as shown above.
 Every include header in the OpenTissue library must include our global configuration header file, OpenTissue/configuration.hpp, This include should be placed immediately after the copyright notice. As shown below
 
 
-<pre>
+```cpp
 #ifndef OPENTISSUE_XXX_H
 #define OPENTISSUE_XXX_H
 //
@@ -323,8 +322,7 @@ Every include header in the OpenTissue library must include our global configura
 
 // OPENTISSUE_XXX_H
 #endif
-
-</pre>
+```
 
 The configuration file will setup pragma directives needed by specific compilers. The header file also defined any other pre-directives. Such as defines that make sure that windows min max macros are not defined inside OpenTissue library code in case OpenTissue is used on a windows platform. Other platform/compiler specific tasks may be performed in this header file.
 

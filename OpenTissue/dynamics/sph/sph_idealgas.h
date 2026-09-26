@@ -65,7 +65,7 @@ namespace OpenTissue
       * Compute mol.
       *
       * @param V    Volume (m^3)
-      * @param Vm   Molar volume (m^3/mol)
+      * @param molar_volume Molar volume (m^3/mol)
       *
       * @return    The number of mol.
       */

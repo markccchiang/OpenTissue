@@ -67,7 +67,7 @@ namespace OpenTissue
       *
       * \f[ \frac{| f(x^{n+1}) - f(x^n) |}{|f(x^n)|} < \varepsilon,  \f]
       *
-      *where \f$\varepsilon \eq 0\f$ is a user specified test-threshold.
+      *where \f$\varepsilon > 0\f$ is a user specified test-threshold.
       */
       size_t const RELATIVE_CONVERGENCE = 4;
 
@@ -78,7 +78,7 @@ namespace OpenTissue
       *
       * \f[ f(x^n) < \varepsilon,  \f]
       *
-      *where \f$\varepsilon \eq 0\f$ is a user specified test-threshold. In case
+      *where \f$\varepsilon > 0\f$ is a user specified test-threshold. In case
       * of minimization the test could also be for a stationary point. The test
       * would then be
       *
@@ -154,42 +154,42 @@ namespace OpenTissue
       /**
       * In Lower Constraint Set Bitmask.
       * Given the general non-linear function, \f$y = f(x)\f$, and
-      * the lower and upper bounds: \f$l\f$ and $\u\f$.
+      * the lower and upper bounds: \f$l\f$ and \f$u\f$.
       * The non-linear mixed complementarity formulation can be stated as follows
       *
       *  \f[ y_i(x) < 0 \Rightarrow x_i = u_i \f]
       *  \f[ y_i(x) > 0 \Rightarrow x_i = l_i \f]
       *  \f[ y_i(x) = 0 \Rightarrow l_i \leq x_i \leq u_i  \f]
       *
-      * The ``in lower'' bit is set if and only if  \f$y_i > (x_i - l_i)\f$.
+      * The "in lower" bit is set if and only if  \f$y_i > (x_i - l_i)\f$.
       */
       size_t const IN_LOWER  = 1;
 
       /**
       * In Upper Constraint Set Bitmask.
       * Given the general non-linear function, \f$y = f(x)\f$, and
-      * the lower and upper bounds: \f$l\f$ and $\u\f$.
+      * the lower and upper bounds: \f$l\f$ and \f$u\f$.
       * The non-linear mixed complementarity formulation can be stated as follows
       *
       *  \f[ y_i(x) < 0 \Rightarrow x_i = u_i \f]
       *  \f[ y_i(x) > 0 \Rightarrow x_i = l_i \f]
       *  \f[ y_i(x) = 0 \Rightarrow l_i \leq x_i \leq u_i  \f]
       *
-      * The ``in upper'' bit is set if and only if  \f$y_i < (x_i - u_i)\f$.
+      * The "in upper" bit is set if and only if  \f$y_i < (x_i - u_i)\f$.
       */
       size_t const IN_UPPER  = 2;
 
       /**
       * In Active Constraint Set Bitmask.
       * Given the general non-linear function, \f$y = f(x)\f$, and
-      * the lower and upper bounds: \f$l\f$ and $\u\f$.
+      * the lower and upper bounds: \f$l\f$ and \f$u\f$.
       * The non-linear mixed complementarity formulation can be stated as follows
       *
       *  \f[ y_i(x) < 0 \Rightarrow x_i = u_i \f]
       *  \f[ y_i(x) > 0 \Rightarrow x_i = l_i \f]
       *  \f[ y_i(x) = 0 \Rightarrow l_i \leq x_i \leq u_i  \f]
       *
-      * The ``in active'' bit is set if and only if  \f$y_i \leq (x_i - l_i)\f$ and \f$y_i \geq (x_i - u_i)\f$.
+      * The "in active" bit is set if and only if  \f$y_i \leq (x_i - l_i)\f$ and \f$y_i \geq (x_i - u_i)\f$.
       */
       size_t const IN_ACTIVE = 4;
 

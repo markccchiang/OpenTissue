@@ -69,7 +69,7 @@ namespace OpenTissue
       mesh::compute_mesh_minimum_coord(mesh,min_coord);
       mesh::compute_mesh_maximum_coord(mesh,max_coord);
 
-      //--- Compute ``best'' resolution for this mesh
+      //--- Compute "best" resolution for this mesh
       size_t res_x = boost::numeric_cast<size_t>( ceil(   (max_coord(0)-min_coord(0))/ delta  ) - 1 );
       size_t res_y = boost::numeric_cast<size_t>( ceil(   (max_coord(1)-min_coord(1))/ delta  ) - 1 );
       size_t res_z = boost::numeric_cast<size_t>( ceil(   (max_coord(2)-min_coord(2))/ delta  ) - 1 );
@@ -117,7 +117,7 @@ namespace OpenTissue
     * @param mesh              A polygonal mesh.
     * @param phi               Upon return this argument contains a signed distance field of the specified mesh.
     * @param bandsize          This argument can be used to set the size of a band enclosing the mesh.
-    * @param max_resolution    This argument can be used to set the wanted resolution of the resuling distance field.
+    * @param resolution        This argument can be used to set the wanted resolution of the resuling distance field.
     * @param use_gpu           Ignored. The GPU scan conversion was implemented in Cg,
     *                          which was discontinued in 2012 and removed from OpenTissue.
     *                          The parameter is kept so existing calls still compile.

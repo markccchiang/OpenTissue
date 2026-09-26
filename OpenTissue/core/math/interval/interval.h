@@ -80,7 +80,7 @@ namespace OpenTissue
         /**
         * Interval Bound Operator Accessor
         *
-        * @param     The index of the interval bound one want to access. Use zero
+        * @param     index index of the interval bound one want to access. Use zero
         *            to get lower bound and one to get upper bound.
         *
         * @return    The interval bound corresponding to the specified index.
@@ -94,7 +94,7 @@ namespace OpenTissue
         /**
         * Interval Bound Operator Accessor
         *
-        * @param     The index of the interval bound one want to access. Use zero
+        * @param     index index of the interval bound one want to access. Use zero
         *            to get lower bound and one to get upper bound.
         *
         * @return    The interval bound corresponding to the specified index.
@@ -108,7 +108,7 @@ namespace OpenTissue
         /**
         * Interval Bound Operator Accessor
         *
-        * @param     The index of the interval bound one want to access. Use zero
+        * @param     index index of the interval bound one want to access. Use zero
         *            to get lower bound and one to get upper bound.
         *
         * @return    The interval bound corresponding to the specified index.
@@ -122,7 +122,7 @@ namespace OpenTissue
         /**
         * Interval Bound Operator Accessor
         *
-        * @param     The index of the interval bound one want to access. Use zero
+        * @param     index index of the interval bound one want to access. Use zero
         *            to get lower bound and one to get upper bound.
         *
         * @return    The interval bound corresponding to the specified index.
@@ -248,7 +248,7 @@ namespace OpenTissue
         /**
         * Interval Addition.
         *
-        * @param     The interval that should be added to this interval.
+        * @param     i   interval that should be added to this interval.
         *
         * @return    A refrence to the resulting interval (this interval instance).
         */
@@ -263,7 +263,7 @@ namespace OpenTissue
         * Interval Addition.
         * Performance Warning: Copy Constructor is invoked to create return value.
         *
-        * @param     The interval that should be added to this interval.
+        * @param     i   interval that should be added to this interval.
         *
         * @return    A refrence to the resulting interval (this interval instance).
         */
@@ -272,7 +272,7 @@ namespace OpenTissue
         /**
         * Interval Subtraction.
         *
-        * @param     The interval that should be subtracted to this interval.
+        * @param     i   interval that should be subtracted to this interval.
         *
         * @return    A refrence to the resulting interval (this interval instance).
         */
@@ -287,7 +287,7 @@ namespace OpenTissue
         * Interval Subtraction.
         * Performance Warning: Copy Constructor is invoked to create return value.
         *
-        * @param     The interval that should be subtracted to this interval.
+        * @param     i   interval that should be subtracted to this interval.
         *
         * @return    A refrence to the resulting interval (this interval instance).
         */

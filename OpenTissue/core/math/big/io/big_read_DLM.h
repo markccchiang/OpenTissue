@@ -34,7 +34,7 @@ namespace OpenTissue
       *
       * Copyright: See COPYING file that comes with this distribution
       *
-      * @param m The matrix(vector) with compatible interface to read in.
+      * @param A The matrix(vector) with compatible interface to read in.
       * @param filename The text filename, e.g., "A.dlm"
       * @return Whether the read operation succeed.
       */
@@ -81,7 +81,7 @@ namespace OpenTissue
       * Author: Ricardo Ortiz <rortizro@math.uiowa.edu>, (C) 2006
       * Copyright: See COPYING file that comes with this distribution
       *
-      * @param m The vector with compatible interface to read in.
+      * @param x The vector with compatible interface to read in.
       * @param filename The text filename, e.g., "A.dlm"
       * @return Whether the read operation succeed.
       */

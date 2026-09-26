@@ -51,7 +51,7 @@ namespace OpenTissue
       private:
 
         node_type               * m_node;    ///< A pointer to the node
-        tetrahedra_idx_iterator   m_it;      ///< An ``local'' iterator to the tetrahedron index, indicating current tetrahedron of this iterator.
+        tetrahedra_idx_iterator   m_it;      ///< An "local" iterator to the tetrahedron index, indicating current tetrahedron of this iterator.
 
       public:
 

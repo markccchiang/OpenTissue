@@ -81,7 +81,7 @@ namespace OpenTissue
       * @param f                     The function functor. This is used for computing the value of f(x+tau*dx).
       * @param nabla_f               The value of df/dx at the current iterate. That is the gradient value at the iterate value x.
       * @param x                     The current iterate value.
-      * @param x_tau                 Upon return this argument holds the value of, x + \tau*dx, the new iterate.
+      * @param x_tau                 Upon return this argument holds the value of, \f$x + \tau\, dx\f$, the new iterate.
       * @param dx                    The descent direction along which the line-search is performed.
       * @param relative_tolerance    This argument holds the value used in the relative stopping criteria.
       *                              Setting the value to zero will make the test in-effective.

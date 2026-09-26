@@ -46,9 +46,6 @@ namespace OpenTissue
       /**
       * Apply a complete solution for par using all pars
       *
-      * @param par    The particle at question
-      * @param begin  A const iterator to the first particle
-      * @param end    A const iterator to the last+1 particle
       */
       virtual value apply(const particle& /*par*/, particle_cptr_container_citerator /*begin*/, particle_cptr_container_citerator /*end*/) const
       {
@@ -58,8 +55,6 @@ namespace OpenTissue
       /**
       * Apply a partial solution for par using only a single particle p
       *
-      * @param par   The particle at question
-      * @param p     A single particle
       */
       virtual value apply(const particle& /*par*/, const particle& /*p*/) const
       {

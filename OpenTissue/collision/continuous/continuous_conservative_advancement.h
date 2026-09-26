@@ -27,12 +27,12 @@ namespace OpenTissue
       *
       * @param T_a             The initial placement of object A.
       * @param v_a             The contact linear velocity of object A.
-      * @param w_a             The contact angular velocity of object A.
+      * @param omega_a         The contact angular velocity of object A.
       * @param A               The shape/geometry of object A.
       * @param r_max_a         Maximum radius of the shape of object A.
       * @param T_b             The initial placement of object B.
       * @param v_b             The contact linear velocity of object B.
-      * @param w_b             The contact angular velocity of object B.
+      * @param omega_b         The contact angular velocity of object B.
       * @param B               The shape/geometry of object B.
       * @param r_max_b         Maximum radius of the shape of object B.
       * @param p_a             Upon return this argument holds the cloest point on object A in case of an impact.
@@ -42,7 +42,7 @@ namespace OpenTissue
       * @param epsilon         The size of the collision envelope. That is the smallest separation distance between A and B where we consider A and B to be in touching contact.
       * @param max_tau         The maximum time into the future that the function will look for a time of impact.
       * @param max_iterations  The maximum number of allowed iterations that the function can take.
-      * @param policy          A motion policy that provides the details of any sub-algorithms/routines needed by the function.
+      * @tparam motion_policy  A motion policy that provides the details of any sub-algorithms/routines needed by the function.
       *
       * @return                If an impact is found then the return value is true otherwise it is false.
       */

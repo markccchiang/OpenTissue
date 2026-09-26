@@ -24,8 +24,7 @@ namespace OpenTissue
     * Retrieve Value of Environment Variable.
     * If environment variable can not be found then a std::logic_error warning is thrown.
     *
-    * @param    A string containing the name of the environment
-    *           variable. Example: "OPENTISSUE".
+    * @param name A string containing the name of the environment
     * @return   A string containing the value.
     */
     inline std::string get_environment_variable(std::string const & name)

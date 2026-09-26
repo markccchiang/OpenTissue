@@ -92,7 +92,7 @@ namespace OpenTissue
 
       typedef polymesh::PolyMesh<>              mesh_type;
 
-      // TODO: Maybe ``system'' is redundant in these type names?
+      // TODO: Maybe "system" is redundant in these type names?
       typedef Cloth<types,integrator_policy>              cloth_system_type;
       typedef SurfaceMesh<types,integrator_policy>        surface_system_type;
       typedef MassSpringSystem<types,integrator_policy>   mass_spring_system_type;

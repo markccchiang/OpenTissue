@@ -25,7 +25,7 @@ namespace OpenTissue
       * end-effector of the chain.
       *
       * @param solver          The solver that the new chain should be added to.
-      * @param root            A reference to the root of the new chain
+      * @param root_           A reference to the root of the new chain
       * @param end_effector    The end-effector of the new chain.
       *
       * @return                 An iterator to the newly added chain.

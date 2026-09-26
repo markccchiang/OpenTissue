@@ -217,8 +217,7 @@ namespace OpenTissue
       * Note initLocalCoordFrame must be invoked prior to invocation of this method.
       *
       * @param p   World space Coordinates.
-      * @param u   Upon return this vector contains the local triangle
-      *            coordinates r,s and t.
+      * @return   The local triangle coordinates r,s and t.
       */
       vector3_type get_local_coord( vector3_type const & p ) const
       {

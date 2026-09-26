@@ -32,7 +32,7 @@ namespace OpenTissue
       * @param x                The current iterate.
       * @param p                The search direction.
       * @param c                The constraint function, we must have c(x) >= 0
-      * @param tau              Upon return this argument holds the step-length that can be taken along the search direction without violating any of the ``linearized'' constraints.
+      * @param tau              Upon return this argument holds the step-length that can be taken along the search direction without violating any of the "linearized" constraints.
       * @param blocking_idx     Upon return this argument holds the index of one of the blocking constraints (the one with lowest index-value). If no blocking constraint is found then the value is set to one plus the size of the x-vector.
       *
       * @return   If the return value is true then a blocking constraint was found.

@@ -301,7 +301,7 @@ namespace OpenTissue
 
         bool remove_face(face_iterator f)
         {
-          //--- Make sure face is not ``pointing'' to something
+          //--- Make sure face is not "pointing" to something
           trimesh_core_access::decrement_face_counter(f->get_vertex0_iterator());
           trimesh_core_access::decrement_face_counter(f->get_vertex1_iterator());
           trimesh_core_access::decrement_face_counter(f->get_vertex2_iterator());

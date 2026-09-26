@@ -283,7 +283,7 @@ namespace OpenTissue
       /**
       * Point Discretization.
       *
-      * @param p   A 3D point in continious space
+      * @param point A 3D point in continious space
       *
       * @return    A discretized point identifying the grid
       *            cell (not the hash cell!) which the contineous

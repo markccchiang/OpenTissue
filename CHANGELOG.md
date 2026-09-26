@@ -62,6 +62,26 @@ Anything older than the entry below predates this file; see the git history.
   comment markup errors. The docs are no longer rebuilt on every build (`ALL` is gone), and
   configure warns when the option is on but Doxygen is missing, instead of silently creating no
   `apidoc` target.
+- The documentation comments in about 180 headers and guides are fixed, cutting the Doxygen
+  warnings from about 650 to 71. None of the remaining 71 is a markup error: 66 flag functions
+  that document some of their parameters but not all, and 5 note include graphs too large to
+  draw. The fixes, most damaging first:
+  - LaTeX-style quotes (two backticks to open, two apostrophes to close) in 72 headers.
+    Doxygen reads the two backticks as the start of a code span, so everything after them,
+    often the rest of the file, vanished from the documentation. They are now plain double quotes.
+  - Formulas with mismatched or reversed markers (`]\f` for `\f]`, `\f}` for `\f]`), and
+    formulas written as raw LaTeX with no markers at all. `\norm` and `\mat`, which LaTeX does
+    not define, are supplied through `documentation/formula_macros.tex`.
+  - About 130 `@param` names that matched no parameter: misspellings (`@parma`, `intertia`),
+    parameters renamed since (`n` for `n_val`), copy-paste leftovers (`map` for a grid), and
+    parameters that are unnamed because they are unused, whose entries are removed.
+  - Smaller slips: `@return` on functions returning `void`, code examples not marked as code,
+    BibTeX entries whose `@` Doxygen took for a command, and a link to a guide that no longer
+    exists.
+
+  One comment described a bug rather than hiding one: `grid::poisson_solver()` divides by 8 in
+  its equal-spacing branch, where the discretization it implements requires 6. The comment now
+  gives the correct update; the code is unchanged.
 - The ParaView guide is split into pages: `documentation/paraview.md` is now the entry page
   -- installing ParaView, running it from the command line, building the examples and the GUI
   basics -- and links to `paraview_writing_data.md`, `paraview_scripting.md` and one page per

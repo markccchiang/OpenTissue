@@ -36,7 +36,7 @@ namespace OpenTissue
       /**
       * Run update algorithm.
       *
-      * @param bvh    Reference to BVH that should be updated.
+      * @param leaves  The leaf nodes of the BVH that should be updated.
       */
       void run( bv_ptr_container const & leaves )
       {

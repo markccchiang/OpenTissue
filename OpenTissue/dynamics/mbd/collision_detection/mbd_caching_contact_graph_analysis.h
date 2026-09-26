@@ -169,7 +169,7 @@ namespace OpenTissue
 
             /*
             KE 06-10-2004: This is currently not supported!!!
-            //--- Test for ``old'' penetrations
+            //--- Test for "old" penetrations
             penetration |= (edge->m_ccg_state==edge_type::penetrating);
             continue;
             */

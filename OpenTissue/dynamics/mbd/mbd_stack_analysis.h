@@ -19,7 +19,7 @@ namespace OpenTissue
     /**
     * Stack Analysis.
     *
-    * This auxiliary tool analyses a contact group in order to see if it forms a ``stack''.
+    * This auxiliary tool analyses a contact group in order to see if it forms a "stack".
     *
     * A stack is loosely defined as when something is in contact with a fixed body.
     *

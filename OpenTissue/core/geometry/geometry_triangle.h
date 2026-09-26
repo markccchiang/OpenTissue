@@ -97,9 +97,9 @@ namespace OpenTissue
       * Specialized Constructor.
       * This constuctor makes the triangle store pointers to its vertex coordinates.
       *
-      * @param p0
-      * @param p1
-      * @param p2
+      * @param p0_
+      * @param p1_
+      * @param p2_
       */
       explicit Triangle(vector3_type * p0_,vector3_type * p1_,vector3_type * p2_)
       {
@@ -113,7 +113,7 @@ namespace OpenTissue
       /**
       * Specialized Constructor.
       *
-      * @param face
+      * @param f
       */
       template<typename face_type>
         Triangle(face_type * f)
@@ -180,9 +180,9 @@ namespace OpenTissue
       /**
       * Bind
       *
-      * @param p0
-      * @param p1
-      * @param p2
+      * @param p0_
+      * @param p1_
+      * @param p2_
       */
       void bind(vector3_type * p0_, vector3_type * p1_, vector3_type * p2_)
       {

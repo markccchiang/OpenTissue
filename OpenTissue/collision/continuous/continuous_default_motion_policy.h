@@ -74,7 +74,7 @@ namespace OpenTissue
           T theta;
           V n;
           get_axis_angle(
-              prod( T_to.Q(), conj( T_from.Q() ) )   // Change in orientation from ``from'' to ''to'', ie. R = T_to * T_from^{-1}
+              prod( T_to.Q(), conj( T_from.Q() ) )   // Change in orientation from "from" to ''to'', ie. R = T_to * T_from^{-1}
             , n
             , theta 
             );

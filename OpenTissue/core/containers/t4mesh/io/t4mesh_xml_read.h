@@ -131,7 +131,7 @@ namespace OpenTissue
         }
         tetrahedron_iterator T = mesh.insert(idx0,idx1,idx2,idx3);
 
-        // kenny extended tetrahedra to support ``nico tags''
+        // kenny extended tetrahedra to support "nico tags"
         int tag;
         if(xml_tetrahedron->Attribute("tag"))
         {

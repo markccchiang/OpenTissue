@@ -29,9 +29,9 @@ namespace OpenTissue
         * @param l             A functor used to retrieve information about the lower bound function.
         * @param u             A functor used to retrieve information about the upper bound function.
         * @param bitmask       A Bitmask, Upon return this vector flags all variables according to their set memberships.
-        *                      The i'th value is equal to ``in active'' if and only if  y(i) \leq (x(i) - lo(i)) &&  y(i) \geq (x(i) - hi(i))
-        *                      The i'th value is equal to ``in upper'' if and only if  y(i) < (x(i) - hi(i))
-        *                      The i'th value is equal to ``in lower'' if and only if  y(i) > (x(i) - lo(i))       
+        *                      The i'th value is equal to "in active" if and only if  y(i) <= (x(i) - lo(i)) &&  y(i) >= (x(i) - hi(i))
+        *                      The i'th value is equal to "in upper" if and only if  y(i) < (x(i) - hi(i))
+        *                      The i'th value is equal to "in lower" if and only if  y(i) > (x(i) - lo(i))       
         * @param cnt_active    Upon return this argument holds the total number of variables in the set of active constraints.
         * @param cnt_inactive  Upon return this argument holds the total number of variables in the union of the set of lower and the set of upper constraints.
         */

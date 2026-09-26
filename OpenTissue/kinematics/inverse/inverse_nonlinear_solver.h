@@ -82,7 +82,7 @@ namespace OpenTissue
           * \f[ f(\theta) = (g - F(\theta))^T W (g - F(\theta)) \f]
           *
           * @param theta   The current value of the joint paramters.
-          * @return        The resulting value of \f$f(\theta)$\f. This is the
+          * @return        The resulting value of \f$f(\theta)\f$. This is the
           *                squared error measure of how close we are to reaching
           *                the desired goal placements.
           */
@@ -146,38 +146,38 @@ namespace OpenTissue
           * By definition we have
           * \f[
           *  f(\vec \theta) = (\vec g - \vec F(\vec \theta))^T \mat W (\vec g - \vec F(\theta)),
-          * ]\f
+          * \f]
           * Then the differential can be computed as follows
           * \f[
           *  d f = d(\vec g - \vec F(\vec \theta))^T \mat W (\vec g-\vec F(\vec \theta))
           *  +
           *  (\vec g - \vec F(\vec \theta))^T \mat W d(\vec g - \vec F(\vec \theta)) 
-          * ]\f
+          * \f]
           * which reduces to
           * \f[
           *  d f = 2 (\vec g - \vec F(\theta))^T \mat W d(\vec g - \vec F(\vec \theta))
-          * ]\f
+          * \f]
           * where
-          * \f[
+          * \f{align*}{
           * d(\vec g - \vec F(\vec \theta)) &= - d \vec F(\vec \theta) =
           *  - \frac{\partial \vec F(\vec \theta)}{\partial \vec \theta} d\vec{\theta}\\
           *   &= - \mat J d \vec{\theta}
-          * ]\f
+          * \f}
           * Which means
           * \f[
           *   d f = - 2 (\vec g - \vec F(\vec \theta))^T \mat W \mat J d \vec{\theta}
-          * ]\f
+          * \f]
           * From this we have
           * \f[
           * \frac{d f}{d \vec \theta} = - 2 (\vec g - \vec F(\vec \theta))^T \mat W \mat J  
-          * ]\f
+          * \f]
           * and the gradient can now be written
           * \f[
           * \nabla f 
           *   = 
           *   \frac{d f}{d \vec \theta}^T = - 2 \mat J^T \mat W ( \vec g - \vec F(\vec
           *   \theta) )  
-          * ]\f
+          * \f]
           *
           * @param theta   The current value of the joint paramters.
           * @return        The resulting gradient value.
@@ -248,7 +248,7 @@ namespace OpenTissue
           * Function Operator.
           * This operator computes the expression
           *
-          * \f[ \theta = \max( \theta_{\min] \min( \theta, \theta_{\max})  )]\f
+          * \f[ \theta = \max( \theta_{\min}, \min( \theta, \theta_{\max})  ) \f]
           *
           *
           * @param theta   The current value of the joint paramters.
@@ -285,10 +285,10 @@ namespace OpenTissue
       *     \vdots\\
       *     \vec F_K(\vec \theta) \\
       *   \end{bmatrix} = \vec F(\vec \theta),
-      *   ]\f
-      * where \f$\vec y_j$\f is the world coordinate position of the \f$j^{\text{th}}$\f
-      * end-effector (tool-frame), and \f$\vec F_j(\vec \theta)$\f is the end-effector
-      * function corresponding to the \f$j^{\text{th}}$\f kinematic chain. Using the
+      *   \f]
+      * where \f$\vec y_j\f$ is the world coordinate position of the \f$j^{\text{th}}\f$
+      * end-effector (tool-frame), and \f$\vec F_j(\vec \theta)\f$ is the end-effector
+      * function corresponding to the \f$j^{\text{th}}\f$ kinematic chain. Using the
       * agglomerated end-effector function we create the objective function
       * \f[
       *   \label{eq:objective:function}
@@ -297,27 +297,27 @@ namespace OpenTissue
       *   (\vec g - \vec F(\vec \theta))^T 
       *   \mat W 
       *   (\vec g- \vec F(\vec \theta)),
-      * ]\f
-      * where \f$\mat W$\f is a symmetric positive definite and possible diagonal matrix and
-      * \f$\vec g = \begin{bmatrix} \vec g_1^T & \cdots & \vec g_K^T \end{bmatrix}^T$\f is
+      * \f]
+      * where \f$\mat W\f$ is a symmetric positive definite and possible diagonal matrix and
+      * \f$\vec g = \begin{bmatrix} \vec g_1^T & \cdots & \vec g_K^T \end{bmatrix}^T\f$ is
       * the agglomerated vector of end-effector (tool frame) goals. The optimization
       * problem is,
       * \f[
       *   \vec \theta^* = \min_{\vec \theta} f(\vec \theta)
-      * ]\f
+      * \f]
       * subject to the linear box-constraints
       * \f[
       *   \vec \theta &\geq \vec l\\
       *   \vec \theta &\leq \vec u
-      * ]\f
-      * which models the minimum and maximum joint parameter values. Here \f$\vec l$\f is a
-      * vector containing the minimum joint limits and \f$\vec u$\f is a vector of the
-      * maximum joints limits. This implies \f$\vec l \leq \vec u$\f at all times.
+      * \f]
+      * which models the minimum and maximum joint parameter values. Here \f$\vec l\f$ is a
+      * vector containing the minimum joint limits and \f$\vec u\f$ is a vector of the
+      * maximum joints limits. This implies \f$\vec l \leq \vec u\f$ at all times.
       * 
       * Our formulation is a squared weighted norm measuring the distance between the
-      * goal positions and the end-effector positions. If \f$\vec F$\f is sufficiently
-      * smooth then when \f$\vec \theta \rightarrow \vec \theta^*$\f we have that
-      * \f$\vec F$\f behaves almost as a linear function. This intuition suggest
+      * goal positions and the end-effector positions. If \f$\vec F\f$ is sufficiently
+      * smooth then when \f$\vec \theta \rightarrow \vec \theta^*\f$ we have that
+      * \f$\vec F\f$ behaves almost as a linear function. This intuition suggest
       * that as we get close to a solution this formulation behaves as
       * a convex quadratic minimization problem. Further, by design all constraints are
       * linear functions defining a convex feasible region. Thus a simple constraint

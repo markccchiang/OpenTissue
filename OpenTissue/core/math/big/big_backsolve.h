@@ -27,7 +27,7 @@ namespace OpenTissue
         * Solve Linear Upper Triangular Problem.
         *
         * @param m      The size of the problem.
-        * @param A      A square upper triangular matrix of dimension at least m \times m.
+        * @param A      A square upper triangular matrix of dimension at least \f$m \times m\f$.
         * @param x      Upon return this argument holds the result of x = A^{-1} b. Note x is of dimension b upon return.
         * @param b      The right hand side vector of A x = b.  Note b is of dimension at least m.
         */

@@ -52,7 +52,7 @@ namespace OpenTissue
       /**
       * Integrate (mandatory)
       *
-      * @param particles   all particles to undergo numerical integration.
+      * @param colisys   The collision detection system.
       */
       void setCollisionSystem(collision_detection* colisys)
       {
@@ -62,7 +62,8 @@ namespace OpenTissue
       /**
       * Initialize particles (optional)
       *
-      * @param particles   all particles to undergo initialization.
+      * @param begin   An iterator to the first particle to undergo initialization.
+      * @param end     An iterator to one past the last particle.
       */
       void initialize_particles(typename particle_container::iterator begin, typename particle_container::iterator end) const
       {
@@ -73,7 +74,8 @@ namespace OpenTissue
       /**
       * Integrate particles (mandatory)
       *
-      * @param particles   all particles to undergo numerical integration.
+      * @param begin   An iterator to the first particle to undergo numerical integration.
+      * @param end     An iterator to one past the last particle.
       */
       void integrate_particles(typename particle_container::iterator begin, typename particle_container::iterator end) const
       {

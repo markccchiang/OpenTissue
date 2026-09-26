@@ -19,7 +19,7 @@ namespace OpenTissue
 
 
     /**
-     * This is the ``core'' data structure for particles. It provides iterator
+     * This is the "core" data structure for particles. It provides iterator
      * capabilities. Particle lookup based on indices and time-management of
      * the entire particle system.
      *

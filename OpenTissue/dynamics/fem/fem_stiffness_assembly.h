@@ -75,32 +75,25 @@ namespace OpenTissue
       * Let M denote the set of all tetrahedral elements then the assembly
       *  of the warped stiffness matrix can be written as
       *
-      *    K'_ij  =      sum    Re Ke_ij Re^T
-      *                e \in M
-      *                 and
-      *               i, j \in e
+      * \f[ K'_{ij} = \sum_{e \in M,\; i, j \in e} R_e K^e_{ij} R_e^T \f]
       *
       * And the assembly of the force offset vector
       *
-      *    f0'_i  =      sum    - Re Ke_ij x0_j
-      *                e \in M
-      *                 and
-      *               i, j \in e
+      * \f[ f'_{0,i} = \sum_{e \in M,\; i, j \in e} - R_e K^e_{ij} x_{0,j} \f]
       *
       *
       * Notice that this can be optimized if node i as a meber of the e'th element
       *  then the contribution to the above summation can be written as (recal
       * the indices j,k and m denote the three ofther nodes of e):
       *
-      *    -Re Ke_ii x0_i - Re Ke_ij x0_j -Re Ke_im x0_m - Re Ke_ik x0_k
-      *    -Re   ( Ke_ii x0_i + Ke_ij x0_j + Ke_im x0_m + Ke_ik x0_k)
+      * \f{align*}{
+      *   & -R_e K^e_{ii} x_{0,i} - R_e K^e_{ij} x_{0,j} - R_e K^e_{im} x_{0,m} - R_e K^e_{ik} x_{0,k} \\
+      *   = & -R_e ( K^e_{ii} x_{0,i} + K^e_{ij} x_{0,j} + K^e_{im} x_{0,m} + K^e_{ik} x_{0,k} )
+      * \f}
       *
       * which saves us a few matrix multiplications and we then finally have
       *
-      *    f0'_i  =      sum  -Re ( Ke_ii x0_i + Ke_ij x0_j + Ke_im x0_m + Ke_ik x0_k)
-      *                e \in M
-      *                  and
-      *                i \in e
+      * \f[ f'_{0,i} = \sum_{e \in M,\; i \in e} -R_e ( K^e_{ii} x_{0,i} + K^e_{ij} x_{0,j} + K^e_{im} x_{0,m} + K^e_{ik} x_{0,k} ) \f]
       *
       * Assuming that f0'_i is initially cleared to zero for all i. This result in the
       * implementation strategy:

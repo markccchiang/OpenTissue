@@ -20,7 +20,7 @@ namespace OpenTissue
 
     /**
     * AABB Fit.
-    * This computes  a``tight'' fitting enclosing AABB around a given point cloud.
+    * This computes  a"tight" fitting enclosing AABB around a given point cloud.
     *
     * Example Usage:
     *

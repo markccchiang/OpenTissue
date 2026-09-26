@@ -46,9 +46,9 @@ namespace OpenTissue
     * as pyramids and orientaions as circular arcs on a sphere.
     *
     * Observe that the pyramid for the root bone is not drawn. This
-    * may cause one to think that a bone consist of a ``sphere-pyramid''
+    * may cause one to think that a bone consist of a "sphere-pyramid"
     * pairing. This is however misleadning the true pairing that match
-    * the underlying bone transform is ``pyramid-sphere''.
+    * the underlying bone transform is "pyramid-sphere".
     *
     *
     * @param bone       A reference to the bone that should be drawn.

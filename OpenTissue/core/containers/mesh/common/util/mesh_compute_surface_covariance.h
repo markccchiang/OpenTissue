@@ -19,7 +19,7 @@ namespace OpenTissue
     *
     * @param mesh
     * @param mu
-    * @param C
+    * @param cov
     *
     */
     template<typename mesh_type, typename vector3_type, typename matrix3x3_type>

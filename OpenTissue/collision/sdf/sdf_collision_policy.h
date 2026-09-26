@@ -107,7 +107,7 @@ namespace OpenTissue
       *
       * @param xform          A coordinate transform that takes the geometry of the bv
       *                       into the local model frame of the sdf geometry.
-      * @parma bv             A pointer to a bounding volume (bv) node.
+      * @param bv             A pointer to a bounding volume (bv) node.
       * @param geometry       A signed distance field geometry.
       *
       * @return               If the geometry of the bv (a sphere) is overlapping with

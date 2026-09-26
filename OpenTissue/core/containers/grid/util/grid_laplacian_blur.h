@@ -20,7 +20,7 @@ namespace OpenTissue
     /**
     * Solves the PDE
     *
-    *   \nu \nabla^2 \phi = phi(t=0)
+    * \f[ \nu \nabla^2 \phi = \phi(t=0) \f]
     *
     * @param image            The image to blur.
     * @param diffusion        The value of the diffusion coefficient.

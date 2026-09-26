@@ -31,7 +31,7 @@ namespace OpenTissue
     * @param p        A point lying on the surface of the inner empty sphere.
     * @param q        Another point lying on the surface of the inner empty sphere.
     * @param r        A third point defining an ellipsoid grown inside the wedge defined by surface points p and q.
-    * @param alpha    The weight of the linear combination of ``wedge'' and inner sphere.
+    * @param alpha    The weight of the linear combination of "wedge" and inner sphere.
     * @param begin    An iterator to the first sample point.
     * @param end      An iterator one past the last sample point.
     *

@@ -152,7 +152,7 @@ namespace OpenTissue
       * Get Maximum Size.
       *
       * @return   The maximum size of a render buffer. I.e. the maximum
-      *           number of ``pixels'' in widht and height arguments.
+      *           number of "pixels" in widht and height arguments.
       */
       static GLint get_max_size()
       {

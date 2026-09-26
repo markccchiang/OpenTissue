@@ -26,7 +26,7 @@ namespace OpenTissue
     * Compute Tetrahedron Quality Measure.
     * This routine computes minimum sine of the dihedral angles of a tetrahedron.
     *
-    *   \frac{9 \sqrt{2}}{8} V min_{1 \leq i < j \leq 4} \frac{l_{ij}}{A_k A_l}
+    * \f[ \frac{9 \sqrt{2}}{8} V \min_{1 \leq i < j \leq 4} \frac{l_{ij}}{A_k A_l} \f]
     *
     * where l_ij is the length of the edge between vertices i and j. A_k is the
     * signed area of the triangle opposing the k'th vertex. V is the signed

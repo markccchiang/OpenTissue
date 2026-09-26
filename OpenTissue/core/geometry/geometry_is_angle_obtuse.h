@@ -16,7 +16,7 @@ namespace OpenTissue
 
     /** 
     * Obtuse Angle Testing
-    * This method tests if the angle between the two vectors (pi-p) and (pj-p) is greather than \pi/2 radians.
+    * This method tests if the angle between the two vectors (pi-p) and (pj-p) is greather than \f$\pi/2\f$ radians.
     *
     * @param p      The common tail point of the two vectors
     * @param pi     The head point of one vector.

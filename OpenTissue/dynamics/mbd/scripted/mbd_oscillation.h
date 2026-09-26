@@ -100,7 +100,7 @@ namespace OpenTissue
       /**
       * Set Origin.
       *
-      * @parma origin    The new origin.
+      * @param origin    The new origin.
       */
       void set_origin(vector3_type const & origin){ m_origin = origin; }
 
@@ -114,7 +114,7 @@ namespace OpenTissue
       /**
       * Set oscillation direction.
       *
-      * @parma dir    The new oscillation direction.
+      * @param dir    The new oscillation direction.
       */
       void set_direction(vector3_type const & dir) { m_dir = unit(dir); }
 

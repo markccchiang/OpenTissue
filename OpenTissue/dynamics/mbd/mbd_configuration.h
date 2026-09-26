@@ -49,7 +49,7 @@ namespace OpenTissue
 
       collision_detection_policy * m_collision_detection;  ///< Collision Detection Engine.
       material_library_type    *   m_material_library;     ///< material_type library
-      group_type                   m_all;                  ///< Internal data strucure used by the method ``get_all_body_group()''
+      group_type                   m_all;                  ///< Internal data strucure used by the method "get_all_body_group()"
       body_ptr_lut_type            m_bodies;               ///< All bodies currently added to the simulator.
       joint_ptr_lut_type           m_joints;               ///< All joints currently added to the simulator.
       edge_lut_type                m_edges;                ///< All edges that currently exist in the simulator.

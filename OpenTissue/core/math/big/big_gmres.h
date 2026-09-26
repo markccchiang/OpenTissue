@@ -223,7 +223,7 @@ namespace OpenTissue
         *
         *   A V_M = V_{M+1} H_{M} 
         *
-        * Where H_{M} is a Hessenberg matrix of dimension (M+1 \times M). The
+        * Where H_{M} is a Hessenberg matrix of dimension \f$(M+1) \times M\f$. The
         * columns of V_M+1 is an orthonormal basis for the Krylow
         * subspace K_m = span{ r_0, A r_0, ..., A^{M-1} r_0}, where the
         * initial residual r_0 = b - A x_0 is given from an initial solution
@@ -240,11 +240,11 @@ namespace OpenTissue
         *   b - A x = b - A(x_0 + V_m y)
         *           = r_0 - A V_M y
         *
-        * Use the ``factorization'' we get from the Arnoldi Method
+        * Use the "factorization" we get from the Arnoldi Method
         *
         *  b - A x = r_0 - V_{M+1} H_{M} y
         *
-        * Define beta as \norm{r_0}, note that the first column, v_1, of V_{m+1} is
+        * Define \f$\beta = \|r_0\|\f$, note that the first column, v_1, of V_{m+1} is
         * a unit vector in the direction of r_0 (because the Arnoldi method is basically
         * a modified Graham-Schmidt ortonormalization of K_M).
         *
@@ -259,7 +259,7 @@ namespace OpenTissue
         *
         *   y = R_M^-1 g_m
         *
-        * where R_M is an M\times M matrix obtained from transforming H_{M} into upper triangular
+        * where \f$R_M\f$ is an \f$M\times M\f$ matrix obtained from transforming H_{M} into upper triangular
         * form and deleting the last row. g_m is the resulting vector from applying the same
         * transformations to the right-hand side beta e_1, and deleting the last entry.
         *
@@ -429,7 +429,7 @@ namespace OpenTissue
         *
         *  where 
         *
-        *    y = arg min \norm { b - A x}
+        * \f[ y = \arg\min \| b - A x \| \f]
         *            y
         *
         *
@@ -440,7 +440,7 @@ namespace OpenTissue
         *                  subspace: K_m = span{r_0, M^{-1} A r_0,...,( M^{-1} A )^{m-1} r_0, } . 
         *                  That is the indices of the basis vectors range from v_0 to v_{m-1}.
         * @param H         The Hessenberg matrix transformed into triangular form. The triangular
-        *                  form consist of the m \times m submatrix of H.
+        *                  form consist of the \f$m \times m\f$ submatrix of H.
         * @param g         The right hand side vector for the least square sub problem
         *                  transformed into triangular form. The transformed vector is the m-dimensional
         *                  subpart of g.
@@ -504,9 +504,9 @@ namespace OpenTissue
       * @param A    The system matrix.
       * @param x    Upon return this argument holds the solution vector.
       * @param b   The right hand side vector.
-      * @param max_itreations           The maximum number of outer iterations that can be used.
+      * @param max_iterations           The maximum number of outer iterations that can be used.
       * @param max_restart_iterations   The restarting parameter for GMRES (see Saad's Iterative Methods for Sparse Linear Systems).
-      * @param tolerence                      The threshold used in stop criteria
+      * @param tolerance                      The threshold used in stop criteria
       * @param relative_residual_error  Upon return this argument holds the accuracy of the last solution computed by invoking the solve methods.
       * @param used_inner_iterations    Upon return this argument holds the number of used inner iterations.
       * @param used_outer_iterations    Upon return this argument holds the number of used outer iterations.

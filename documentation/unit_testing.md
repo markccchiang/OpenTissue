@@ -166,7 +166,7 @@ and in the link tab page under the item
 
 add
 
-<center>$(BOOST)\lib</center>
+`$(BOOST)\lib`
 
 VC80 will automatically figure out what lib-file that is needed,
 so one does not have to do any more.

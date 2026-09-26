@@ -22,15 +22,17 @@ namespace OpenTissue
         * Perturbation Function.
         * In the phd thesis of Billups a pertubed problem is created, by replacing a function f(x) with another function
         *
-        *    f(\lambda,y,x) = f(x) + \lambda(x - y)
+        * \f[ f(\lambda,y,x) = f(x) + \lambda(x - y) \f]
         *
-        * where y is termed the center point and \lambda>0 is the perturbation value or simply the amount of perturbation.
+        * where y is termed the center point and \f$\lambda>0\f$ is the perturbation value or simply the amount of perturbation.
         *
         * In the case of the a linear mixed complementarity problem we have f(x) = A x + b, so this implies
         *
-        *  f(\lambda,y,x) = f(x) + \lambda(x - y)
-        *                  = A x + b + \lambda(x - y)
-        *                  = (A + \lambda I)x + ( b - \lambda y)
+        * \f{align*}{
+        *  f(\lambda,y,x) &= f(x) + \lambda(x - y) \\
+        *                 &= A x + b + \lambda(x - y) \\
+        *                 &= (A + \lambda I)x + ( b - \lambda y)
+        * \f}
         *
         * We thus see that the perturbed problem corresponds to adding a postive value to
         * the diagonal of the coefficient matrix A, and modifying the right-hand-side by
@@ -38,12 +40,11 @@ namespace OpenTissue
         *
         * Defining:
         *
-        *   A^\prime = (A + \lambda I)
-        *   b^\prime = ( b - \lambda y)
+        * \f[ A^\prime = (A + \lambda I), \qquad b^\prime = ( b - \lambda y) \f]
         *
         * We see that the perturbed problem is also a affine function of x as is the un-perturbed function.
         *
-        *  f(\lambda,y,x) = A^\prime x + b^\prime
+        * \f[ f(\lambda,y,x) = A^\prime x + b^\prime \f]
         *
         * This function computes the matrix and rhs-vector of the perturbed problem. Observe
         * that usually A is a symmetric positive semi-definite matrix. Thus A_prime is

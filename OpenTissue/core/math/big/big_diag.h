@@ -24,7 +24,7 @@ namespace OpenTissue
       * for quick-and-dirty initialization.
       *
       * @param v          A vector which holds the diagonal values of the resulting matrix.
-      * @param A          A square diagonal matrix holding the values of the vector along the diagonal.
+      * @param D          A square diagonal matrix holding the values of the vector along the diagonal.
       */
       template<typename value_type, typename matrix_type>
       inline void diag( ublas::vector<value_type> const & v, matrix_type & D  )

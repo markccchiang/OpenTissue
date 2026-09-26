@@ -79,7 +79,6 @@ namespace OpenTissue
       * @param x                At invokation this argument holds the initial value of x^0, Upon return this argument holds the value of x^{k+1} = D^{-1}(b - (L+U) x^k) for some k>0.
       * @param b                The right hand side vector.
       * @param max_iterations   The maximum number of iterations that is allowed.
-      * @param epsilon          A stopping threshold (currently not used).
       * @param iterations       Upon return this argument holds the number of used iterations.
       */
       template<typename T>

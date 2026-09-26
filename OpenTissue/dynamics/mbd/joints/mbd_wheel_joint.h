@@ -113,7 +113,7 @@ namespace OpenTissue
       *       Observe that the s_steering joint axis is the z-axis in this
       *       local coordinate frame.
       *
-      *    3) During simulation project the current motor axis onto the ``steering axis plane''
+      *    3) During simulation project the current motor axis onto the "steering axis plane"
       *
       *               s' =   s_motor - (s_steering*s_motor)*s_steering
       *
@@ -194,9 +194,10 @@ namespace OpenTissue
       * Set Suspension.
       * Only works if constraint force mixing is supported (newton damping).
       *
-      * Suspension is modelled by making the steering axis ``soft''
+      * Suspension is modelled by making the steering axis "soft"
       *
-      * @param syspension.
+      * @param gamma  The softness of the suspension, in the range [0..1].
+      * @param erp    The error reduction parameter of the suspension, in the range [0..1].
       */
       void set_suspension(real_type const & gamma,real_type const & erp)
       {

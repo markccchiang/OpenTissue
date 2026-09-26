@@ -154,7 +154,7 @@ namespace OpenTissue
       /**
       * Get Jacobian Low Limits.
       *
-      * @param lambda_low  Upon return this vector holds the low limits of
+      * @param lo          Upon return this vector holds the low limits of
       *                    the lagrange multipliers associated with the jacobian
       *                    constraints.
       */
@@ -195,8 +195,8 @@ namespace OpenTissue
       /**
       * Get Bounds Scaling Factor.
       * Imagine having the same case as described in the getDepedencyIndices() method.
-      * The first row is not dependent on the others, so its scale factor is a ``don't
-      * care'', if the bounds of the second row are twice the value of the first variable,
+      * The first row is not dependent on the others, so its scale factor is a "don't
+      * care", if the bounds of the second row are twice the value of the first variable,
       * and the bounds on the third row are three times the value of the first
       * variable, then the fac-vector is equal to [0,2,3] real_type.
       *

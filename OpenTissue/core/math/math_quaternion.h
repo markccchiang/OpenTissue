@@ -218,7 +218,7 @@ namespace OpenTissue
       /**
       * Quaternion Vector Multiplication.
       *
-      * @param v    A Quaternion as a vector, i.e. zero scalar value.
+      * @param v_val A Quaternion as a vector, i.e. zero scalar value.
       */
       Quaternion operator%(vector3_type const & v_val)
       {

@@ -24,7 +24,7 @@ namespace OpenTissue
     * @param M        Original grid to be cropped.
     * @param m        Destination grid.
     * @param treshold Maximum value that needs to be cropped.
-    * @return         Upon return the destination grid m contains the cropped grid.
+    * Upon return the destination grid m contains the cropped grid.
     */
     template < typename grid_type >
     inline void crop(grid_type const & M, grid_type & m, typename grid_type::value_type const & treshold)
@@ -79,7 +79,7 @@ namespace OpenTissue
     * @param max_i Upper i-coord of bounding box.
     * @param max_j Upper j-coord of bounding box.
     * @param max_k Upper k-coord of bounding box.
-    * @return      Upon return the destination grid m contains the cropped grid.
+    * Upon return the destination grid m contains the cropped grid.
     */
     template < typename grid_type >
     inline void crop(

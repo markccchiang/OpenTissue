@@ -24,9 +24,8 @@ namespace OpenTissue
     * Sphere Triangle Intersection Test.
     *
     *
-    * @param p            Center of sphere
-    * @param r            Radius of sphere
-    * @param triangle
+    * @param sphere       The sphere.
+    * @param triangle     The triangle.
     *
     * @return             If intersection then the reutrn value is true otherwise it is false.
     */

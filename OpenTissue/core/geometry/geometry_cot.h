@@ -24,31 +24,31 @@ namespace OpenTissue
     *
     * This metod computes the cotangent angle between two vectors (pi-p) and (pj-p).
     *
-    * Let the angle between the two vectors \vec u and \vec v be \theta. Then by defnition
-    *                    
-    *    cot(\theta) = \frac{cos \theta}{sin \theta}
+    * Let the angle between the two vectors \f$\vec u\f$ and \f$\vec v\f$ be \f$\theta\f$. Then by defnition
+    *
+    * \f[ \cot(\theta) = \frac{\cos \theta}{\sin \theta} \f]
     *
     * and we know that
     *
-    *  cos(\theta) =  \frac{ u \cdot v  }{ \norm{u} \norm{v} }
+    * \f[ \cos(\theta) =  \frac{ u \cdot v  }{ \|u\| \|v\| } \f]
     *
     * and
     *
-    *  \norm{u \times v} = \norm{u}\norm{v}sin \theta
+    * \f[ \|u \times v\| = \|u\|\|v\| \sin \theta \f]
     *
-    * since  1 = cos^2 \theta + sin^2 \theta we re-write
+    * since \f$1 = \cos^2 \theta + \sin^2 \theta\f$ we re-write
     *
-    *   \norm{u}\norm{v}sin \theta  = \norm{u}\norm{v}\left( \pm \sqrt{1 - cos^2 \theta }\right)
+    * \f[ \|u\|\|v\| \sin \theta  = \|u\|\|v\|\left( \pm \sqrt{1 - \cos^2 \theta }\right) \f]
     *
-    * Knowing that the angle between two vectors is between 0 and \pi, we can throw away
-    * the negative solution of sin\theta. Substituting the expression for cos \theta and
-    * isolating \sin \theta we get
-    *  
-    *  sin \theta  = \frac{  \sqrt{\norm{u}^2\norm{v}^2 -  (u \cdot v )^2 } }{\norm{u}\norm{v}}
+    * Knowing that the angle between two vectors is between 0 and \f$\pi\f$, we can throw away
+    * the negative solution of \f$\sin\theta\f$. Substituting the expression for \f$\cos \theta\f$ and
+    * isolating \f$\sin \theta\f$ we get
+    *
+    * \f[ \sin \theta  = \frac{  \sqrt{\|u\|^2\|v\|^2 -  (u \cdot v )^2 } }{\|u\|\|v\|} \f]
     *
     * Finally substituting the expressions for cos and sin into the equation for cot we get
     *
-    *  cot(\theta)  = \frac{u \codt v}{ \sqrt{\norm{u}^2\norm{v}^2 -  (u \cdot v )^2 } }
+    * \f[ \cot(\theta)  = \frac{u \cdot v}{ \sqrt{\|u\|^2\|v\|^2 -  (u \cdot v )^2 } } \f]
     *
     * This is the formula we use for computing cot.
     *

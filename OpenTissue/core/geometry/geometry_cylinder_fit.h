@@ -33,7 +33,7 @@ namespace OpenTissue
   {
     /**
     * Cylinder Covariance Fit.
-    * This method uses covariance analysis to fit an good ``tight'' fitting
+    * This method uses covariance analysis to fit an good "tight" fitting
     * enclosing cylinder around a given point cloud.
     *
     * Example Usage:

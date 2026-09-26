@@ -175,7 +175,7 @@ namespace OpenTissue
           if(number_of_vertices<3)
             continue;
 
-          //--- transform vertices into ``screen space'', that is make a parallel projection onto the I and J axes of phi
+          //--- transform vertices into "screen space", that is make a parallel projection onto the I and J axes of phi
           //--- In openGL one would do it like
           //--- real_type left   = min_x - dx/2;
           //--- real_type right  = max_x + dx/2;
@@ -347,7 +347,7 @@ namespace OpenTissue
           if(number_of_vertices<3)
             continue;
 
-          //--- transform vertices into ``screen space'', that is make a parallel projection onto the I and J axes of phi
+          //--- transform vertices into "screen space", that is make a parallel projection onto the I and J axes of phi
           //--- In openGL one would do it like
           //--- real_type left   = min_x - dx/2;
           //--- real_type right  = max_x + dx/2;

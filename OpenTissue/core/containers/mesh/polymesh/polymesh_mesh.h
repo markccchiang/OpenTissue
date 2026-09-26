@@ -656,7 +656,7 @@ namespace OpenTissue
             //--- Finally adjust outgoing halfedge to point to empty gap in 1-ring neighborhood of B
             polymesh_core_access::adjust_outgoing_halfedge_handle(Bit);
           }
-          //--- Make sure that nothing in the edges ``points'' to someting
+          //--- Make sure that nothing in the edges "points" to someting
           {
             polymesh_core_access::set_next_handle(h0it,this->null_halfedge_handle());
             polymesh_core_access::set_twin_handle(h0it,this->null_halfedge_handle());
@@ -713,7 +713,7 @@ namespace OpenTissue
             remove_edge( (*e) );
           }
 
-          //--- Make sure face is not ``pointing'' to something
+          //--- Make sure face is not "pointing" to something
           polymesh_core_access::set_border_halfedge_handle(f,this->null_halfedge_handle());
           //--- Ask kernel to remove face
           this->erase_face(f->get_handle());

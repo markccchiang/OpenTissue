@@ -203,7 +203,7 @@ namespace OpenTissue
        * Projection Operator Class.
        * This class conveniently hides the lower and upper bounds
        * for the projection-function and wraps it all into one
-       * single ``operator''.
+       * single "operator".
        *
        * Intended usage is: 
        *

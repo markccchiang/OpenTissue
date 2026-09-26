@@ -204,7 +204,7 @@ namespace OpenTissue
 
       /**
       *
-      * @param zoom_factor     Example double size : 2, halfside : 0.5;
+      * @param distance   The distance to move the camera along its line of sight; negative moves it backwards.
       */
       void move(real_type const & distance)
       {

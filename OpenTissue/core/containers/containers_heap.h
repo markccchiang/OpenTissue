@@ -32,12 +32,12 @@ namespace OpenTissue
     *     in a priority queue. The priorites indicate the benefit of performing
     *     some operation on the edges. 
     *
-    *     Thus when extracting the top element one gets the ``edge'' which will
+    *     Thus when extracting the top element one gets the "edge" which will
     *     result in the largest gain when performing some operation on it.
     *
     *   2) After having performed an operation on a coupled feature, one often
     *      need to recompute the priority value, the operation may even affects
-    *      ``neighboring'' features, which also need to get their priority values
+    *      "neighboring" features, which also need to get their priority values
     *      updated.
     *
     *      Thus we are often faced with the problem of changing only a small
@@ -128,7 +128,7 @@ namespace OpenTissue
       /**
       * Push a new feature onto the heap.
       *
-      * Note that the new elements is not ``heapified''.
+      * Note that the new elements is not "heapified".
       *
       * @param f   The feature that should be inserted.
       *

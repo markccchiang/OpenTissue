@@ -29,7 +29,7 @@ namespace OpenTissue
 
     /**
     * OBB Covariance Fit.
-    * This method uses covariance analysis to fit an good ``tight'' fitting
+    * This method uses covariance analysis to fit an good "tight" fitting
     * enclosing OBB around a given point cloud.
     *
     * Example Usage:

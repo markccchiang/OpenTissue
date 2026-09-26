@@ -23,8 +23,6 @@ namespace OpenTissue
     /**
     *
     * @param p
-    *
-    * @return
     */
     template<typename vector3_type, typename sphere_type>
     void compute_circumscribed_sphere(vector3_type const & p, sphere_type & sphere)
@@ -36,8 +34,6 @@ namespace OpenTissue
     *
     * @param p0
     * @param p1
-    *
-    * @return
     */
     template<typename vector3_type, typename sphere_type>
     void compute_circumscribed_sphere(vector3_type const & p0,vector3_type const & p1, sphere_type & sphere)
@@ -52,8 +48,6 @@ namespace OpenTissue
     * @param p0
     * @param p1
     * @param p2
-    *
-    * @return
     */
     template<typename vector3_type, typename sphere_type>
     void compute_circumscribed_sphere(vector3_type const & p0, vector3_type const & p1, vector3_type const & p2, sphere_type & sphere)
@@ -128,8 +122,6 @@ namespace OpenTissue
     * @param p1
     * @param p2
     * @param p3
-    *
-    * @return
     */
     template<typename vector3_type, typename sphere_type>
     void compute_circumscribed_sphere(vector3_type const & p0, vector3_type const & p1, vector3_type const & p2, vector3_type const & p3, sphere_type & sphere)
