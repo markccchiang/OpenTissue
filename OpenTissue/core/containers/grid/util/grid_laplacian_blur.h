@@ -24,7 +24,7 @@ namespace OpenTissue
     *
     * @param image            The image to blur.
     * @param diffusion        The value of the diffusion coefficient.
-    * @param max_iterations   The maximum number of iterations allowed. Default is 30 iterations.
+    * @param max_iterations   The maximum number of iterations allowed. Default is 10 iterations.
     */
     template<typename grid_type>
     inline void laplacian_blur(

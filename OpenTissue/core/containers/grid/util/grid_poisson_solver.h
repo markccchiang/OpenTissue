@@ -62,7 +62,7 @@ namespace OpenTissue
     * @param phi              Contains initial guess for solution, and upon
     *                         return contains the solution.
     * @param W                The right hand side of the poisson equation.
-    * @param max_iterations   The maximum number of iterations allowed. Default is 30 iterations.
+    * @param max_iterations   The maximum number of iterations allowed. Default is 10 iterations.
     */
     template < typename grid_type >
     inline void poisson_solver(
@@ -135,7 +135,7 @@ namespace OpenTissue
         //std::cout << "poisson_solver(): uniform grid, dx=dy=dz" << std::endl;
 
         real_type a0 = dx*dx;
-        real_type a1 = 1.0/8.0;
+        real_type a1 = 1.0/6.0;   // the centre node has six neighbours
         for(size_t iteration=0;iteration<max_iterations;++iteration)
         {
           index_iterator  p      = phi.begin();

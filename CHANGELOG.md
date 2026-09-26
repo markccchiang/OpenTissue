@@ -79,9 +79,8 @@ Anything older than the entry below predates this file; see the git history.
     BibTeX entries whose `@` Doxygen took for a command, and a link to a guide that no longer
     exists.
 
-  One comment described a bug rather than hiding one: `grid::poisson_solver()` divides by 8 in
-  its equal-spacing branch, where the discretization it implements requires 6. The comment now
-  gives the correct update; the code is unchanged.
+  One comment described a bug rather than hiding one; see `grid::poisson_solver()` under
+  Fixed.
 - The ParaView guide is split into pages: `documentation/paraview.md` is now the entry page
   -- installing ParaView, running it from the command line, building the examples and the GUI
   basics -- and links to `paraview_writing_data.md`, `paraview_scripting.md` and one page per
@@ -102,6 +101,13 @@ Anything older than the entry below predates this file; see the git history.
 
 ### Fixed
 
+- **`grid::poisson_solver()` solved the wrong equation on grids with equal spacing.** Its
+  branch for dx = dy = dz divided the Gauss-Seidel update by 8, where the seven-point
+  discretization requires 6, so it converged to the solution of a different problem, and a zero
+  right-hand side drove the field to zero instead of leaving a constant alone.
+  `grid::laplacian_blur()`, which calls it, therefore also darkened the images it blurred: a
+  uniform image lost a quarter of its brightness on every iteration. The branch for unequal spacing was correct. New test:
+  `unit_poisson_solver`.
 - **`documentation/paraview.md` gave instructions that did not work.** Its script used a
   `MetaFileReader` that ParaView does not have (`OpenDataFile()` or `MetaFileSeriesReader`),
   its signed distance field example called `mesh2phi(mesh, phi, 64)` as though 64 were the
