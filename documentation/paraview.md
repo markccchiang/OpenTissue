@@ -10,7 +10,16 @@ looking at a field in any detail.
 data properly: isosurfaces, volume rendering, slicing, thresholding, and scripted batch
 rendering.
 
-This guide covers the grid path, which is the one OpenTissue supports directly.
+These pages cover getting OpenTissue's results out of a simulation and into ParaView, with
+three complete, runnable examples.
+
+| Page | What it covers |
+| --- | --- |
+| [Writing data for ParaView](paraview_writing_data.md) | Grids, signed distance fields, height fields, meshes with values on them, animations, and what the exporters cannot do |
+| [Scripting ParaView](paraview_scripting.md) | Rendering from a Python script, without opening a window |
+| [Example: a signed distance field](paraview_example_distance_field.md) | A box and its distance field, rotating -- the export workflow end to end |
+| [Example: waves in a pool](paraview_example_shallow_water.md) | A physical simulation: OpenTissue's shallow water solver |
+| [Example: a cantilever beam](paraview_example_cantilever.md) | A structural simulation: OpenTissue's finite element solver, on a beam of soft rubber |
 
 ## Installing ParaView
 
@@ -21,53 +30,7 @@ brew install --cask paraview     # macOS
 sudo apt-get install paraview    # Debian/Ubuntu
 ```
 
-## Trying it: the example program (on Mac)
-
-`demos/console/paraview_export` is a complete example of everything in this guide. It builds
-a box mesh, converts it to a signed distance field, and writes into the current directory:
-
-- `box.obj` — the mesh
-- `box_phi.mhd` and `box_phi.raw` — its signed distance field
-- `spin_0000.mhd` … `spin_0009.mhd` (each with its `.raw`) — the field of the box turning, as
-  an animation
-
-Next to it is `render.py`, a ParaView script that renders those files to `box_phi.png`,
-`spin_first.png` and `spin_last.png` without opening a window.
-
-Run these commands from the root of the OpenTissue checkout. There are two ways to build it.
-
-**Through CMake**, as part of the demos:
-
-```sh
-cmake -S . -B build-demos -DCMAKE_BUILD_TYPE=Release -DOPENTISSUE_ENABLE_DEMOS=ON
-cmake --build build-demos --target paraview_export
-
-cd build-demos/demos/console/paraview_export
-./paraview_export
-pvbatch render.py
-```
-
-The build copies `render.py` next to the program, so both commands run from the same
-directory. `OPENTISSUE_ENABLE_DEMOS` requires the OpenGL, GLEW, GLFW and GLUT development
-packages (see `INSTALL.md`), even though this demo does not draw anything itself.
-
-**By compiling the one file directly**, which needs none of the graphics packages:
-
-```sh
-c++ -std=c++17 -O2 -I. -Ibuild -I/opt/homebrew/include \
-    demos/console/paraview_export/src/paraview_export.cpp -o paraview_export
-
-mkdir -p out && cd out
-../paraview_export
-pvbatch ../demos/console/paraview_export/render.py
-```
-
-- `-I.` finds the OpenTissue headers. Nothing needs linking: the library is header-only.
-- `-Ibuild` finds `OpenTissue/configuration.h`, which CMake generates. It has to be a build
-  directory that has been configured at least once (`cmake -S . -B build`).
-- `-I/opt/homebrew/include` finds Boost when it was installed with Homebrew. Drop it where
-  Boost is in a standard location, as it is on Debian and Ubuntu.
-- The program writes into the current directory, hence `out/`.
+## Running ParaView from the command line (on Mac)
 
 `pvbatch` comes with ParaView, but a macOS install does not put it on your `PATH`. Either
 call it by its full path, `/Applications/ParaView-<version>.app/Contents/bin/pvbatch`, or add
@@ -80,194 +43,36 @@ export PATH="/Applications/ParaView-5.11.0.app/Contents/bin:$PATH"   # match you
 On Linux the `paraview` package installs `pvbatch` on the `PATH`; on Windows it is in the
 `bin` folder of the ParaView installation.
 
-### Exploring the output in the ParaView GUI
-
-Start ParaView from the directory the program wrote to, so that **File → Open** starts there
--- `build-demos/demos/console/paraview_export` for the CMake build, `out` for the direct one:
+The GUI program itself is elsewhere in the application bundle -- in `Contents/MacOS`, not in
+`Contents/bin` with `pvbatch` -- so the `PATH` change above does not reach it. To start it from
+a terminal, so that **File → Open** starts in the directory your program wrote to:
 
 ```sh
-cd build-demos/demos/console/paraview_export
 /Applications/ParaView-5.11.0.app/Contents/MacOS/paraview
 ```
 
-The GUI program is in `Contents/MacOS`, not in `Contents/bin` with `pvbatch`, so the `PATH`
-change above does not reach it. Opening ParaView from the Dock and browsing to the directory
-works just as well.
+Opening ParaView from the Dock and browsing to the directory works just as well.
 
-**1. The distance field and the mesh**
+## Building the examples
 
-1. **File → Open**, choose `box_phi.mhd`, **OK**, then **Apply** in the Properties panel on
-   the left. Only a bounding-box outline appears: that is the default for a volume.
-2. With `box_phi.mhd` selected in the **Pipeline Browser** (top left), **Filters → Common →
-   Contour**.
-3. In Properties, set the value under **Isosurfaces** to **0**, then **Apply**. The box
-   appears: this is the zero surface of the distance field.
-4. **File → Open**, choose `box.obj`, **Apply**, and switch its representation in the
-   toolbar drop-down from *Surface* to **Wireframe**. Its edges should sit exactly on the
-   contour -- the check that the distance field is right.
-
-**2. The values inside and outside**
-
-1. Select `box_phi.mhd` in the Pipeline Browser again, **Filters → Common → Slice**,
-   **Apply**.
-2. In the toolbar's colouring drop-down, choose **MetaImage**. Negative values are inside the
-   box, positive ones outside.
-3. Drag the slice plane's arrow in the view to move the plane through the volume.
-
-The eye icon beside each item in the Pipeline Browser hides or shows it.
-
-**3. The animation**
-
-1. **File → Open**. The ten numbered files show up as a single entry, `spin_..mhd`, with a
-   small arrow beside it. Select that **group entry** -- not `spin_0000.mhd` inside it, which
-   would load one frame only -- then **OK** and **Apply**.
-2. **Filters → Common → Contour** at value **0** again, then **Apply**.
-3. Press **▶** in the VCR controls on the toolbar at the top of the window: the box turns 9°
-   per frame for ten frames. If the buttons are greyed out, only one time step was loaded --
-   go back to step 1. If they are missing, **View → Toolbars → VCR Controls**.
-
-Hide the objects from the first two parts with their eye icons so they do not overlap.
-
-**Tips**
-
-- Left-drag rotates the view, right-drag or the scroll wheel zooms, and middle-drag or
-  Shift+drag pans. **Reset Camera** in the toolbar recentres everything.
-- Nothing changes after editing a setting? Press **Apply** -- ParaView waits for it.
-- **File → Save State** writes a `.pvsm` file; `paraview --state=yourfile.pvsm` brings the
-  whole setup back, camera included.
-- `paraview --script=render.py` builds the same scene as the script automatically and leaves
-  it open to explore.
-
-## A physical simulation: waves in a pool
-
-`demos/console/paraview_shallow_water` runs a real simulation. A drop of water falls into a
-pool 10 units across and 1 unit deep, with a hill on the bottom, and OpenTissue's shallow
-water solver (`dynamics/swe/`) moves the water for six seconds. The rings spread out, bounce
-off the walls, and slow down where they cross the shallow water over the hill: in shallow
-water, waves travel at √(g · depth).
-
-It writes, into the current directory:
-
-- `sea_bed.mhd` / `.raw` — the bottom of the pool, written once since it does not move
-- `water_0000.mhd` … `water_0100.mhd` — the water surface, 101 frames 0.06 s apart
-
-Build and run it like the first example; `render.py` here saves `water_0000.png`,
-`water_0008.png` … `water_0100.png`, six moments from the drop to the end:
+The examples are console demos under `demos/console/`, built with the rest of the demos. From
+the root of the OpenTissue checkout:
 
 ```sh
 cmake -S . -B build-demos -DCMAKE_BUILD_TYPE=Release -DOPENTISSUE_ENABLE_DEMOS=ON
-cmake --build build-demos --target paraview_shallow_water
-cd build-demos/demos/console/paraview_shallow_water
-./paraview_shallow_water
-pvbatch render.py
+cmake --build build-demos --target <demo name>
 ```
 
-Run the first line even if `build-demos` already exists. A build directory configured before
+Each example's page gives the exact commands. Each demo writes its files into the current
+directory, and the build copies its `render.py` next to it, so running the program and then
+`pvbatch render.py` from its build directory needs no paths.
+
+Run the configure line even if `build-demos` already exists. A build directory configured before
 a demo was added has no rule for it, and `cmake --build` then stops with *No rule to make
 target*; configuring again is safe and picks it up.
 
-While it runs, the program prints checks that the water is behaving like water:
-
-```
-  time   volume    change   highest   crest distance
-  0.00   96.8899  +0.0000%   1.2500    0.000
-  0.50   96.8816  -0.0085%   1.0365    1.875
-  1.00   96.8612  -0.0296%   1.0442    3.500
-  1.50   96.8337  -0.0580%   1.0366    4.875
-  ...
-```
-
-- **volume** should stay constant, since no water enters or leaves the pool. It drifts by
-  0.2% over the six seconds; that is the solver's numerical scheme, which is stable but not
-  exactly conservative.
-- **crest distance** is how far the ring's crest has travelled from the drop towards the far
-  wall. Between 0.5 s and 1.5 s it covers 3.0 units a second, against √(9.81 × 1) = 3.13 for
-  shallow water 1 unit deep. It reaches the wall 5 units away at about 1.6 s, reflects, and is
-  back over the drop at 3 s.
-
-### Writing a height field
-
-The water surface is a *height field*, one height for each (x, y) point, but an OpenTissue
-grid is three-dimensional. The demo stores each height field in a grid only two layers
-deep, one below every height and one above, holding *z minus the height*:
-
-```cpp
-field.create(vector3_type(0, 0, z_low), vector3_type(x_max, y_max, z_high), I, J, 2);
-field(i, j, 0) = z_low  - height(i, j);
-field(i, j, 1) = z_high - height(i, j);
-```
-
-That value is zero exactly at the surface and linear in z, so ParaView's **Contour** at
-value 0 recovers the surface exactly -- the same idea as a signed distance field, and the
-same step in ParaView. It also keeps the files small: two layers of 80 × 80.
-
-The solver's heights are read with `getSeaHeight(i, j)` and `getSeaBottom(i, j)`.
-
-### In the ParaView GUI
-
-1. **File → Open** `sea_bed.mhd`, **Apply**, then **Filters → Common → Contour** at value
-   **0**, **Apply**. Set its colouring to *Solid Color*.
-2. **File → Open** and choose the group entry `water_..mhd`, **Apply**, then **Contour** at
-   **0** again.
-3. With that contour selected, **Filters → Common → Calculator**, set **Result Array Name**
-   to `elevation` and the expression to `coordsZ - 1`, **Apply**. This is the height above
-   the water at rest; colour by it, with a diverging colour map centred on zero.
-4. The waves are a few hundredths of a unit high, so they look flat at true scale. For each
-   of the two surfaces, click the gear icon in Properties to show the advanced options, and
-   under **Transforming** set **Scale** to `1 1 3`. The pictures `render.py` saves use the
-   same exaggeration, and say so.
-5. Press **▶** in the VCR controls. **File → Save Animation** writes the frames out as images
-   or a movie.
-
-## Writing a grid
-
-`grid_metaimage_write.h` writes any OpenTissue grid as a MetaImage, which ParaView reads
-natively:
-
-```cpp
-#include <OpenTissue/core/containers/grid/grid.h>
-#include <OpenTissue/core/containers/grid/io/grid_metaimage_write.h>
-
-OpenTissue::grid::metaimage_write("phi", phi);
-```
-
-That produces two files:
-
-- `phi.mhd` — a short text header giving the dimensions, voxel spacing, origin and element
-  type. This is the file you open in ParaView.
-- `phi.raw` — the voxel data, a plain binary dump in the grid's own layout.
-
-The `.mhd` suffix on the name is optional; `metaimage_write("phi.mhd", phi)` does the same
-thing. The header records the grid's `min_coord()` as the origin and its `dx()`, `dy()`,
-`dz()` as the spacing, so the volume appears in ParaView at the position and scale the
-simulation used, not in arbitrary voxel units.
-
-### A worked example: a signed distance field
-
-Signed distance fields are the most common thing worth looking at:
-
-```cpp
-#include <OpenTissue/core/containers/mesh/mesh.h>
-#include <OpenTissue/core/containers/grid/grid.h>
-#include <OpenTissue/core/containers/grid/util/grid_mesh2phi.h>
-#include <OpenTissue/core/containers/grid/io/grid_metaimage_write.h>
-
-typedef OpenTissue::math::BasicMathTypes<double, size_t>  math_types;
-typedef OpenTissue::grid::Grid<float, math_types>         grid_type;
-
-grid_type phi;
-OpenTissue::grid::mesh2phi(mesh, phi, 0.25, 64);   // 0.25 margin around the mesh, 64 voxels per axis
-OpenTissue::grid::metaimage_write("phi", phi);
-```
-
-Mind which `mesh2phi` overload you call. The shorter one, `mesh2phi(mesh, phi, 64)`, treats
-64 only as an *upper limit*: it derives the resolution from the mesh's smallest face and
-rounds it to a power of two, which for a plain box gives a 16x16x16 grid -- far too coarse to
-look at. The four-argument form above uses the resolution you give it.
-
-Open `phi.mhd` in ParaView and apply a **Contour** filter at value 0. That is the surface the
-distance field represents, and comparing it against the mesh you started from is a direct
-check that the conversion did what you expected.
+`OPENTISSUE_ENABLE_DEMOS` requires the OpenGL, GLEW, GLFW and GLUT development packages (see
+`INSTALL.md`), even though these demos do not draw anything themselves.
 
 ## Using it in ParaView
 
@@ -285,103 +90,12 @@ check that the conversion did what you expected.
 The colour legend button shows the scalar range, and **Rescale to Data Range** is usually the
 first thing worth pressing.
 
-## Animations
+### Tips
 
-Write one file per frame with a zero-padded number, and **keep the grid the same in every
-frame** -- same origin, same spacing, same number of voxels:
-
-```cpp
-grid_type field;
-field.create(min_corner, max_corner, I, J, K);   // once, big enough for the whole run
-
-for(size_t frame = 0u; frame < frames; ++frame)
-{
-  simulator.run(timestep);
-  // ... fill `field` for this frame ...
-
-  std::ostringstream name;
-  name << "phi_" << std::setw(4) << std::setfill('0') << frame;
-  OpenTissue::grid::metaimage_write(name.str(), field);
-}
-```
-
-ParaView groups numbered files automatically: the **File → Open** dialog lists them as a
-single entry, `phi_..mhd`. Open that group entry rather than one of the files inside it, and
-the VCR controls in the toolbar then play through the frames. **File → Save Animation**
-writes the frames out as images or a movie.
-
-The fixed grid matters because ParaView reads the grid geometry of a series from its *first*
-file only and applies it to every other frame. If the origin or spacing changes from frame to
-frame, the later frames are drawn with the wrong ones: a rotating box comes out as a sheared
-parallelogram, although each file is correct when opened on its own.
-
-A simulation that works on a fixed grid satisfies this without trying. Watch out for anything
-that sizes the grid to its contents -- `mesh2phi()` does, fitting a new grid around the mesh
-each call. To animate the distance field of a moving mesh, create the grid once and refill it
-each frame with the scan conversion `mesh2phi()` uses internally:
-
-```cpp
-field.clear();                                            // back to "unused"
-OpenTissue::mesh::compute_angle_weighted_vertex_normals(mesh);
-OpenTissue::t4_cpu_scan(mesh, band, field, OpenTissue::t4_cpu_signed());
-```
-
-where `band` is how far from the surface to compute distances; make it large enough to cover
-the grid. `demos/console/paraview_export` does exactly this.
-
-## Scripting
-
-ParaView ships `pvpython`, so a figure can be reproduced without clicking:
-
-```python
-from paraview.simple import *
-
-phi = OpenDataFile('phi.mhd')
-contour = Contour(Input=phi, ContourBy=['POINTS', 'MetaImage'], Isosurfaces=[0.0])
-Show(contour)
-Render()
-SaveScreenshot('phi.png', ImageResolution=[1600, 1200])
-```
-
-`pvbatch` does the same without opening a window, which is what you want on a cluster or in
-CI.
-
-`OpenDataFile()` picks the right reader from the file name, which is sturdier across ParaView
-versions than naming one. To load numbered frames as a time series, pass the list of files:
-
-```python
-import glob
-series = MetaFileSeriesReader(FileNames=sorted(glob.glob('phi_*.mhd')))
-scene = GetAnimationScene()
-scene.UpdateAnimationUsingDataTimeSteps()
-for t in series.TimestepValues:
-    scene.AnimationTime = t
-    Render()
-```
-
-`demos/console/paraview_export/render.py` is a complete script along these lines, run
-against that demo's output.
-
-## What this does not cover
-
-- **One scalar field per file.** The writer takes a single grid. Several fields means several
-  files, loaded separately and combined in ParaView with **Append Attributes**.
-- **No vector fields.** OpenTissue stores vector-valued data as separate scalar grids; you
-  would write each component and recombine with the **Calculator** filter.
-- **No time metadata.** Frames are ordered by file name, not by simulation time. If the real
-  timestamps matter, write a `.pvd` index file listing each file with its `timestep`.
-- **Surface meshes go elsewhere.** For polygonal meshes use `mesh_obj_write.h`; ParaView reads
-  OBJ directly, and so does Blender and MeshLab.
-
-## Related exporters
-
-| Header | Format | Use |
-| --- | --- | --- |
-| `grid_metaimage_write.h` | MetaImage `.mhd` + `.raw` | ParaView and other VTK tools; compact |
-| `grid_matlab_write.h` | MATLAB `.m` | Small grids, numeric inspection; also runs in Octave |
-| `grid_raw_write.h` | headerless binary | Data only, no dimensions; needs a header written by hand |
-| `mesh_obj_write.h` | Wavefront OBJ | Surface meshes, for ParaView, Blender, MeshLab |
-| `mesh_vrml_write.h` | VRML | Surface meshes, older tools |
-
-`grid_metaimage_write.h` is essentially `grid_raw_write.h` plus the header that makes the data
-self-describing, so prefer it unless something downstream specifically wants a bare dump.
+- Left-drag rotates the view, right-drag or the scroll wheel zooms, and middle-drag or
+  Shift+drag pans. **Reset Camera** in the toolbar recentres everything.
+- Nothing changes after editing a setting? Press **Apply** -- ParaView waits for it.
+- **File → Save State** writes a `.pvsm` file; `paraview --state=yourfile.pvsm` brings the
+  whole setup back, camera included.
+- `paraview --script=render.py` builds the same scene as the script automatically and leaves
+  it open to explore.

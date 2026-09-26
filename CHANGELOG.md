@@ -9,6 +9,15 @@ Anything older than the entry below predates this file; see the git history.
 
 ### Added
 
+- `demos/console/paraview_cantilever`, a structural simulation rendered in ParaView: a beam of
+  soft rubber clamped at one end and released under its own weight, simulated with OpenTissue's
+  finite element solver and written as legacy VTK files carrying each point's displacement and
+  each element's von Mises stress. The beam droops far past what small-deflection beam theory
+  describes, so it checks itself with measures that hold at any deflection -- its centre line
+  stretches by at most 0.39% while its tip swings 2.6 m down -- and ships a `render.py` for
+  ParaView. The guide covers it, including the material model and how a real material would
+  compare, and how the result depends on the time step: `fem::simulate` runs a fixed 20
+  conjugate gradient iterations, which is too few once the step is too large.
 - `demos/console/paraview_shallow_water`, a physical simulation rendered in ParaView: a drop
   falling into a pool with a hill on its bottom, moved by OpenTissue's shallow water solver.
   It writes the sea bed and 101 frames of the water surface, prints checks that the water is
@@ -43,6 +52,10 @@ Anything older than the entry below predates this file; see the git history.
 
 ### Changed
 
+- The ParaView guide is split into pages: `documentation/paraview.md` is now the entry page
+  -- installing ParaView, running it from the command line, building the examples and the GUI
+  basics -- and links to `paraview_writing_data.md`, `paraview_scripting.md` and one page per
+  example. It had grown to over 500 lines covering three demos and the export reference.
 - `grid::metaimage_write()` no longer prints a line on every successful write. It is typically
   called once per frame of an animation, so the message only buried a program's own output;
   failures are still reported on `std::cerr`.
