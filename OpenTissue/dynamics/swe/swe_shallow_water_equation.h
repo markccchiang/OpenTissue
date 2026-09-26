@@ -596,6 +596,41 @@ namespace OpenTissue
       }
 
       /**
+      * Get Water Height.
+      * The counterpart of setSeaHeight(): the height of the water surface at a grid node, in
+      * the same units and frame as the sea bottom. The water depth there is this minus
+      * getSeaBottom(). Without it the simulation's results could only be drawn, not exported
+      * or examined.
+      *
+      * @param i    The index of water node grid along x-axe direction
+      * @param j    The index of water node grid along y-axe direction
+      *
+      * @return     The height of the water surface at the (i,j) grid node.
+      */
+      real_type getSeaHeight( const unsigned int i, const unsigned int j ) const
+      {
+        assert( i < X && "index out of bounds" );
+        assert( j < Y && "index out of bounds" );
+        return h[ i ][ j ];
+      }
+
+      /**
+      * Get Bottom Height.
+      * The counterpart of setSeaBottom(): the height of the sea bottom at a grid node.
+      *
+      * @param i    The index of water node grid along x-axe direction
+      * @param j    The index of water node grid along y-axe direction
+      *
+      * @return     The height of the sea bottom at the (i,j) grid node.
+      */
+      real_type getSeaBottom( const unsigned int i, const unsigned int j ) const
+      {
+        assert( i < X && "index out of bounds" );
+        assert( j < Y && "index out of bounds" );
+        return b[ i ][ j ];
+      }
+
+      /**
       * Set Shore
       *
       * @param i    The index of water node grid along x-axe direction

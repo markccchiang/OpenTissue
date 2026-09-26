@@ -9,6 +9,15 @@ Anything older than the entry below predates this file; see the git history.
 
 ### Added
 
+- `demos/console/paraview_shallow_water`, a physical simulation rendered in ParaView: a drop
+  falling into a pool with a hill on its bottom, moved by OpenTissue's shallow water solver.
+  It writes the sea bed and 101 frames of the water surface, prints checks that the water is
+  behaving like water -- its volume holds to within 0.2% and the waves travel at the speed
+  shallow-water theory predicts -- and ships a `render.py` for ParaView. The ParaView guide
+  covers it, including how to write a height field.
+- `ShallowWaterEquations::getSeaHeight()` and `getSeaBottom()`, the counterparts of the
+  existing setters. The solver had no way to read its state back except by drawing it with
+  OpenGL, so its results could not be exported or examined.
 - `demos/console/paraview_export`, a complete, runnable example of getting OpenTissue data
   into ParaView: a mesh, its signed distance field, and an animated series of that field.
   It ships with `render.py`, which renders the output with ParaView's `pvbatch`; both have
@@ -34,6 +43,9 @@ Anything older than the entry below predates this file; see the git history.
 
 ### Changed
 
+- `grid::metaimage_write()` no longer prints a line on every successful write. It is typically
+  called once per frame of an animation, so the message only buried a program's own output;
+  failures are still reported on `std::cerr`.
 - **The multibody engine now reaches its linear algebra only through its math policy.**
   Twenty mbd headers bypassed it for uBLAS API -- `vector_type::size_type`, `.clear()`,
   `.empty()`, writing into a sparse matrix with `operator()`, and an unqualified `prod` that

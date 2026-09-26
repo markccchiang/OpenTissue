@@ -128,7 +128,7 @@ namespace OpenTissue
                 static_cast<std::streamsize>(grid.size() * sizeof(value_type)));
       raw.close();
 
-      std::cout << "metaimage_write(): wrote " << header_name << " and " << raw_name << std::endl;
+      // Silent on success: this is typically called once per frame of an animation.
       return true;
     }
 

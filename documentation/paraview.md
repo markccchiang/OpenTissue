@@ -138,6 +138,87 @@ Hide the objects from the first two parts with their eye icons so they do not ov
 - `paraview --script=render.py` builds the same scene as the script automatically and leaves
   it open to explore.
 
+## A physical simulation: waves in a pool
+
+`demos/console/paraview_shallow_water` runs a real simulation. A drop of water falls into a
+pool 10 units across and 1 unit deep, with a hill on the bottom, and OpenTissue's shallow
+water solver (`dynamics/swe/`) moves the water for six seconds. The rings spread out, bounce
+off the walls, and slow down where they cross the shallow water over the hill: in shallow
+water, waves travel at √(g · depth).
+
+It writes, into the current directory:
+
+- `sea_bed.mhd` / `.raw` — the bottom of the pool, written once since it does not move
+- `water_0000.mhd` … `water_0100.mhd` — the water surface, 101 frames 0.06 s apart
+
+Build and run it like the first example; `render.py` here saves `water_0000.png`,
+`water_0008.png` … `water_0100.png`, six moments from the drop to the end:
+
+```sh
+cmake -S . -B build-demos -DCMAKE_BUILD_TYPE=Release -DOPENTISSUE_ENABLE_DEMOS=ON
+cmake --build build-demos --target paraview_shallow_water
+cd build-demos/demos/console/paraview_shallow_water
+./paraview_shallow_water
+pvbatch render.py
+```
+
+Run the first line even if `build-demos` already exists. A build directory configured before
+a demo was added has no rule for it, and `cmake --build` then stops with *No rule to make
+target*; configuring again is safe and picks it up.
+
+While it runs, the program prints checks that the water is behaving like water:
+
+```
+  time   volume    change   highest   crest distance
+  0.00   96.8899  +0.0000%   1.2500    0.000
+  0.50   96.8816  -0.0085%   1.0365    1.875
+  1.00   96.8612  -0.0296%   1.0442    3.500
+  1.50   96.8337  -0.0580%   1.0366    4.875
+  ...
+```
+
+- **volume** should stay constant, since no water enters or leaves the pool. It drifts by
+  0.2% over the six seconds; that is the solver's numerical scheme, which is stable but not
+  exactly conservative.
+- **crest distance** is how far the ring's crest has travelled from the drop towards the far
+  wall. Between 0.5 s and 1.5 s it covers 3.0 units a second, against √(9.81 × 1) = 3.13 for
+  shallow water 1 unit deep. It reaches the wall 5 units away at about 1.6 s, reflects, and is
+  back over the drop at 3 s.
+
+### Writing a height field
+
+The water surface is a *height field*, one height for each (x, y) point, but an OpenTissue
+grid is three-dimensional. The demo stores each height field in a grid only two layers
+deep, one below every height and one above, holding *z minus the height*:
+
+```cpp
+field.create(vector3_type(0, 0, z_low), vector3_type(x_max, y_max, z_high), I, J, 2);
+field(i, j, 0) = z_low  - height(i, j);
+field(i, j, 1) = z_high - height(i, j);
+```
+
+That value is zero exactly at the surface and linear in z, so ParaView's **Contour** at
+value 0 recovers the surface exactly -- the same idea as a signed distance field, and the
+same step in ParaView. It also keeps the files small: two layers of 80 × 80.
+
+The solver's heights are read with `getSeaHeight(i, j)` and `getSeaBottom(i, j)`.
+
+### In the ParaView GUI
+
+1. **File → Open** `sea_bed.mhd`, **Apply**, then **Filters → Common → Contour** at value
+   **0**, **Apply**. Set its colouring to *Solid Color*.
+2. **File → Open** and choose the group entry `water_..mhd`, **Apply**, then **Contour** at
+   **0** again.
+3. With that contour selected, **Filters → Common → Calculator**, set **Result Array Name**
+   to `elevation` and the expression to `coordsZ - 1`, **Apply**. This is the height above
+   the water at rest; colour by it, with a diverging colour map centred on zero.
+4. The waves are a few hundredths of a unit high, so they look flat at true scale. For each
+   of the two surfaces, click the gear icon in Properties to show the advanced options, and
+   under **Transforming** set **Scale** to `1 1 3`. The pictures `render.py` saves use the
+   same exaggeration, and say so.
+5. Press **▶** in the VCR controls. **File → Save Animation** writes the frames out as images
+   or a movie.
+
 ## Writing a grid
 
 `grid_metaimage_write.h` writes any OpenTissue grid as a MetaImage, which ParaView reads
