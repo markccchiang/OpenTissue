@@ -107,7 +107,11 @@ void do_unconstrained_minimizer_test(func_functor & f, grad_functor & nabla_f, v
     BOOST_CHECK( iteration <= max_iterations );
   }
 
-  double tol = 0.001;
+  // In percent. The solver may stop on its relative test, when f changes by less than
+  // relative_tolerance (1e-9) between iterations. Near a minimum f is quadratic in the
+  // distance to it, so that leaves x up to about sqrt(1e-9) away -- more than the 0.001% this
+  // check once demanded, which failed a correct solver on some random starting points.
+  double tol = 0.01;
   BOOST_CHECK_CLOSE( x(0), solution(0), tol);
   BOOST_CHECK_CLOSE( x(1), solution(1), tol);
 }

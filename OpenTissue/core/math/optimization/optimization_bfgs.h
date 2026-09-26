@@ -18,6 +18,7 @@
 #include <OpenTissue/core/math/math_is_number.h>
 
 #include <cmath>
+#include <limits>
 #include <stdexcept>
 #include <cassert>
 
@@ -44,8 +45,6 @@ namespace OpenTissue
         template<typename vector_type,typename matrix_type>
         inline void bfgs_update_inverse_hessian(vector_type const & y,vector_type const & s, matrix_type & H)
         {
-          using std::fabs;
-
           typedef typename matrix_type::value_type                     real_type;
           typedef typename OpenTissue::math::ValueTraits<real_type>    value_traits;
 
@@ -62,11 +61,15 @@ namespace OpenTissue
 
           size_t const N = H.size1();
 
-          real_type dot = inner_prod(y,s);
-          if(  fabs(dot) <= value_traits::zero() ) // Make sure we do not divide by zero
-          {            
-            dot = value_traits::one();
-          }
+          // The update keeps H positive definite only if the curvature condition y^T s > 0
+          // holds. A Wolfe line search would guarantee it; Armijo back-tracking, which the
+          // callers use, does not. Updating anyway makes H indefinite, so that the next
+          // direction points uphill. Skip the update instead, as is customary (Nocedal and
+          // Wright, Numerical Optimization, section 6.1). This also rules out dividing by zero.
+          real_type const dot       = inner_prod(y,s);
+          real_type const threshold = std::sqrt( std::numeric_limits<real_type>::epsilon() ) * ublas::norm_2(y) * ublas::norm_2(s);
+          if( dot <= threshold )
+            return;
 
           real_type rho = value_traits::one() / dot;
           
@@ -117,8 +120,25 @@ namespace OpenTissue
           {
             ublas::row(H,i) -= rho*s(i) * v;
             ublas::row(H,i) += (gamma*s(i) - rho * v(i)) * s;
-          } 
+          }
 
+        }
+
+        /**
+        * Reset the inverse Hessian approximation to the identity, which turns the next
+        * step into a steepest descent step.
+        *
+        * @param H   Upon return this argument holds the identity matrix.
+        */
+        template<typename matrix_type>
+        inline void bfgs_reset_inverse_hessian(matrix_type & H)
+        {
+          typedef typename matrix_type::value_type                     real_type;
+          typedef typename OpenTissue::math::ValueTraits<real_type>    value_traits;
+
+          H.clear();
+          for(typename matrix_type::size_type i = 0; i < H.size1(); ++i)
+            H(i,i) = value_traits::one();
         }
 
       }
@@ -355,6 +375,17 @@ namespace OpenTissue
           // ublas::noalias( dx ) = - ublas::prod(H, nabla_f_k);
           ublas::axpy_prod(H, -nabla_f_k, dx, true);
 
+          // H should stay positive definite, which makes dx a descent direction. Should
+          // round-off have spoilt that, restart from H = I (steepest descent) rather than
+          // give up with a non-descent direction.
+          bool restarted = false;
+          if( ublas::inner_prod(dx, nabla_f_k) >= value_traits::zero() )
+          {
+            detail::bfgs_reset_inverse_hessian(H);
+            ublas::noalias( dx ) = -nabla_f_k;
+            restarted = true;
+          }
+
           x_old.assign( x );
           real_type f_tau = f_0;
           armijo_backtracking(
@@ -368,8 +399,32 @@ namespace OpenTissue
             , alpha
             , beta
             , f_tau
-            , status 
+            , status
             );
+
+          // A badly scaled H can give a direction so long that even the shortest step the
+          // line-search tries overshoots. Retry once along the steepest descent direction
+          // before giving up.
+          if(status == BACKTRACKING_FAILED && !restarted)
+          {
+            detail::bfgs_reset_inverse_hessian(H);
+            ublas::noalias( dx ) = -nabla_f_k;
+            x.assign( x_old );
+            f_tau = f_0;
+            armijo_backtracking(
+              f
+              , nabla_f_k
+              , x_old
+              , x
+              , dx
+              , relative_tolerance
+              , stagnation_tolerance
+              , alpha
+              , beta
+              , f_tau
+              , status
+              );
+          }
 
           if(status != OK)
             return;

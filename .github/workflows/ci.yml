@@ -134,8 +134,8 @@ jobs:
       - name: Header self-containment
         run: cmake --build build --config Debug --target opentissue_header_check --parallel 4
 
-      # The gating run. unit_kmeans and unit_bfgs carry the 'unreliable' label and
-      # are excluded here; see unit_tests/CMakeLists.txt for why.
+      # The gating run. unit_kmeans carries the 'unreliable' label and is excluded
+      # here; see unit_tests/CMakeLists.txt for why.
       - name: Test
         run: ctest --test-dir build --build-config Debug --output-on-failure -LE unreliable
 

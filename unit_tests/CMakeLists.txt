@@ -31,10 +31,12 @@ set(OPENTISSUE_TEST_RANDOM_SEED 20090306 CACHE STRING
 #               caught by a local minima then all the following unit-tests is likely to
 #               fail!". Making it reliable means restarts or k-means++ in the algorithm,
 #               not a tweak to the test.
-# unit_bfgs   - passes for roughly 85% of seeds. BFGS on Rosenbrock stops well short of
-#               the minimum when the random starting point is poor.
 #
-set(OPENTISSUE_UNRELIABLE_TESTS unit_kmeans unit_bfgs)
+# unit_bfgs used to be listed here too, passing for about 85% of seeds. That was a bug in
+# the solver, not bad luck, and it is fixed; it now passes for every seed tried.
+#
+
+set(OPENTISSUE_UNRELIABLE_TESTS unit_kmeans)
 
 function(ot_add_test TEST_NAME)
   add_test(NAME ${TEST_NAME}

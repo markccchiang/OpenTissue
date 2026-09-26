@@ -101,6 +101,18 @@ Anything older than the entry below predates this file; see the git history.
 
 ### Fixed
 
+- **`optimization::bfgs()` gave up on problems it could solve.** Its update of the inverse
+  Hessian ran even when the step violated the curvature condition yᵀs > 0, which Armijo
+  back-tracking does not guarantee. That made the approximation indefinite, the next direction
+  pointed uphill, and the solver stopped with "Non descent direction was encountered", far from
+  the minimum. On the Rosenbrock test this happened for about 15% of random starting points.
+  The update is now skipped when the condition fails (Nocedal and Wright, section 6.1). As a
+  safety net, the solver restarts from steepest descent when a direction is not a descent
+  direction, or when the line search fails along a quasi-Newton direction. The skipped update
+  applies to `projected_bfgs()` too, which shares the update function. `unit_bfgs` passes for
+  all 3,000 seeds tried (it failed 153 of 1,001 before), so it no longer carries the
+  `unreliable` label and now gates CI. Its position check was also relaxed from 0.001% to
+  0.01%, because the solver's relative stopping test allows about sqrt(1e-9) of error.
 - **`grid::poisson_solver()` solved the wrong equation on grids with equal spacing.** Its
   branch for dx = dy = dz divided the Gauss-Seidel update by 8, where the seven-point
   discretization requires 6, so it converged to the solution of a different problem, and a zero
