@@ -101,6 +101,18 @@ Anything older than the entry below predates this file; see the git history.
 
 ### Fixed
 
+- **`math::kmeans()` usually failed to find well-separated clusters.** It placed its initial
+  centers uniformly at random in the bounding box of the points. A center that landed away
+  from the data got no points and was never moved again, so its cluster stayed empty and the
+  other clusters merged separate groups. On the test's four clearly separated groups it found
+  the right clustering for only about 27% of random seeds. The initial centers are now chosen
+  by k-means++ seeding, an empty cluster is re-seeded at the point farthest from its center,
+  and the algorithm runs 10 times, keeping the clustering with the smallest sum of squared
+  distances. The number of runs is a new trailing parameter, `restarts`, defaulting to 10, so
+  existing calls compile unchanged but take about 10 times as long. `unit_kmeans` passes for
+  all 3,000 seeds tried, so it no longer carries the `unreliable` label, and a new case checks
+  that a single run leaves no cluster empty. No test carries the label now, and the
+  informational CI step that ran the labelled tests is removed.
 - **`optimization::bfgs()` gave up on problems it could solve.** Its update of the inverse
   Hessian ran even when the step violated the curvature condition yᵀs > 0, which Armijo
   back-tracking does not guarantee. That made the approximation indefinite, the next direction

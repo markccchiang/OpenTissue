@@ -9,8 +9,6 @@
 //
 #include <OpenTissue/configuration.h>
 
-#include <random>
-
 #include <OpenTissue/core/math/math_random.h>
 #include <OpenTissue/core/math/math_matrix3x3.h>
 #include <OpenTissue/core/math/math_covariance.h>
@@ -179,6 +177,32 @@ namespace OpenTissue
 
       protected:
 
+        static real_type squared_distance( vector_type const & a, vector_type const & b )
+        {
+          using OpenTissue::math::inner_prod;
+          vector_type const diff = a - b;
+          return inner_prod( diff, diff );
+        }
+
+        /**
+        * Pick one of the indices 0..N-1 with equal probability.
+        */
+        static size_t pick_uniformly( OpenTissue::math::Random<real_type> & uniform, size_t const & N )
+        {
+          size_t const pick = static_cast<size_t>( uniform() * N );
+          return pick < N ? pick : N - 1u;
+        }
+
+        /**
+        * Append a cluster, centered at the given point.
+        */
+        void add_cluster( vector_type const & center )
+        {
+          m_clusters.push_back( cluster_type() );
+          m_clusters.back().m_mean  = center;
+          m_clusters.back().m_index = m_clusters.size() - 1u;
+        }
+
         /**
         * Initialize KMeans Algorithm.
         * This method creates an initial set of clusters and assign feature points to them.
@@ -195,8 +219,6 @@ namespace OpenTissue
           )
         {
           using std::min;
-          using std::max;
-          using OpenTissue::math::random;
 
           // Assign all feature points to the zero-indexed cluster
 
@@ -211,39 +233,58 @@ namespace OpenTissue
               m_memberships[index] = membership_info( index, &(*p) );
           }
 
-          // Find a bounding box of the feature points
-          vector_type min_coord = (*begin);
-          vector_type max_coord = (*begin);
-          for( vector_iterator p = begin; p != end; ++p)
-          {
-            min_coord = min( min_coord, (*p) );
-            max_coord = max( max_coord, (*p) );
-          }
-
-          // Add some randomness
+          // Choose the initial cluster centers by k-means++ seeding (Arthur and Vassilvitskii,
+          // 2007): the first center is a feature point picked at random, and each further one
+          // is a feature point picked with probability proportional to its squared distance
+          // to the nearest center chosen so far. Centers then start spread over the data.
           //
-          // std::random_shuffle was removed in C++17. It drew from an unspecified source,
-          // in practice rand(), which is deterministic unless the caller seeds it. A
-          // fixed-seed generator is used here so the behaviour stays deterministic rather
-          // than silently becoming run-dependent.
-          {
-            static std::mt19937 shuffle_generator( 1234u );
-            std::shuffle(m_memberships.begin(), m_memberships.end(), shuffle_generator);
-          }
+          // The centers used to be placed uniformly at random in the bounding box of the
+          // feature points. A center could land where there were no points, and its cluster
+          // stayed empty for good, while others merged separate groups of points.
+          OpenTissue::math::Random<real_type> uniform;   // uniform on [0,1)
 
-          //--- This initialization just seed clusters at random positions...
           m_clusters.clear();
-          for(size_t i=0;i<K;++i)
+          add_cluster( *(m_memberships[ pick_uniformly( uniform, N ) ].m_p) );
+
+          // Squared distance from every feature point to its nearest center so far.
+          std::vector<real_type> squared_distances( N );
+          for(size_t n = 0; n < N; ++n)
+            squared_distances[n] = squared_distance( *(m_memberships[n].m_p), m_clusters.back().m_mean );
+
+          while( m_clusters.size() < K )
           {
-            // Allocate cluster
-            m_clusters.push_back(cluster_type());
-            cluster_type & cluster = m_clusters.back();
-            // Assign a random cluster center within bounding box of feature points
-            random( cluster.m_mean, min_coord, max_coord );
-            cluster.m_index = i;
+            real_type total = value_traits::zero();
+            for(size_t n = 0; n < N; ++n)
+              total += squared_distances[n];
+
+            size_t pick = 0u;
+            if( total > value_traits::zero() )
+            {
+              real_type const threshold = uniform() * total;
+              real_type       sum       = value_traits::zero();
+              pick = N - 1u;  // in case round-off keeps the running sum below the threshold
+              for(size_t n = 0; n < N; ++n)
+              {
+                sum += squared_distances[n];
+                if( sum > threshold )
+                {
+                  pick = n;
+                  break;
+                }
+              }
+            }
+            else
+            {
+              // Every feature point coincides with a center already; any point will do.
+              pick = pick_uniformly( uniform, N );
+            }
+
+            add_cluster( *(m_memberships[pick].m_p) );
+            for(size_t n = 0; n < N; ++n)
+              squared_distances[n] = min( squared_distances[n], squared_distance( *(m_memberships[n].m_p), m_clusters.back().m_mean ) );
           }
 
-          // Finally we assign the membership of the feature points to the random initial clusters
+          // Finally we assign the membership of the feature points to the initial clusters
           distribute_features();
         }
 
@@ -308,23 +349,56 @@ namespace OpenTissue
             if(! cluster->m_features.empty())
               cluster->update();
           }
+
+          // A cluster that got no feature points would otherwise never move again. Move its
+          // center onto the feature point that is farthest from its own cluster's center;
+          // the next re-assignment then gives it that point. Each move lowers the sum of
+          // squared distances, so this cannot make the iteration cycle.
+          for(cluster_iterator cluster=m_clusters.begin();cluster!=m_clusters.end();++cluster)
+          {
+            if(! cluster->m_features.empty())
+              continue;
+
+            membership_info * farthest     = 0;
+            real_type         max_distance = -value_traits::one();
+            for(membership_iterator m = m_memberships.begin(); m != m_memberships.end(); ++m)
+            {
+              if( m->m_cluster->m_features.size() < 2u )  // do not empty another cluster
+                continue;
+              real_type const d = squared_distance( *(m->m_p), m->m_cluster->m_mean );
+              if( d > max_distance )
+              {
+                max_distance = d;
+                farthest     = &(*m);
+              }
+            }
+            if(!farthest)
+              break;  // no cluster can spare a feature point
+
+            cluster->m_mean = *(farthest->m_p);
+            changed = true;
+          }
           return changed;
         }
 
-      public:
+        /**
+        * The sum of squared distances from every feature point to the center of its cluster.
+        * K-means lowers it every iteration; of several runs, the one with the smallest value
+        * found the best clustering.
+        */
+        real_type sum_of_squared_distances() const
+        {
+          real_type sum = value_traits::zero();
+          for(typename membership_container::const_iterator m = m_memberships.begin(); m != m_memberships.end(); ++m)
+            sum += squared_distance( *(m->m_p), m->m_cluster->m_mean );
+          return sum;
+        }
 
         /**
-        * K-means.
-        *
-        * @param begin            An iterator to the first feature point.
-        * @param end              An iterator to the position one past the last feature point.
-        * @param K                The number of clusters
-        * @param iteration        Upon return this argument holds the number of iterations that was done.
-        * @param max_iterations   The maximum number of iterations to perform the KMeans algorithm.
-        *
+        * Run K-means once from a k-means++ initialization.
         */
         template<typename vector_iterator>
-        void run( 
+        void run_once(
           vector_iterator const & begin
           , vector_iterator const & end
           , size_t const & K
@@ -342,6 +416,64 @@ namespace OpenTissue
             if(iteration >= max_iterations)
               return;
           }while(changed);
+        }
+
+      public:
+
+        /**
+        * K-means.
+        *
+        * K-means converges to a local minimum, which depends on the initial centers. Even
+        * with k-means++ seeding a run occasionally starts two centers in one group of
+        * points and merges two other groups, so the algorithm is run several times and the
+        * best clustering is kept.
+        *
+        * @param begin            An iterator to the first feature point.
+        * @param end              An iterator to the position one past the last feature point.
+        * @param K                The number of clusters
+        * @param iteration        Upon return this argument holds the number of iterations
+        *                         done by the run that was kept.
+        * @param max_iterations   The maximum number of iterations to perform the KMeans algorithm.
+        * @param restarts         The number of times to run the algorithm. At least one run is made.
+        *
+        */
+        template<typename vector_iterator>
+        void run( 
+          vector_iterator const & begin
+          , vector_iterator const & end
+          , size_t const & K
+          , size_t & iteration
+          , size_t const & max_iterations
+          , size_t const & restarts = 10u
+          )
+        {
+          std::vector<vector_type> best_centers;
+          real_type                best_sum       = value_traits::infinity();
+          size_t                   best_iteration = 0u;
+
+          size_t const runs = restarts > 0u ? restarts : 1u;
+          for(size_t r = 0u; r < runs; ++r)
+          {
+            run_once(begin, end, K, iteration, max_iterations);
+
+            real_type const sum = sum_of_squared_distances();
+            if( sum < best_sum || best_centers.empty() )
+            {
+              best_sum       = sum;
+              best_iteration = iteration;
+              best_centers.clear();
+              for(cluster_iterator c = m_clusters.begin(); c != m_clusters.end(); ++c)
+                best_centers.push_back( c->m_mean );
+            }
+          }
+
+          // Restore the best run. Its centers are the means of their clusters, so assigning
+          // every point to its nearest center again reproduces that run's clustering.
+          size_t i = 0u;
+          for(cluster_iterator c = m_clusters.begin(); c != m_clusters.end(); ++c, ++i)
+            c->m_mean = best_centers[i];
+          distribute_features();
+          iteration = best_iteration;
         }
       };
 
@@ -363,6 +495,9 @@ namespace OpenTissue
     * @param K                The number of clusters
     * @param iteration        Upon return this argument holds the number of iterations that was done.
     * @param max_iterations   The maximum number of iterations to perform the KMeans algorithm. Usually a value of 50 works okay.
+    * @param restarts         The number of times to run the algorithm, keeping the best clustering.
+    *                         K-means finds a local minimum that depends on where it starts; more
+    *                         runs make a poor one less likely, at a proportional cost.
     *
     */
     template<typename vector_iterator, typename vector_container, typename index_container>
@@ -374,6 +509,7 @@ namespace OpenTissue
       , size_t K
       , size_t & iteration
       , size_t const & max_iterations
+      , size_t const & restarts = 10u
       )
     {
       typedef typename vector_container::value_type  vector_type;
@@ -387,7 +523,7 @@ namespace OpenTissue
 
       kmeans_algorithm kmeans;
 
-      kmeans.run( begin , end, K, iteration, max_iterations );
+      kmeans.run( begin , end, K, iteration, max_iterations, restarts );
 
       centers.clear();
       centers.resize(K);

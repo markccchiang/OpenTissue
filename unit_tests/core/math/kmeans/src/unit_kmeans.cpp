@@ -125,4 +125,40 @@ BOOST_AUTO_TEST_CASE(simple_test)
   }
 }
 
+BOOST_AUTO_TEST_CASE(no_cluster_is_left_empty)
+{
+  // A single run, no restarts: every cluster must still end up with feature points. The
+  // centers were once placed at random in the bounding box, and a center that landed away
+  // from the data kept an empty cluster for good.
+  typedef OpenTissue::math::BasicMathTypes<double, size_t> math_types;
+  typedef math_types::vector3_type                         vector3_type;
+  typedef std::vector<vector3_type>                        vector_container;
+  typedef std::vector<size_t>                              index_container;
+
+  // Two tight groups far apart, with most of the bounding box empty, and more clusters
+  // than groups.
+  vector_container features;
+  for(size_t i = 0; i < 20; ++i)
+  {
+    vector3_type p;
+    OpenTissue::math::random( p, -0.1, 0.1 );
+    features.push_back( p + vector3_type( i < 10 ? -10.0 : 10.0, 0.0, 0.0 ) );
+  }
+
+  size_t const K = 5;
+  for(size_t trial = 0; trial < 50; ++trial)
+  {
+    vector_container centers;
+    index_container  membership;
+    size_t           iteration = 0u;
+    OpenTissue::math::kmeans( features.begin(), features.end(), centers, membership, K, iteration, 50u, 1u );
+
+    std::vector<size_t> count( K, 0u );
+    for(size_t i = 0; i < membership.size(); ++i)
+      ++count[ membership[i] ];
+    for(size_t c = 0; c < K; ++c)
+      BOOST_CHECK( count[c] > 0u );
+  }
+}
+
 BOOST_AUTO_TEST_SUITE_END();

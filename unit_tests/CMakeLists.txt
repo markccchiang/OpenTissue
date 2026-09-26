@@ -26,17 +26,14 @@ set(OPENTISSUE_TEST_RANDOM_SEED 20090306 CACHE STRING
 #   ctest --test-dir build -LE unreliable    # the gating run
 #   ctest --test-dir build -L  unreliable    # just these, informational
 #
-# unit_kmeans - passes for roughly 40% of seeds. K-means with random initialisation gets
-#               caught in local minima, and the test says so itself: "If k-means gets
-#               caught by a local minima then all the following unit-tests is likely to
-#               fail!". Making it reliable means restarts or k-means++ in the algorithm,
-#               not a tweak to the test.
-#
-# unit_bfgs used to be listed here too, passing for about 85% of seeds. That was a bug in
-# the solver, not bad luck, and it is fixed; it now passes for every seed tried.
+# No test carries the label at the moment. unit_kmeans and unit_bfgs used to, passing for
+# roughly 30% and 85% of seeds. Both were bugs rather than bad luck -- k-means placed its
+# initial centers badly, and BFGS broke its Hessian approximation -- and both are fixed.
+# Don't add a test here to make CI pass; fix it, or label it only with the reason written
+# beside it, as those two were.
 #
 
-set(OPENTISSUE_UNRELIABLE_TESTS unit_kmeans)
+set(OPENTISSUE_UNRELIABLE_TESTS )
 
 function(ot_add_test TEST_NAME)
   add_test(NAME ${TEST_NAME}

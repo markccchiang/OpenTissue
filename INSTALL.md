@@ -129,8 +129,8 @@ Run the tests through `ctest` rather than invoking the binaries directly. `ctest
 library's random generator seeds itself from the clock, and the tests that check numerical
 results over random inputs then fail intermittently.
 
-`-LE unreliable` excludes a test that does not reliably pass for any seed: `unit_kmeans`,
-which depends on k-means escaping local minima from a random start. Drop the flag to run it.
+`-LE unreliable` excludes tests labelled as not reliably passing. None is labelled at the
+moment; the flag is kept so that CI and local runs agree if one ever is.
 
 To check that every header compiles on its own:
 

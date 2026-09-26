@@ -134,16 +134,10 @@ jobs:
       - name: Header self-containment
         run: cmake --build build --config Debug --target opentissue_header_check --parallel 4
 
-      # The gating run. unit_kmeans carries the 'unreliable' label and is excluded
-      # here; see unit_tests/CMakeLists.txt for why.
+      # The gating run. Tests labelled 'unreliable' would be excluded here; none is at
+      # the moment. See unit_tests/CMakeLists.txt.
       - name: Test
         run: ctest --test-dir build --build-config Debug --output-on-failure -LE unreliable
-
-      # Reported, never gating, so the known-unreliable tests stay visible.
-      - name: Test (known unreliable, informational)
-        if: always()
-        continue-on-error: true
-        run: ctest --test-dir build --build-config Debug --output-on-failure -L unreliable
 
   coverage:
     name: Coverage
