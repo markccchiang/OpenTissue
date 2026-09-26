@@ -142,6 +142,29 @@ cmake --build build --target opentissue_header_check -j
 
 This adds roughly 900 translation units, which is why it is off by default.
 
+## Building the API documentation
+
+The API reference is generated with [Doxygen](https://www.doxygen.nl/). Graphviz is optional
+and adds the class and include diagrams.
+
+```sh
+brew install doxygen graphviz              # macOS
+sudo apt-get install -y doxygen graphviz   # Debian/Ubuntu
+```
+
+Then configure with the documentation on, build the `apidoc` target, and open the result:
+
+```sh
+cmake -S . -B build -DOPENTISSUE_ENABLE_DOCUMENTATION=ON
+cmake --build build --target apidoc
+open build/documentation/html/index.html   # xdg-open on Linux
+```
+
+The documentation is not part of the default build, so it has to be requested by target name.
+The front page is this project's README, and the guides under `documentation/` are pages of
+the site. Formulas are drawn by MathJax, which the pages load from the web, so they need a
+network connection to render.
+
 ## Installing
 
 ```sh
@@ -169,3 +192,17 @@ If yours is not there, it is a regression worth fixing rather than adding to tha
 
 **Intermittent test failures** — you are probably running a test binary directly rather than
 through `ctest`. See "Running the tests" above.
+
+**"No rule to make target `apidoc`"** — the build directory was configured without
+`-DOPENTISSUE_ENABLE_DOCUMENTATION=ON`, or Doxygen was not found; configure prints a warning
+in the second case. Install Doxygen and configure again.
+
+**`apidoc` fails with "Bus error: 10"** — this is a bug in Doxygen 1.18.0 on Apple Silicon
+([doxygen#12326](https://github.com/doxygen/doxygen/issues/12326)), not in OpenTissue: it
+crashes at random, and rerunning usually succeeds. Either retry until it does,
+
+```sh
+until cmake --build build --target apidoc; do echo "doxygen crashed, retrying"; done
+```
+
+or use Doxygen 1.17.0, which does not have the bug.

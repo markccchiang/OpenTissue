@@ -52,6 +52,16 @@ Anything older than the entry below predates this file; see the git history.
 
 ### Changed
 
+- The Doxygen API documentation (`OPENTISSUE_ENABLE_DOCUMENTATION`, target `apidoc`) is
+  configured properly. `README.md` is the main page, and the guides under `documentation/`,
+  `INSTALL.md` and `CHANGELOG.md` are pages of the site, with the README's links resolving to
+  them. Every header gets a file page, not just the 2 of 899 that had a `\file` comment.
+  Formulas render with MathJax instead of needing LaTeX. Paths are shown relative to the
+  checkout instead of the builder's absolute paths, and undocumented members no longer warn,
+  which cut the warnings from about 6,300 to about 650. Most of those remaining are real
+  comment markup errors. The docs are no longer rebuilt on every build (`ALL` is gone), and
+  configure warns when the option is on but Doxygen is missing, instead of silently creating no
+  `apidoc` target.
 - The ParaView guide is split into pages: `documentation/paraview.md` is now the entry page
   -- installing ParaView, running it from the command line, building the examples and the GUI
   basics -- and links to `paraview_writing_data.md`, `paraview_scripting.md` and one page per

@@ -41,7 +41,7 @@ namespace OpenTissue
      * @return             If succesfully written to the specified file then the
      *                     return value is true otherwise it is false.
      *
-     * @example
+     * @par Example
      * @code
      *
      * template<typename skin_type>
