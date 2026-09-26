@@ -1,10 +1,10 @@
-[![Build Status](https://dev.azure.com/OpenTissue/OpenTissue/_apis/build/status/erleben.OpenTissue?branchName=master)](https://dev.azure.com/OpenTissue/OpenTissue/_build/latest?definitionId=5&branchName=master)
-[![License](https://img.shields.io/badge/License-Zlib-blue.svg)](http://opensource.org/licenses/zlib-license.php)
+[![CI](https://github.com/markccchiang/OpenTissue/actions/workflows/ci.yml/badge.svg)](https://github.com/markccchiang/OpenTissue/actions/workflows/ci.yml)
+[![License](https://img.shields.io/badge/License-Zlib-blue.svg)](https://opensource.org/license/zlib)
 
 # OpenTissue
 OpenTissue is a collection of generic algorithms and data structures for rapid development of interactive modeling and simulation.
 
-Free for commercial use, open source under the [Zlib license](http://opensource.org/licenses/zlib-license.php).
+Free for commercial use, open source under the [Zlib license](https://opensource.org/license/zlib).
 
 ## Getting Started/Installing
   * [Installing OpenTissue](INSTALL.md) — requirements, dependencies, building and testing
@@ -20,7 +20,7 @@ Free for commercial use, open source under the [Zlib license](http://opensource.
 
 ## Read More
   * Have a look at our [OpenTissue Gallery](https://www.youtube.com/playlist?list=PLNtAp--NfuirWaf0HhB9wUeromoXWvJlb)
-  * Doxygen documentation (run doxygen on the source tree)
+  * The API documentation, generated with Doxygen (see "Building the API documentation" in [INSTALL.md](INSTALL.md))
   * Demo applications (work as small tutorials/hands on examples)
   * The book: [Physics-Based Animation](https://iphys.wordpress.com/2020/01/12/free-textbook-physics-based-animation/)
 
@@ -53,7 +53,7 @@ Utility - Large collection of miscellaneous utilities, mostly for OT-based appli
   * [Utility Programming Guide](documentation/utility.md)
 
 ## Learn More
-Here is a few suggestions
-  * Learn more about generic programing reading a [textbook](http://www.josuttis.com/tmplbook/).
-  * Learn about the C++ programming language from a [textbook](http://www.research.att.com/~bs/3rd.html ).
-  * Learn more about solving problems with C++ by reading a [textbook](http://www.acceleratedcpp.com/)
+Here are a few suggestions:
+  * Learn more about generic programming from [C++ Templates: The Complete Guide](https://www.tmplbook.com/), by David Vandevoorde, Nicolai M. Josuttis and Douglas Gregor.
+  * Learn about the C++ programming language from [The C++ Programming Language](https://www.stroustrup.com/4th.html), by Bjarne Stroustrup.
+  * Learn more about solving problems with C++ from [Accelerated C++](https://www.informit.com/store/accelerated-c-plus-plus-practical-programming-by-example-9780201703535), by Andrew Koenig and Barbara E. Moo.
