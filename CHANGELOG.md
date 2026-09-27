@@ -9,6 +9,15 @@ Anything older than the entry below predates this file; see the git history.
 
 ### Added
 
+- A fourth ParaView example, `demos/console/paraview_dam_break`: a multi-particle simulation.
+  A column of water, 1,232 particles, collapses in a tank under OpenTissue's smoothed particle
+  hydrodynamics solver; the wave runs along the floor, climbs the far wall and sloshes to
+  rest. It writes the particles as legacy VTK polydata with velocity, speed, density and
+  pressure, and `render.py` draws them as spheres coloured by speed. The page,
+  `documentation/paraview_example_dam_break.md`, explains the solver set-up the demo needed
+  for water that behaves: spatial hashing (`SPHSH`), range-checked kernels, a pressure law
+  clamped at zero, walls half a particle inside the drawn tank, and a stiffer material with
+  a shorter time step. `paraview_writing_data.md` gains a section on writing particles.
 - Regression tests that hold the recent solver fixes in place whatever seed CI pins. Each
   of `unit_bfgs`, `unit_projected_bfgs` and `unit_kmeans` gains a case that reruns its
   randomised scenarios for a fixed range of seeds (100, 100 and 50), reseeding the generator

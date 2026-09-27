@@ -142,6 +142,31 @@ OpenTissue::t4_cpu_scan(mesh, band, field, OpenTissue::t4_cpu_signed());
 where `band` is how far from the surface to compute distances; make it large enough to cover
 the grid. `demos/console/paraview_export` does exactly this; see [its page](paraview_example_distance_field.md).
 
+## Writing particles
+
+Particles have no connectivity, only positions and values, and legacy VTK holds them as
+`POLYDATA` with one *vertex* cell per point. [The dam break example](paraview_example_dam_break.md)
+writes one file per frame this way -- see `write_particles()` in the demo:
+
+```
+# vtk DataFile Version 3.0
+OpenTissue SPH particles
+ASCII
+DATASET POLYDATA
+POINTS 1232 double
+...
+VERTICES 1232 2464       <- per particle: 1 and its point index
+POINT_DATA 1232
+VECTORS velocity double
+SCALARS speed double 1
+LOOKUP_TABLE default
+```
+
+Keep the `VERTICES` section: without it the file holds points but no cells, and a
+representation that draws cells has nothing to draw. In ParaView, the **Point Gaussian** representation
+draws each particle as a shaded sphere of a given radius, which is far cheaper than a
+**Glyph** filter putting real geometry at each point.
+
 ## What this does not cover
 
 - **One scalar field per file.** The writer takes a single grid. Several fields means several
@@ -162,6 +187,7 @@ the grid. `demos/console/paraview_export` does exactly this; see [its page](para
 | `grid_raw_write.h` | headerless binary | Data only, no dimensions; needs a header written by hand |
 | `mesh_obj_write.h` | Wavefront OBJ | Surface meshes, for ParaView, Blender, MeshLab |
 | `write_vtk()` in `paraview_cantilever` | legacy VTK `.vtk` | Tetrahedral meshes with point and cell values; demo code, not a library header |
+| `write_particles()` in `paraview_dam_break` | legacy VTK `.vtk` | Particles with point values; demo code, not a library header |
 | `mesh_vrml_write.h` | VRML | Surface meshes, older tools |
 
 `grid_metaimage_write.h` is essentially `grid_raw_write.h` plus the header that makes the data
