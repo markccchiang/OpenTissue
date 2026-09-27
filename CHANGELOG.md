@@ -7,6 +7,25 @@ Anything older than the entry below predates this file; see the git history.
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-09-27
+
+Numerical fixes, documentation, and examples. Nothing in the public API is removed or
+changed incompatibly, so code written against 1.0.0 still compiles; a consumer asking for
+1.0 accepts 1.1.0. One build change to note: the optional Qhull support now needs Qhull's
+reentrant library, `libqhull_r`, which Homebrew, Debian/Ubuntu and vcpkg all ship.
+
+- **Numerical fixes.** A review of the optimizers, the k-means clustering and the grid
+  solvers found several that gave wrong or unreliable answers: BFGS and projected BFGS
+  stopping short of the minimum, the Armijo line searches misreporting failures, k-means
+  missing well-separated clusters, the Poisson solver dividing by 8 instead of 6, and
+  `laplacian_blur()` not blurring. Their results change -- that is the point -- and each is
+  described under Fixed. The two tests that were labelled unreliable because of them now
+  gate CI, with seed sweeps that hold the fixes in place.
+- **Documentation.** The Doxygen API documentation builds, with the README as its front
+  page, and the comment markup in about 180 headers is fixed.
+- **Examples.** Five ParaView examples: a signed distance field, waves in a pool, a
+  cantilever beam, a dam break and a double pendulum, each a runnable demo with a guide page.
+
 ### Added
 
 - A fifth ParaView example, `demos/console/paraview_double_pendulum`: a multibody simulation.
