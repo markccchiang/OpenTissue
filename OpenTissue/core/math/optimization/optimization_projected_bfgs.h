@@ -22,6 +22,7 @@
 #include <cmath>
 #include <stdexcept>
 #include <cassert>
+#include <vector>
 
 namespace OpenTissue
 {
@@ -125,8 +126,18 @@ namespace OpenTissue
         vector_type x_old;
         vector_type nabla_f_k;
         vector_type nabla_f_k1;
+        vector_type projected_gradient;
+        vector_type trial;
+        vector_type step;
+        vector_type free_gradient;
+        std::vector<bool> active;
 
         // Allocate space for temporaries
+        projected_gradient.resize(m);
+        trial.resize(m);
+        step.resize(m);
+        free_gradient.resize(m);
+        active.resize(m);
         y_k.resize(m);
         s_k.resize(m);
         dx.resize(m);
@@ -146,16 +157,52 @@ namespace OpenTissue
           if(profiling)
             (*profiling)(iteration) = f_0;
         
-          // Check for absolute convergence
-          if(stationary_point( nabla_f_k, absolute_tolerance, error ) )
+          // Check for absolute convergence. At a minimizer on a bound the gradient is not
+          // zero, it points out of the feasible region, so test the projected gradient
+          // x - P(x - nabla f) instead: it is zero exactly at a constrained stationary point.
+          ublas::noalias( projected_gradient ) = x - P( vector_type( x - nabla_f_k ) );
+          if(stationary_point( projected_gradient, absolute_tolerance, error ) )
           {
             status = ABSOLUTE_CONVERGENCE;
             return;
           }
 
-          // solve Newton system. Compute Search Direction
-          // ublas::noalias( dx ) = - ublas::prod(H, nabla_f_k);
-          ublas::axpy_prod(H, -nabla_f_k, dx, true);
+          // Compute the search direction as in the projected Newton method of Bertsekas
+          // (1982). A variable is active if it lies within epsilon of a bound and its
+          // gradient pushes it into that bound; epsilon shrinks as the iterates converge.
+          // Moving every variable epsilon against its gradient and seeing which ones the
+          // projection clips finds exactly those. Active variables take a steepest descent
+          // step, which the projection then cancels; the others take the quasi-Newton step
+          // computed without the active components. Using -H nabla f for all of them lets the
+          // gradient of an active variable, which cannot move, push the free variables away
+          // from their optimum through the off-diagonal terms of H.
+          real_type const epsilon = min( value_traits::one(), ublas::norm_inf( projected_gradient ) );
+          for(size_t i = 0; i < m; ++i)
+            step(i) = nabla_f_k(i) > value_traits::zero() ? -epsilon : ( nabla_f_k(i) < value_traits::zero() ? epsilon : value_traits::zero() );
+          ublas::noalias( trial ) = P( vector_type( x + step ) );
+          for(size_t i = 0; i < m; ++i)
+            active[i] = fabs( trial(i) - ( x(i) + step(i) ) ) > value_traits::zero();
+
+          ublas::noalias( free_gradient ) = nabla_f_k;
+          for(size_t i = 0; i < m; ++i)
+            if(active[i])
+              free_gradient(i) = value_traits::zero();
+
+          // ublas::noalias( dx ) = - ublas::prod(H, free_gradient);
+          ublas::axpy_prod(H, -free_gradient, dx, true);
+          for(size_t i = 0; i < m; ++i)
+            if(active[i])
+              dx(i) = -nabla_f_k(i);
+
+          // H should stay positive definite, which makes dx a descent direction. Should
+          // round-off have spoilt that, restart from H = I (steepest descent).
+          bool restarted = false;
+          if( ublas::inner_prod(dx, nabla_f_k) >= value_traits::zero() )
+          {
+            detail::bfgs_reset_inverse_hessian(H);
+            ublas::noalias( dx ) = -nabla_f_k;
+            restarted = true;
+          }
 
           x_old.assign( x );
           real_type f_tau = f_0;
@@ -173,7 +220,35 @@ namespace OpenTissue
             , status
             , P
             );
-        
+
+          // The line-search stops the iteration on stagnation or a small relative change in
+          // f. Along a quasi-Newton direction that proves little: a poorly scaled H -- say
+          // one that started out singular -- gives a direction too short, or too long and
+          // back-tracked to almost nothing, so f barely changes although the projected
+          // gradient test above has just failed. Before accepting such a stop, retry once
+          // along the steepest descent direction; if that stalls as well, the stop stands.
+          if( status != OK && !restarted )
+          {
+            detail::bfgs_reset_inverse_hessian(H);
+            ublas::noalias( dx ) = -nabla_f_k;
+            x.assign( x_old );
+            f_tau = f_0;
+            armijo_projected_backtracking(
+              f
+              , nabla_f_k
+              , x_old
+              , x
+              , dx
+              , relative_tolerance
+              , stagnation_tolerance
+              , alpha
+              , beta
+              , f_tau
+              , status
+              , P
+              );
+          }
+
           if(status != OK ) 
             return;
                     

@@ -402,10 +402,13 @@ namespace OpenTissue
             , status
             );
 
-          // A badly scaled H can give a direction so long that even the shortest step the
-          // line-search tries overshoots. Retry once along the steepest descent direction
-          // before giving up.
-          if(status == BACKTRACKING_FAILED && !restarted)
+          // The line-search stops the iteration on failure, stagnation or a small relative
+          // change in f. Along a quasi-Newton direction that proves little: a poorly scaled H
+          // -- say one that started out singular -- gives a direction too short, or too long
+          // and back-tracked to almost nothing, so f barely changes although the gradient
+          // test above has just failed. Before accepting such a stop, retry once along the
+          // steepest descent direction; if that stalls as well, the stop stands.
+          if( status != OK && !restarted )
           {
             detail::bfgs_reset_inverse_hessian(H);
             ublas::noalias( dx ) = -nabla_f_k;

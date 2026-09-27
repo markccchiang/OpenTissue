@@ -131,7 +131,11 @@ void do_test(F & f, nabla_F & nabla_f, vector_type & x, matrix_type & H, Project
     BOOST_CHECK( iteration <= max_iterations );
   }
 
-  double tol = 0.001;
+  // In percent. The solver may stop on its relative test, when f changes by less than
+  // relative_tolerance (1e-9) between iterations. Near a minimum f is quadratic in the
+  // distance to it, so that leaves x up to about sqrt(1e-9) away -- more than the 0.001% this
+  // check once demanded, which failed a correct solver on some random starting points.
+  double tol = 0.01;
   for(size_t i = 0;i<x.size();++i)
     BOOST_CHECK_CLOSE( x(i), y(i), tol);
 }

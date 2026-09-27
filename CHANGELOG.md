@@ -101,6 +101,22 @@ Anything older than the entry below predates this file; see the git history.
 
 ### Fixed
 
+- **`optimization::projected_bfgs()` stopped short of the minimum.** `unit_projected_bfgs` failed
+  for about 10% of random seeds; CI's pinned seed happened to pass. Three causes, all fixed:
+  - Its convergence test used the raw gradient, which is not zero at a minimum on a bound. It
+    now tests the projected gradient, x − P(x − ∇f), which is.
+  - Its direction was −H∇f in every variable. Through the off-diagonal terms of H, the gradient
+    of a variable held at a bound pushed the free variables away from their optimum. It now
+    follows Bertsekas's projected Newton method: variables within ε of a bound they are pushed
+    into take a steepest descent step, and the others a quasi-Newton step that ignores them.
+  - Like `bfgs()`, it accepted a stop from the line search -- stagnation, or a small relative
+    change in f -- even when a poorly scaled H had only produced a tiny step. Both solvers now
+    confirm such a stop with one steepest descent step before accepting it.
+
+  `unit_projected_bfgs` passes for all 3,000 seeds tried (102 of 1,001 failed before), with its
+  position check relaxed to 0.01% for the same reason as `unit_bfgs`'s. `projected_bfgs()` is
+  also what the inverse kinematics solver uses with joint limits; its test,
+  `unit_nonlinear_solver`, passes for every seed tried, before and after.
 - **`math::kmeans()` usually failed to find well-separated clusters.** It placed its initial
   centers uniformly at random in the bounding box of the points. A center that landed away
   from the data got no points and was never moved again, so its cluster stayed empty and the
