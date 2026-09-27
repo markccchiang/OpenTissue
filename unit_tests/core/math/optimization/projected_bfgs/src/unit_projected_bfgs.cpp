@@ -81,6 +81,10 @@ public:
 
 
 
+// Whether to print each solve. Off while sweeping many seeds, where it would bury the
+// output of a failure.
+bool verbose = true;
+
 void do_test(F & f, nabla_F & nabla_f, vector_type & x, matrix_type & H, ProjectionOperator & P, vector_type const & y)
 {
   using namespace OpenTissue::math::big;
@@ -112,16 +116,16 @@ void do_test(F & f, nabla_F & nabla_f, vector_type & x, matrix_type & H, Project
     , beta
     );
 
-  std::cout << "status     = " 
+  if(verbose) std::cout << "status     = " 
     << OpenTissue::math::optimization::get_error_message(status) 
     << std::endl;
-  std::cout << "absolute   = " 
+  if(verbose) std::cout << "absolute   = " 
     << accuracy  
     << std::endl;
-  std::cout << "iterations = " 
+  if(verbose) std::cout << "iterations = " 
     << iteration 
     << std::endl;
-  std::cout << "x          = " 
+  if(verbose) std::cout << "x          = " 
     << x 
     << std::endl;
 
@@ -142,7 +146,7 @@ void do_test(F & f, nabla_F & nabla_f, vector_type & x, matrix_type & H, Project
 
 BOOST_AUTO_TEST_SUITE(opentissue_math_big_projected_bfgs);
 
-BOOST_AUTO_TEST_CASE(unconstrained_global_minimizer)
+void unconstrained_scenarios()
 {
   using namespace OpenTissue::math::big;
 
@@ -276,7 +280,7 @@ BOOST_AUTO_TEST_CASE(unconstrained_global_minimizer)
 }
 
 
-BOOST_AUTO_TEST_CASE(constrained_global_minimizer)
+void constrained_scenarios()
 {
   using namespace OpenTissue::math::big;
 
@@ -405,6 +409,97 @@ BOOST_AUTO_TEST_CASE(constrained_global_minimizer)
   H(1,0) = 0.0;    H(1,1) = 4.0;   
   do_test(f,nabla_f,x,H,P,y);
 
+}
+
+BOOST_AUTO_TEST_CASE(unconstrained_global_minimizer)
+{
+  unconstrained_scenarios();
+}
+
+BOOST_AUTO_TEST_CASE(constrained_global_minimizer)
+{
+  constrained_scenarios();
+}
+
+BOOST_AUTO_TEST_CASE(bound_minimizer_with_coupled_hessian_approximation)
+{
+  // min x^T A x - b^T x with A = 2I and b = [-1, -2], over 0 <= x_0 <= 1, -1 <= x_1 <= 1.
+  // The minimizer [0, -0.5] lies on the bound x_0 = 0, where the gradient is [1, 0]: it
+  // keeps pushing x_0 into the bound. With an approximation H that couples the variables,
+  // -H nabla f turns that push into a step in x_1 as well, and the solver once stalled
+  // there with x_1 off its optimum. It must leave the pinned variable out of the
+  // quasi-Newton step.
+  size_type N = 2;
+
+  matrix_type A;
+  A.resize(N,N,false);
+  A(0,0) = 2.0;  A(0,1) = 0.0;
+  A(1,0) = 0.0;  A(1,1) = 2.0;
+
+  vector_type b;
+  b.resize(N,false);
+  b(0) = -1.0;
+  b(1) = -2.0;
+
+  F f(A,b);
+  nabla_F nabla_f(A,b);
+
+  vector_type l, u;
+  l.resize(N,false);
+  u.resize(N,false);
+  l(0) =  0.0;  u(0) = 1.0;
+  l(1) = -1.0;  u(1) = 1.0;
+  ProjectionOperator P(l,u);
+
+  vector_type y;
+  y.resize(N,false);
+  y(0) =  0.0;
+  y(1) = -0.5;
+
+  // Starting approximations and points for which the solver used to stop short; found by
+  // a search over H and x. Each H is symmetric positive definite.
+  struct Start { real_type h00, h01, h11, x0, x1; };
+  Start const starts[] = {
+      { 0.1, -0.09, 0.1,  0.3, -0.5 }
+    , { 0.1, -0.06, 0.1,  0.7, -1.0 }
+    , { 0.1, -0.03, 0.1,  1.0, -1.0 }
+  };
+  for(size_t s = 0; s < sizeof(starts)/sizeof(starts[0]); ++s)
+  {
+    BOOST_TEST_CONTEXT("start " << s)
+    {
+      matrix_type H;
+      H.resize(N,N,false);
+      H(0,0) = starts[s].h00;  H(0,1) = starts[s].h01;
+      H(1,0) = starts[s].h01;  H(1,1) = starts[s].h11;
+
+      vector_type x;
+      x.resize(N,false);
+      x(0) = starts[s].x0;
+      x(1) = starts[s].x1;
+
+      do_test(f,nabla_f,x,H,P,y);
+    }
+  }
+}
+
+// The scenarios above draw random starting points and matrices, and CI runs them for one
+// pinned seed only. Projected BFGS once failed for about 10% of seeds -- mostly with the
+// minimizer on a bound -- while that seed happened to pass. So also run them for a fixed
+// range of seeds, reseeding the generator here, independent of the environment.
+BOOST_AUTO_TEST_CASE(many_random_starts)
+{
+  verbose = false;
+  for(unsigned int seed = 1u; seed <= 100u; ++seed)
+  {
+    BOOST_TEST_CONTEXT("seed " << seed)
+    {
+      OpenTissue::math::Random<real_type>::seed(seed);
+      unconstrained_scenarios();
+      constrained_scenarios();
+    }
+  }
+  verbose = true;
 }
 
 BOOST_AUTO_TEST_SUITE_END();

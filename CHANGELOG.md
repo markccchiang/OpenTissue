@@ -9,6 +9,14 @@ Anything older than the entry below predates this file; see the git history.
 
 ### Added
 
+- Regression tests that hold the recent solver fixes in place whatever seed CI pins. Each
+  of `unit_bfgs`, `unit_projected_bfgs` and `unit_kmeans` gains a case that reruns its
+  randomised scenarios for a fixed range of seeds (100, 100 and 50), reseeding the generator
+  itself. `unit_bfgs` and `unit_projected_bfgs` also gain deterministic cases built from
+  starting points that broke the old solvers: Rosenbrock starts where BFGS gave up with a
+  non-descent direction, and coupled Hessian approximations that stopped projected BFGS
+  short of a minimizer on a bound. Every new case fails against the code before its fix;
+  CI's pinned seed alone had let `unit_projected_bfgs`'s failure through.
 - `demos/console/paraview_cantilever`, a structural simulation rendered in ParaView: a beam of
   soft rubber clamped at one end and released under its own weight, simulated with OpenTissue's
   finite element solver and written as legacy VTK files carrying each point's displacement and

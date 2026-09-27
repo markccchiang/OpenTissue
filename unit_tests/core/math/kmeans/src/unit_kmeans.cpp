@@ -22,7 +22,11 @@ using namespace OpenTissue;
 
 BOOST_AUTO_TEST_SUITE(opentissue_math_kmeans);
 
-BOOST_AUTO_TEST_CASE(simple_test)
+// Whether to print each clustering. Off while sweeping many seeds, where it would bury the
+// output of a failure.
+bool verbose = true;
+
+void four_groups_scenario()
 {
   typedef OpenTissue::math::BasicMathTypes<double, size_t> math_types;
   typedef math_types::vector3_type                         vector3_type;
@@ -92,8 +96,8 @@ BOOST_AUTO_TEST_CASE(simple_test)
   BOOST_CHECK( iteration < max_iterations );
 
   for(size_t i = 0;i<40;++i)
-    std::cout << cluster_indexes[i] << " ";
-  std::cout << std::endl;
+    if(verbose) std::cout << cluster_indexes[i] << " ";
+  if(verbose) std::cout << std::endl;
 
   size_t cluster_order[4];
   cluster_order[0] = cluster_indexes[0];
@@ -119,10 +123,33 @@ BOOST_AUTO_TEST_CASE(simple_test)
 
   for(size_t c = 0;c<K;++c)
   {
-    std::cout << cluster_centers[ cluster_order[c] ] << std::endl;
+    if(verbose) std::cout << cluster_centers[ cluster_order[c] ] << std::endl;
     real_type dist = OpenTissue::math::length( center[c] - cluster_centers[ cluster_order[c] ] );
     BOOST_CHECK(dist < value_traits::half() );
   }
+}
+
+BOOST_AUTO_TEST_CASE(simple_test)
+{
+  four_groups_scenario();
+}
+
+// The scenario above draws random feature points, and k-means random initial centers, and
+// CI runs it for one pinned seed only. K-means once found these four groups for only about
+// 27% of seeds. So also run it for a fixed range of seeds, reseeding the generator here,
+// independent of the environment.
+BOOST_AUTO_TEST_CASE(many_seeds)
+{
+  verbose = false;
+  for(unsigned int seed = 1u; seed <= 50u; ++seed)
+  {
+    BOOST_TEST_CONTEXT("seed " << seed)
+    {
+      OpenTissue::math::Random<double>::seed(seed);
+      four_groups_scenario();
+    }
+  }
+  verbose = true;
 }
 
 BOOST_AUTO_TEST_CASE(no_cluster_is_left_empty)

@@ -57,6 +57,10 @@ public:
   }
 };
 
+// Whether to print each solve. Off while sweeping many seeds, where it would bury the
+// output of a failure.
+bool verbose = true;
+
 template<typename func_functor, typename grad_functor>
 void do_unconstrained_minimizer_test(func_functor & f, grad_functor & nabla_f, vector_type & x, matrix_type & H, vector_type const & solution )
 {
@@ -88,16 +92,16 @@ void do_unconstrained_minimizer_test(func_functor & f, grad_functor & nabla_f, v
     , beta
     );
 
-  std::cout << "status     = " 
+  if(verbose) std::cout << "status     = " 
     << OpenTissue::math::optimization::get_error_message(status) 
     << std::endl;
-  std::cout << "absolute   = " 
+  if(verbose) std::cout << "absolute   = " 
     << accuracy  
     << std::endl;
-  std::cout << "iterations = " 
+  if(verbose) std::cout << "iterations = " 
     << iteration 
     << std::endl;
-  std::cout << "x          = " 
+  if(verbose) std::cout << "x          = " 
     << x 
     << std::endl;
 
@@ -156,7 +160,7 @@ public:
 
 BOOST_AUTO_TEST_SUITE(opentissue_math_big_bfgs);
 
-BOOST_AUTO_TEST_CASE(simple_test_case)
+void simple_scenarios()
 {
   using namespace OpenTissue::math::big;
 
@@ -275,7 +279,7 @@ BOOST_AUTO_TEST_CASE(simple_test_case)
 
 }
 
-BOOST_AUTO_TEST_CASE(rosenbrock_test_case)
+void rosenbrock_scenarios()
 {
   using namespace OpenTissue::math::big;
 
@@ -303,21 +307,21 @@ BOOST_AUTO_TEST_CASE(rosenbrock_test_case)
   do_unconstrained_minimizer_test(f,nabla_f,x,H,solution);
 
   // use H = I, and x = 0
-  std::cout << std::endl;
+  if(verbose) std::cout << std::endl;
 
   x.clear();
   x(0)=2.0;
   x(1)=2.0;
-  std::cout << "using H = I   x = " << x <<  std::endl;
+  if(verbose) std::cout << "using H = I   x = " << x <<  std::endl;
   H(0,0) = 1.0;   H(0,1) = 0.0;
   H(1,0) = 0.0;    H(1,1) = 1.0;   
   do_unconstrained_minimizer_test(f,nabla_f,x,H,solution);
 
   // use H = 4*I, and x = 0
-  std::cout << std::endl;
+  if(verbose) std::cout << std::endl;
 
   x.clear();
-  std::cout << "using H = 4*I   x = "<< x << std::endl;
+  if(verbose) std::cout << "using H = 4*I   x = "<< x << std::endl;
   H(0,0) = 4.0;   H(0,1) = 0.0;
   H(1,0) = 0.0;    H(1,1) = 4.0;   
   do_unconstrained_minimizer_test(f,nabla_f,x,H,solution);
@@ -361,6 +365,77 @@ BOOST_AUTO_TEST_CASE(rosenbrock_test_case)
   H(1,0) = -40.0;    H(1,1) = 20.0;   
   do_unconstrained_minimizer_test(f,nabla_f,x,H,solution);
 
+}
+
+BOOST_AUTO_TEST_CASE(simple_test_case)
+{
+  simple_scenarios();
+}
+
+BOOST_AUTO_TEST_CASE(rosenbrock_test_case)
+{
+  rosenbrock_scenarios();
+}
+
+BOOST_AUTO_TEST_CASE(rosenbrock_curvature_condition)
+{
+  // Armijo back-tracking does not guarantee the curvature condition y^T s > 0, and
+  // updating the inverse Hessian approximation without it makes the approximation
+  // indefinite. From these starting points the next direction then pointed uphill, and the
+  // solver gave up with "non descent direction", far from the minimizer [1, 1]. Found by a
+  // search over starting points.
+  size_type N = 2;
+
+  vector_type solution;
+  solution.resize(N,false);
+  solution(0) = 1.0;
+  solution(1) = 1.0;
+
+  F_rosenbrock f;
+  nabla_F_rosenbrock nabla_f;
+
+  struct Start { real_type h, x0, x1; };
+  Start const starts[] = {
+      { 1.0,  -1.0, 2.5 }
+    , { 1.0,   3.0, 1.0 }
+    , { 0.25,  1.5, 0.0 }
+    , { 4.0,  -1.0, 2.5 }
+  };
+  for(size_t s = 0; s < sizeof(starts)/sizeof(starts[0]); ++s)
+  {
+    BOOST_TEST_CONTEXT("start " << s)
+    {
+      matrix_type H;
+      H.resize(N,N,false);
+      H(0,0) = starts[s].h;  H(1,1) = starts[s].h;
+
+      vector_type x;
+      x.resize(N,false);
+      x(0) = starts[s].x0;
+      x(1) = starts[s].x1;
+
+      do_unconstrained_minimizer_test(f,nabla_f,x,H,solution);
+    }
+  }
+}
+
+// The scenarios above draw random starting points and matrices, and CI runs them for one
+// pinned seed only. BFGS once failed on Rosenbrock for about 15% of starting points --
+// a broken Hessian approximation -- while that seed happened to pass. So also run them for
+// a fixed range of seeds, reseeding the generator here, independent of the environment.
+BOOST_AUTO_TEST_CASE(many_random_starts)
+{
+  verbose = false;
+  for(unsigned int seed = 1u; seed <= 100u; ++seed)
+  {
+    BOOST_TEST_CONTEXT("seed " << seed)
+    {
+      OpenTissue::math::Random<real_type>::seed(seed);
+      simple_scenarios();
+      rosenbrock_scenarios();
+    }
+  }
+  verbose = true;
 }
 
 BOOST_AUTO_TEST_SUITE_END();
