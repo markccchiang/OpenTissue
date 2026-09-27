@@ -11,7 +11,6 @@
 
 #include <OpenTissue/core/math/math_random.h>
 #include <OpenTissue/core/math/math_matrix3x3.h>
-#include <OpenTissue/core/math/math_covariance.h>
 #include <OpenTissue/core/math/math_constants.h>
 #include <OpenTissue/core/math/math_value_traits.h>
 
@@ -41,7 +40,7 @@ namespace OpenTissue
 
         typedef V                                vector_type;
         typedef typename V::value_type           real_type;
-        typedef M                                matrix_type;
+        typedef M                                matrix_type;  ///< Unused since clusters stopped storing covariances; kept so the class keeps its template parameters.
 
         typedef OpenTissue::math::ValueTraits<real_type>  value_traits;
 
@@ -54,16 +53,13 @@ namespace OpenTissue
         /**
          * A Cluster Class.
          * This class is used to store information about a
-         * given cluster, such as the mean point and co-variance
-         * of the cluster.
+         * given cluster: its mean point and the feature points assigned to it.
          */
         class cluster_type
         {
         public:
 
           vector_type            m_mean;     ///< The mean point, i.e. the cluster center.
-          matrix_type            m_C;        ///< Covariance matrix.
-          matrix_type            m_invC;     ///< The inverse covariance matrix.
           size_t                 m_index;    ///< A unique cluster index
           feature_ptr_container  m_features; ///< Pointers to all features in this cluster.
 
@@ -76,18 +72,23 @@ namespace OpenTissue
 
           cluster_type()
             : m_mean(value_traits::zero(),value_traits::zero(),value_traits::zero())
-            , m_C( value_traits::one(), value_traits::zero(), value_traits::zero(), value_traits::zero(), value_traits::one(), value_traits::zero(), value_traits::zero(), value_traits::zero(), value_traits::one()  )
-            , m_invC( value_traits::one(), value_traits::zero(), value_traits::zero(), value_traits::zero(), value_traits::one(), value_traits::zero() , value_traits::zero(), value_traits::zero(), value_traits::one() )
             , m_index(0u)
           {}
 
+          /**
+          * Move the center to the mean of the cluster's feature points.
+          *
+          * This used to compute each cluster's covariance matrix and its inverse as well,
+          * for a Mahalanobis distance that distribute_features() does not use. That was
+          * wasted work on every update, and more of it once restarts ran k-means ten times.
+          */
           void update()
           {
-            using OpenTissue::math::covariance;
-            using OpenTissue::math::inverse;
-
-            covariance( begin(), end(), m_mean, m_C);
-            m_invC = inverse(m_C);
+            size_t N = 0u;
+            m_mean.clear();
+            for(feature_iterator p = begin(); p != end(); ++p, ++N)
+              m_mean += (*p);
+            m_mean /= static_cast<real_type>( N );
           }
 
         };
@@ -289,9 +290,8 @@ namespace OpenTissue
         }
 
         /**
-        * This method re-assigns feature points to clusters. Afterwards the method
-        * tries to re-estimate the clusters using a covariance analysis of the
-        * assigned feature points.
+        * This method re-assigns feature points to clusters. Afterwards it moves
+        * each cluster center to the mean of the feature points assigned to it.
         *
         * @return     If a change occured in the reassignment of feature
         *             points then the return value is true. If the return
@@ -326,9 +326,9 @@ namespace OpenTissue
               for(;c!=c_end;++c)
               {
                 vector_type diff = *p - c->m_mean;
-                // Mahalonobis type of distance measure, seems to make convergence really bad!!!
-                //   real_type squared_distance = inner_prod( diff,  prod( c->m_invC , diff) );
-                // So we use Euclidean ("spherical") distances
+                // A Mahalanobis type of distance measure, using each cluster's inverse
+                // covariance, seemed to make convergence really bad, so Euclidean
+                // ("spherical") distances are used, and clusters keep only their mean.
                 real_type squared_distance = inner_prod( diff, diff );
                 if(squared_distance < min_squared_distance)
                 {

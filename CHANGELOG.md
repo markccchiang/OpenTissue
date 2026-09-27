@@ -60,6 +60,11 @@ Anything older than the entry below predates this file; see the git history.
 
 ### Changed
 
+- `math::kmeans()` no longer computes a covariance matrix and its inverse for every cluster
+  on every iteration. Only the cluster means were ever used, since distances are Euclidean.
+  The means are computed exactly as before, so results are bit-identical (checked over 200
+  seeds and K = 2 to 6); runs are about 10% faster. The internal
+  `detail::KMeans::cluster_type` loses its `m_C` and `m_invC` members.
 - The Doxygen API documentation (`OPENTISSUE_ENABLE_DOCUMENTATION`, target `apidoc`) is
   configured properly. `README.md` is the main page, and the guides under `documentation/`,
   `INSTALL.md` and `CHANGELOG.md` are pages of the site, with the README's links resolving to
