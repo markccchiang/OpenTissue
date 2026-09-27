@@ -89,6 +89,9 @@ void do_test(F & f, nabla_F & nabla_f, vector_type & x, matrix_type & H, Project
 {
   using namespace OpenTissue::math::big;
 
+  // The solver starts from the projection of x onto the feasible set.
+  real_type const f_start = f( P(x) );
+
   size_type max_iterations       = 100;
   real_type absolute_tolerance   = boost::numeric_cast<real_type>(1e-6);
   real_type relative_tolerance   = boost::numeric_cast<real_type>(0.000000001);
@@ -128,6 +131,9 @@ void do_test(F & f, nabla_F & nabla_f, vector_type & x, matrix_type & H, Project
   if(verbose) std::cout << "x          = " 
     << x 
     << std::endl;
+
+  // Whatever else happens, the solver must not hand back a point worse than it was given.
+  BOOST_CHECK( f(x) <= f_start );
 
   if(status==OpenTissue::math::optimization::ABSOLUTE_CONVERGENCE)
   {
@@ -481,6 +487,73 @@ BOOST_AUTO_TEST_CASE(bound_minimizer_with_coupled_hessian_approximation)
       do_test(f,nabla_f,x,H,P,y);
     }
   }
+}
+
+// A gradient functor with the wrong sign, so that every direction the solver computes
+// points uphill and every line-search fails.
+class wrong_nabla_F
+{
+public:
+  nabla_F const & m_nabla_f;
+
+  wrong_nabla_F(nabla_F const & nabla_f)
+    : m_nabla_f(nabla_f)
+  {}
+
+  vector_type operator()( vector_type const & x ) const
+  {
+    return vector_type( -m_nabla_f(x) );
+  }
+};
+
+BOOST_AUTO_TEST_CASE(never_returns_a_worse_point)
+{
+  // A failed line-search leaves its last, rejected, trial point behind. The solver used to
+  // return it, higher up than where it started. With a wrong gradient no step can succeed,
+  // so the solver must give up where it began.
+  size_type N = 2;
+
+  matrix_type A;
+  A.resize(N,N,false);
+  A(0,0) = 2.0;  A(0,1) = 0.0;
+  A(1,0) = 0.0;  A(1,1) = 2.0;
+
+  vector_type b;
+  b.resize(N,false);
+  b(0) = -1.0;
+  b(1) = -2.0;
+
+  F             f(A,b);
+  nabla_F       nabla_f(A,b);
+  wrong_nabla_F wrong(nabla_f);
+
+  vector_type l, u;
+  l.resize(N,false);
+  u.resize(N,false);
+  l(0) = -1.0;  u(0) = 1.0;
+  l(1) = -1.0;  u(1) = 1.0;
+  ProjectionOperator P(l,u);
+
+  vector_type x;
+  x.resize(N,false);
+  x(0) =  0.3;
+  x(1) = -0.2;
+  vector_type const x_start = x;
+
+  matrix_type H;
+  H.resize(N,N,false);
+  H(0,0) = 1.0;
+  H(1,1) = 1.0;
+
+  size_t    status    = 0;
+  size_type iteration = 0;
+  real_type accuracy  = 0.0;
+  OpenTissue::math::optimization::projected_bfgs( f, wrong, H, x, P, 100u, 1e-6, 1e-9, 1e-9, status, iteration, accuracy, 0.0001, 0.5 );
+
+  BOOST_CHECK( status != OpenTissue::math::optimization::ABSOLUTE_CONVERGENCE );
+  BOOST_CHECK( f(x) <= f(x_start) );
+  BOOST_CHECK_EQUAL( x(0), x_start(0) );
+  BOOST_CHECK_EQUAL( x(1), x_start(1) );
 }
 
 // The scenarios above draw random starting points and matrices, and CI runs them for one

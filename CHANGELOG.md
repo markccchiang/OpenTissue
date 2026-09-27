@@ -109,6 +109,15 @@ Anything older than the entry below predates this file; see the git history.
 
 ### Fixed
 
+- **`optimization::bfgs()` and `projected_bfgs()` could return a worse point than they were
+  given.** A failed Armijo line search leaves its last, *rejected* trial point behind, and
+  the solvers returned it. The steepest-descent retry added recently made this reachable in
+  a new way: a first attempt could improve f, and a failing retry then replaced that with a
+  worse point. Both solvers now keep the better of the two attempts, and if every attempt
+  failed they return the point the iteration started from. Both test helpers now check,
+  for every scenario and seed, that the solver never returns a point worse than its start.
+  A new case, `never_returns_a_worse_point`, gives each solver a gradient with the wrong
+  sign so that every line search fails; it fails on the old code.
 - **`optimization::projected_bfgs()` stopped short of the minimum.** `unit_projected_bfgs` failed
   for about 10% of random seeds; CI's pinned seed happened to pass. Three causes, all fixed:
   - Its convergence test used the raw gradient, which is not zero at a minimum on a bound. It

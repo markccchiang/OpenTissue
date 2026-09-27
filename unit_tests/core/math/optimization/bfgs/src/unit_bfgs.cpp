@@ -66,6 +66,8 @@ void do_unconstrained_minimizer_test(func_functor & f, grad_functor & nabla_f, v
 {
   using namespace OpenTissue::math::big;
 
+  real_type const f_start = f(x);
+
   size_type max_iterations       = 100;
   real_type absolute_tolerance   = boost::numeric_cast<real_type>(1e-6);
   real_type relative_tolerance   = boost::numeric_cast<real_type>(0.000000001);
@@ -104,6 +106,9 @@ void do_unconstrained_minimizer_test(func_functor & f, grad_functor & nabla_f, v
   if(verbose) std::cout << "x          = " 
     << x 
     << std::endl;
+
+  // Whatever else happens, the solver must not hand back a point worse than it was given.
+  BOOST_CHECK( f(x) <= f_start );
 
   if(status==OpenTissue::math::optimization::ABSOLUTE_CONVERGENCE)
   {
@@ -417,6 +422,50 @@ BOOST_AUTO_TEST_CASE(rosenbrock_curvature_condition)
       do_unconstrained_minimizer_test(f,nabla_f,x,H,solution);
     }
   }
+}
+
+// f(x) = x^T x, with a gradient functor that has the wrong sign, so every direction the
+// solver computes points uphill and every line-search fails.
+class F_bowl
+{
+public:
+  real_type operator()( vector_type const & x ) const { return ublas::inner_prod(x, x); }
+};
+
+class wrong_nabla_F_bowl
+{
+public:
+  vector_type operator()( vector_type const & x ) const { return vector_type( -2.0 * x ); }
+};
+
+BOOST_AUTO_TEST_CASE(never_returns_a_worse_point)
+{
+  // A failed line-search leaves its last, rejected, trial point behind. The solver used to
+  // return it, higher up than where it started. With a wrong gradient no step can succeed,
+  // so the solver must give up where it began.
+  F_bowl             f;
+  wrong_nabla_F_bowl nabla_f;
+
+  vector_type x;
+  x.resize(2,false);
+  x(0) = 1.0;
+  x(1) = -2.0;
+  vector_type const x_start = x;
+
+  matrix_type H;
+  H.resize(2,2,false);
+  H(0,0) = 1.0;
+  H(1,1) = 1.0;
+
+  size_t    status    = 0;
+  size_type iteration = 0;
+  real_type accuracy  = 0.0;
+  OpenTissue::math::optimization::bfgs( f, nabla_f, H, x, 100u, 1e-6, 1e-9, 1e-9, status, iteration, accuracy, 0.0001, 0.5 );
+
+  BOOST_CHECK( status != OpenTissue::math::optimization::ABSOLUTE_CONVERGENCE );
+  BOOST_CHECK( f(x) <= f(x_start) );
+  BOOST_CHECK_EQUAL( x(0), x_start(0) );
+  BOOST_CHECK_EQUAL( x(1), x_start(1) );
 }
 
 // The scenarios above draw random starting points and matrices, and CI runs them for one

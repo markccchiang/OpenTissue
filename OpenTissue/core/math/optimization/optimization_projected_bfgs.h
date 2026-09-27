@@ -229,6 +229,13 @@ namespace OpenTissue
           // along the steepest descent direction; if that stalls as well, the stop stands.
           if( status != OK && !restarted )
           {
+            // Remember this first attempt: the retry must not leave us somewhere worse. A
+            // failed line-search hands back its last, rejected, trial point, where f is
+            // higher than where it started.
+            vector_type const x_first      = x;
+            real_type   const f_first      = f_tau;
+            size_t      const status_first = status;
+
             detail::bfgs_reset_inverse_hessian(H);
             ublas::noalias( dx ) = -nabla_f_k;
             x.assign( x_old );
@@ -247,6 +254,21 @@ namespace OpenTissue
               , status
               , P
               );
+
+            if( f_tau > f_first )
+            {
+              x.assign( x_first );
+              f_tau  = f_first;
+              status = status_first;
+            }
+          }
+
+          // Should every attempt have failed, return the point this iteration started from
+          // rather than a rejected trial point.
+          if( status != OK && f_tau > f_0 )
+          {
+            x.assign( x_old );
+            f_tau = f_0;
           }
 
           if(status != OK ) 
