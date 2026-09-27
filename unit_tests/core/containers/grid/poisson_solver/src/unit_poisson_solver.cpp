@@ -7,7 +7,6 @@
 #include <OpenTissue/core/math/math_basic_types.h>
 #include <OpenTissue/core/containers/grid/grid.h>
 #include <OpenTissue/core/containers/grid/util/grid_poisson_solver.h>
-#include <OpenTissue/core/containers/grid/util/grid_laplacian_blur.h>
 
 #define BOOST_AUTO_TEST_MAIN
 #include <OpenTissue/utility/utility_push_boost_filter.h>
@@ -153,19 +152,6 @@ BOOST_AUTO_TEST_CASE(sweeps_converge_to_the_solution)
   for(grid_type::iterator e = exact.begin(), p = phi.begin(); e != exact.end(); ++e, ++p)
     largest = std::max(largest, std::fabs((*p - mean_phi) - (*e - mean_exact)));
   BOOST_CHECK_SMALL(largest, 1e-6);
-}
-
-BOOST_AUTO_TEST_CASE(laplacian_blur_preserves_a_constant_image)
-{
-  // Blurring must not change an image with nothing to blur. With the old factor of 1/8 each
-  // sweep scaled the image by 6/8, so it faded towards zero instead.
-  grid_type image = make_grid(6, 6, 6, 1.0, 1.0, 1.0);
-  std::fill(image.begin(), image.end(), 1.0);
-
-  OpenTissue::grid::laplacian_blur(image, 1.0, 10u);
-
-  for(grid_type::iterator p = image.begin(); p != image.end(); ++p)
-    BOOST_CHECK_CLOSE(*p, 1.0, 1e-9);
 }
 
 BOOST_AUTO_TEST_SUITE_END();

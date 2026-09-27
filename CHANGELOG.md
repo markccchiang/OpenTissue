@@ -109,6 +109,18 @@ Anything older than the entry below predates this file; see the git history.
 
 ### Fixed
 
+- **`grid::laplacian_blur()` did not blur consistently, and for most diffusion values did
+  not blur at all.** It solved ν∇²φ = φ₀ with the Poisson solver. Under its Neumann boundary
+  conditions that equation has no solution unless the image averages to zero, so for any ν
+  other than 1 the Gauss-Seidel sweeps drifted instead of converging. For ν = 1 exactly, the
+  default, it replaced the right-hand side by zero, so the result jumped between ν = 1 and
+  any value near it, and ν had no effect. It now takes one implicit step of the heat
+  equation, solving φ − ν∇²φ = φ₀ by Gauss-Seidel. That equation always has a unique
+  solution, ν = 0 leaves the image unchanged, the blur grows smoothly with ν, constant
+  images stay constant and the sum of the values is preserved. A negative ν throws
+  `std::invalid_argument`. Nothing in the tree calls the function. New test:
+  `unit_laplacian_blur`, whose six cases all fail on the old code; the blur check previously
+  in `unit_poisson_solver` moved there.
 - **The Armijo line searches misreported failures, and the projected one accepted too
   little decrease.** `armijo_backtracking()` and `armijo_projected_backtracking()` back
   every optimizer in `core/math/optimization/`: `bfgs()`, `projected_bfgs()`,
