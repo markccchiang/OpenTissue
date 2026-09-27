@@ -61,7 +61,8 @@ namespace OpenTissue
       * @param f                     The function functor. This is used for computing the value of f(x+tau*dx).
       * @param nabla_f               The value of df/dx at the current iterate. That is the gradient value at the iterate value x.
       * @param x                     The current iterate value.
-      * @param x_tau                 Upon return this argument holds the value of, \f$x + \tau\, dx\f$, the new iterate.
+      * @param x_tau                 Upon return this argument holds the value of, \f$x + \tau\, dx\f$, the new iterate. If the search fails
+      *                              (BACKTRACKING_FAILED) it holds x itself, and f_tau holds f(x).
       * @param dx                    The descent direction along which the line-search is performed.
       * @param relative_tolerance    This argument holds the value used in the relative stopping criteria.
       *                              Setting the value to zero will make the test in-effective.
@@ -148,9 +149,17 @@ namespace OpenTissue
           assert( is_number( f_tau ) || !"armijo_backtracking(): internal error, NAN is encountered?");
         }
 
-        // Test if a new step length was computed
+        // Test if a new step length was computed. If not, hand back the point we started
+        // from: the last trial point was rejected, and f is higher there. And report the
+        // failure as such; the tests below would otherwise overwrite it with stagnation or
+        // relative convergence, since a failed search moves x, and changes f, very little.
         if( (tau < TOO_TINY) && (f_tau > f_0))
+        {
           status = BACKTRACKING_FAILED;
+          x_tau.assign( x );
+          f_tau = f_0;
+          return tau;
+        }
 
         if(stagnation( x, x_tau, stagnation_tolerance ) )
           status = STAGNATION;

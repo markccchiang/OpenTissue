@@ -17,6 +17,7 @@
 #include <OpenTissue/core/math/optimization/optimization_stagnation.h>
 #include <OpenTissue/core/math/optimization/optimization_relative_convergence.h>
 
+#include <algorithm>
 #include <stdexcept>
 #include <cassert>
 
@@ -81,7 +82,8 @@ namespace OpenTissue
       * @param f                     The function functor. This is used for computing the value of f(x+tau*dx).
       * @param nabla_f               The value of df/dx at the current iterate. That is the gradient value at the iterate value x.
       * @param x                     The current iterate value.
-      * @param x_tau                 Upon return this argument holds the value of, \f$x + \tau\, dx\f$, the new iterate.
+      * @param x_tau                 Upon return this argument holds the value of, \f$x + \tau\, dx\f$, the new iterate. If the search fails
+      *                              (BACKTRACKING_FAILED) it holds x itself, and f_tau holds f(x).
       * @param dx                    The descent direction along which the line-search is performed.
       * @param relative_tolerance    This argument holds the value used in the relative stopping criteria.
       *                              Setting the value to zero will make the test in-effective.
@@ -113,6 +115,7 @@ namespace OpenTissue
       {
         using std::fabs;
         using std::max;
+        using std::min;
 
         typedef OpenTissue::math::ValueTraits<T>  value_traits;
 
@@ -182,8 +185,14 @@ namespace OpenTissue
         gamma = alpha*ublas::inner_prod( nabla_f, x_tau - x );
         assert( is_number( gamma ) || !"armijo_projected_backtracking(): internal error, NAN is encountered?");
 
-        // Perform pojected back-tracking line-search
-        while( ( f_tau > (f_0 + gamma*tau ) ) && tau > TOO_TINY )
+        // Perform pojected back-tracking line-search.
+        //
+        // gamma is recomputed from P(x + tau dx) - x at every trial, so it already contains
+        // the step length; the Armijo test is f(x_tau) <= f(x) + gamma. (It used to multiply
+        // by tau once more, which weakened the test to tau squared.) The projection can also
+        // make gamma non-negative even for a descent direction dx, and the test would then
+        // accept an increase in f, so gamma is capped at zero.
+        while( ( f_tau > (f_0 + min( gamma, value_traits::zero() ) ) ) && tau > TOO_TINY )
         {
           tau *= beta;
           assert( is_number( tau ) || !"armijo_projected_backtracking(): internal error, NAN is encountered?");
@@ -194,9 +203,17 @@ namespace OpenTissue
           assert( is_number( f_tau ) || !"armijo_projected_backtracking(): internal error, NAN is encountered?");
         }
 
-        // Test if a new step length was computed
+        // Test if a new step length was computed. If not, hand back the point we started
+        // from: the last trial point was rejected, and f is higher there. And report the
+        // failure as such; the tests below would otherwise overwrite it with stagnation or
+        // relative convergence, since a failed search moves x, and changes f, very little.
         if( (tau < TOO_TINY) && (f_tau > f_0))
+        {
           status = BACKTRACKING_FAILED;
+          x_tau.assign( x );
+          f_tau = f_0;
+          return tau;
+        }
 
         if(stagnation( x, x_tau, stagnation_tolerance ) )
           status = STAGNATION;

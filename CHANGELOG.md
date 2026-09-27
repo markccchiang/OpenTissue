@@ -109,6 +109,22 @@ Anything older than the entry below predates this file; see the git history.
 
 ### Fixed
 
+- **The Armijo line searches misreported failures, and the projected one accepted too
+  little decrease.** `armijo_backtracking()` and `armijo_projected_backtracking()` back
+  every optimizer in `core/math/optimization/`: `bfgs()`, `projected_bfgs()`,
+  `projected_steepest_descent()` and the non-smooth Newton solver.
+  - A failed search left `x_tau` at its last, rejected, trial point, where f is higher than
+    at the start. It now returns the starting point and f there.
+  - The stagnation and relative-convergence tests ran after the failure test and could
+    overwrite `BACKTRACKING_FAILED` with a success status, since a failed search moves x
+    very little. A failure is now reported as one.
+  - The projected search multiplied its sufficient-decrease term by the step length twice,
+    so for a step τ it demanded only τ² of the decrease the Armijo condition requires. It now
+    applies the condition as stated, and never accepts an increase in f when the projection
+    turns the step away from the descent direction.
+
+  `unit_armijo` was empty; it now tests all three, and each test fails on the old code. None
+  of the solvers' tests changed outcome, for any of 500 seeds.
 - **`optimization::bfgs()` and `projected_bfgs()` could return a worse point than they were
   given.** A failed Armijo line search leaves its last, *rejected* trial point behind, and
   the solvers returned it. The steepest-descent retry added recently made this reachable in
