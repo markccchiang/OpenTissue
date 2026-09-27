@@ -6,6 +6,7 @@ add_subdirectory(paraview_export)
 add_subdirectory(paraview_shallow_water)
 add_subdirectory(paraview_cantilever)
 add_subdirectory(paraview_dam_break)
+add_subdirectory(paraview_double_pendulum)
 
 # These two compare OpenTissue's uBLAS-based solvers with Eigen on the same input. They are
 # the record of why OpenTissue does not use Eigen, and the only code in the tree that does:

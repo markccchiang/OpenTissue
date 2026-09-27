@@ -9,6 +9,15 @@ Anything older than the entry below predates this file; see the git history.
 
 ### Added
 
+- A fifth ParaView example, `demos/console/paraview_double_pendulum`: a multibody simulation.
+  Two rigid rods on hinges fall from horizontal under OpenTissue's multibody engine, and the
+  program integrates the pendulum's equations of motion alongside as an exact reference. The
+  engine keeps within 0.02 rad of it for six and a half seconds, with the energy within 0.07
+  J, before chaos parts them; `render.py` draws the engine's pendulum solid, the reference as
+  a grey ghost, and the tip's path coloured by time. The page,
+  `documentation/paraview_example_double_pendulum.md`, explains how the scene is assembled
+  (bodies, sockets, hinges, offsets that keep the arms from colliding) and how accuracy
+  depends on the time step.
 - A fourth ParaView example, `demos/console/paraview_dam_break`: a multi-particle simulation.
   A column of water, 1,232 particles, collapses in a tank under OpenTissue's smoothed particle
   hydrodynamics solver; the wave runs along the floor, climbs the far wall and sloshes to

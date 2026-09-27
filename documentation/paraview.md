@@ -11,7 +11,7 @@ data properly: isosurfaces, volume rendering, slicing, thresholding, and scripte
 rendering.
 
 These pages cover getting OpenTissue's results out of a simulation and into ParaView, with
-four complete, runnable examples.
+five complete, runnable examples.
 
 | Page | What it covers |
 | --- | --- |
@@ -21,6 +21,7 @@ four complete, runnable examples.
 | [Example: waves in a pool](paraview_example_shallow_water.md) | A physical simulation: OpenTissue's shallow water solver |
 | [Example: a cantilever beam](paraview_example_cantilever.md) | A structural simulation: OpenTissue's finite element solver, on a beam of soft rubber |
 | [Example: a dam break](paraview_example_dam_break.md) | A multi-particle simulation: OpenTissue's smoothed particle hydrodynamics solver, drawn as spheres |
+| [Example: a double pendulum](paraview_example_double_pendulum.md) | A multibody simulation: OpenTissue's rigid-body engine against the exact solution, and chaos |
 
 ## Installing ParaView
 
